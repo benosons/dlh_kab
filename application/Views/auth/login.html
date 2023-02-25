@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include "auth/parts/head.html" %}
+
+<body class="login-layout">
+	<div class="account-pages my-5 pt-sm-5">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-8 col-lg-6 col-xl-5">
+					<div class="card overflow-hidden">
+						<div class="bg-primary bg-soft">
+							<div class="row">
+								<div class="col-7">
+									<div class="text-primary p-4">
+										<h5 class="text-primary">Welcome Back !</h5>
+										<p>Sign in to continue to Skote.</p>
+									</div>
+								</div>
+								<div class="col-5 align-self-end">
+									<img src="{{baseURL}}/assets/images/profile-img.png" alt="" class="img-fluid">
+								</div>
+							</div>
+						</div>
+						<div class="card-body pt-0"> 
+							<div class="auth-logo">
+								<a href="index.html" class="auth-logo-light">
+									<div class="avatar-md profile-user-wid mb-4">
+										<span class="avatar-title rounded-circle bg-light">
+											<img src="{{baseURL}}/assets/images/logo-light.svg" alt="" class="rounded-circle" height="34">
+										</span>
+									</div>
+								</a>
+
+								<a href="index.html" class="auth-logo-dark">
+									<div class="avatar-md profile-user-wid mb-4">
+										<span class="avatar-title rounded-circle bg-light">
+											<img src="{{baseURL}}/assets/images/logo.svg" alt="" class="rounded-circle" height="34">
+										</span>
+									</div>
+								</a>
+							</div>
+							<div class="p-2">
+								<form class="form-horizontal" action="auth" method="post" onsubmit="return validateForm()">
+	
+									<div class="mb-3">
+										<label for="username" class="form-label">Username</label>
+										<input type="text" class="form-control" name="username" id="username" placeholder="Username">
+									</div>
+			
+									<div class="mb-3">
+										<label class="form-label">Password</label>
+										<div class="input-group auth-pass-inputgroup">
+											<input type="password" class="form-control" name="password" placeholder="******" aria-label="Password" aria-describedby="password-addon">
+											<button class="btn btn-light " type="button" id="password-addon"><i class="mdi mdi-eye-outline"></i></button>
+										</div>
+									</div>
+									<div class="mb-3" id="iniMessage">
+										<div class="alert alert-danger alert-dismissible fade show" role="alert" value="{{message}}" id="message">
+											<i class="mdi mdi-alert-outline me-2"></i> {{message}}
+										</div>
+									</div>
+									
+									<div class="mt-3 d-grid">
+										<button id="btnlogin" class="btn btn-primary waves-effect waves-light" type="submit">Masuk</button>
+									</div>
+
+									<div class="mt-4 text-center">
+										Belum memiliki akun ? <a href="register" class="fw-medium text-primary"> Daftar</a>
+									</div>
+								</form>
+							</div>
+		
+						</div>
+					</div>
+					<div class="mt-5 text-center">
+						
+						<div>
+							<p>© <script>document.write(new Date().getFullYear())</script></p>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	{% include "auth/parts/scripts.html" %}
+  	<script type="text/javascript">
+		  window.ada = 1;
+  			jQuery(function($) {
+				$(document).ready(function(){
+					if({register}){
+						$('.user-signup-link').trigger('click')
+					}
+				})
+			
+  			 $(document).on('click', '.toolbar a[data-target]', function(e) {
+  				e.preventDefault();
+  				var target = $(this).data('target');
+  				$('.widget-box.visible').removeClass('visible');//hide others
+  				$(target).addClass('visible');//show target
+  			 });
+  			});
+
+  			jQuery(function($) {
+  			 $('#btn-login-dark').on('click', function(e) {
+  				$('body').attr('class', 'login-layout');
+  				$('#id-text2').attr('class', 'white');
+  				$('#id-company-text').attr('class', 'blue');
+
+  				e.preventDefault();
+  			 });
+  			 $('#btn-login-light').on('click', function(e) {
+  				$('body').attr('class', 'login-layout light-login');
+  				$('#id-text2').attr('class', 'grey');
+  				$('#id-company-text').attr('class', 'blue');
+
+  				e.preventDefault();
+  			 });
+  			 $('#btn-login-blur').on('click', function(e) {
+  				$('body').attr('class', 'login-layout blur-login');
+  				$('#id-text2').attr('class', 'white');
+  				$('#id-company-text').attr('class', 'light-blue');
+
+  				e.preventDefault();
+  			 });
+
+			   $('[name="register_username"]').on('keyup', function(){
+					var formData = new FormData();
+						formData.append('user_name', $('[name="register_username"]').val());
+						formData.append('user_email', $('[name="register_email"]').val());
+						$.ajax({
+							type: 'post',
+							processData: false,
+							contentType: false,
+							url: 'checkUser',
+							data : formData,
+							success: function(result){
+							var code = result.code;
+							
+							if(code == '0'){
+								window.ada = 0;
+								$('[name="register_username"]').parent().removeClass('has-error')
+								$('#adaDOng').hide();
+								
+								if($('[name="register_email"]').val() &&  $('[name="register_username"]').val() && $('[name="register_password"]').val() && $('[name="register_badan_usaha"]').val())
+								{
+									$('#isregis').prop('disabled', false);
+									
+								}else{
+									$('#isregis').prop('disabled', true);
+								}
+							}else{
+								window.ada = 1;
+								$('[name="register_username"]').parent().addClass('has-error')
+								$('#adaDOng').show();
+								$('#isregis').prop('disabled', true);
+
+							}
+						}
+				});
+				})
+				
+				$('#iniMessage').hide();
+				$('#btnlogin').on('click', function(){
+					$('#iniMessage').hide();
+					$('#message').attr('value', '');
+				});
+
+				if($('#message').attr('value') != ''){
+					$('#iniMessage').show();
+				}
+
+				setTimeout(function(){
+					$('#iniMessage').hide();
+					$('#message').attr('value', '');
+				}, 10000)
+
+
+				$('.regis').on('keyup', function() {
+					if($('[name="register_email"]').val() &&  $('[name="register_username"]').val() && $('[name="register_password"]').val() && $('[name="register_badan_usaha"]').val())
+					{
+						$('#isregis').prop('disabled', false);
+						
+					}else{
+						$('#isregis').prop('disabled', true);
+					}
+					
+				})
+
+  			});
+
+			  function validateForm(){
+					let x = $('[name="username"]').val();
+					let y = $('[name="password"]').val();
+						if (x == "" & y == "") {
+							$('#iniMessage').show();
+							$('#message').text('Harap isi username dan password');
+							return false;
+						}
+			 }
+
+
+  		</script>
+</body>
+
+</html>
