@@ -124,7 +124,7 @@
           <embed src="{{baseURL}}/assets/document/PERMEN-LHK-5-2021.pdf#toolbar=0" width="100%" height="393px"></embed>
         </div>
         <div class="col-md-4"> 
-          <embed src="{{baseURL}}/assets/document/fix.pdf#toolbar=0" width="100%" height="393px"></embed>
+          <embed src="{{baseURL}}/assets/document/Permen LH 6 2021.pdf#toolbar=0" width="100%" height="393px"></embed>
         </div>
       </div>
   </section>
