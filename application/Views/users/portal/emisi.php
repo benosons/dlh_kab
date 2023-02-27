@@ -26,15 +26,17 @@
 </div>
 <legend></legend>
 <div class="container">
-  <section>
-      <div class="text-center">
-          <h4>Alur Proses Penerbitan Persetujuan Teknis Pemenuhan Baku Mutu Emisi </h4>
-          <img src="{{baseURL}}/assets/images/flow-baku-mutu.png" style="width: 100%; padding: 15px;">
-      </div>
-  </section>
+    <section>
+        <div class="section-title">
+            <div class="text-center">
+                <h4>Alur Proses Penerbitan Persetujuan Teknis Pemenuhan Baku Mutu Emisi </h4>
+                <img src="{{baseURL}}/assets/images/flow-baku-mutu.png" style="width: 100%; padding: 15px;">
+            </div>
+        </div>
+    </section>
   <legend></legend>
   <section>
-      <div class="">
+      <div class="section-title">
           <h4>Format dokumen pengajuan permohonan persetujuan teknis pemenuhan baku mutu emisi</h4>
       </div>
       <div>
@@ -46,9 +48,9 @@
       </div>
   </section>
   <legend></legend>
-  <section class="text-center">
+  <section class="section-title text-center">
   <h1>Form Pengajuan Pertek Pemenuhan Baku Mutu Emisi</h1>
-  <a href="https://docs.google.com/forms/u/1/d/e/1FAIpQLSd7Hm7qVYjoUL_yvJ6osyMeSRNVW9660ZC7mrg8Y5FGFd0ttw/viewform" class="btn" style="background-color: rgba(42,74,70,1); color:#cfcfcf;">Ajukan Permohonan Disini</a>
+  <a href="https://docs.google.com/forms/u/1/d/e/1FAIpQLSd7Hm7qVYjoUL_yvJ6osyMeSRNVW9660ZC7mrg8Y5FGFd0ttw/viewform" class="btn" id="pengajuan">Ajukan Permohonan Disini</a>
 </section>
 <legend></legend>
 </div>

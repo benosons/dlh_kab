@@ -15,14 +15,13 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" style="padding: 7px 5px 0 0;">
-        <img src="{{baseURL}}/assets/images/logo-light.png" width="60" height="30">
+      <a class="navbar-brand">
+        <img src="{{baseURL}}/assets/images/logo-dispora.png" width="90" height="50">
       </a>
-      <a class="navbar-brand" href="home" style="font-family: serif;">Dinas Lingkungan Hidup</a>
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right" style="margin-right: -75px;">
+      <ul class="nav navbar-nav navbar-right" style="margin-right: -75px; padding-top: 10px;">
         <li><a href="#tf-home" class="page-scroll">Beranda</a></li>
         <li><a href="#tf-about" class="page-scroll">Air Limbah</a></li>
         <li><a href="#tf-team" class="page-scroll">Emisi</a></li>
