@@ -39,7 +39,7 @@ class View extends \CodeIgniter\Controller
 		helper('form');
 		$this->data['script'] = $this->data['baseURL'] . '/action-js/users/home.js';
 		$this->data['page'] = 'home';
-		return \Twig::instance()->display('users/backupindex.html', $this->data);
+		return \Twig::instance()->display('users/portal/index.php', $this->data);
 	}
 
 
