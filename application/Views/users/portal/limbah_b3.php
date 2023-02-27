@@ -30,14 +30,14 @@
 <legend></legend>
 <div class="container">
   <section>
-      <div class="text-center">
+      <div class="section-title text-center">
           <h4>Alur Proses Penerbitan Persetujuan Teknis Tempat Penyimpanan Sementara Limbah B3</h4>
           <img src="{{baseURL}}/assets/images/flow-limbah-b3.png" style="width: 100%; padding: 15px;">
       </div>
   </section>
   <legend></legend>
   <section>
-      <div class="">
+      <div class="section-title">
           <h4>Format dokumen pengajuan permohonan rincian teknis tempat penyimpanan sementara limbah B3</h4>
       </div>
       <div>
@@ -52,9 +52,9 @@
       </div>
   </section>
   <legend></legend>
-  <section class="text-center">
+  <section class="section-title text-center">
   <h1>Form Pengajuan Pertek Tempat Penyimpanan Sementara Limbah B3</h1>
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLScbnVZyO6BDwieVLOECkiGgYFFIbMCYhoeW_I_EINIQStN3vA/viewform" class="btn" style="background-color: rgba(42,74,70,1); color:#cfcfcf;">Ajukan Permohonan Disini</a>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLScbnVZyO6BDwieVLOECkiGgYFFIbMCYhoeW_I_EINIQStN3vA/viewform" class="btn" id="pengajuan">Ajukan Permohonan Disini</a>
   </section>
   <legend></legend>
 </div>

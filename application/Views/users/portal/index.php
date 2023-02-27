@@ -2,7 +2,7 @@
 <!-- Beranda -->
 <div id="tf-home" class="text-center">
   <div class="overlay">
-    <div class="content" style="padding: 10%;">
+    <div class="content" style="padding: 15%;">
       <h1>PENERBITAN PERSETUJUAN/RINCIAN TEKNIS</h1>
       <br>
       <h2 style="margin: 30px; font-size:25px;">BIDANG PENGENDALIAN PENCEMARAN LINGKUNGAN</h2>
@@ -35,21 +35,23 @@
   </section>
   <legend></legend>
   <section>
-      <div class="text-center">
-          <h4>Persetujuan Teknis Pemenuhan Baku Mutu Air Limbah (Pertek BMAL) </h4>
-      </div>
-      <div id="air-limbah">
-          <p class="intro">
-              Memiliki nomenklatur Izin Pembuangan Air Limbah. Kegiatan pembuangan dan/atau pemanfaatan Air Limbah meliputi :
-              <ol>
-                  <li>Pembuangan Air Limbah ke Badan Air Permukaan</li>
-                  <li>Pembuangan Air Limbah ke Formasi Tertentu</li>
-                  <li>Pemanfaatan Air Limbah ke Formasi Tertentu</li>
-                  <li>Pemanfaatan Air Limbah untuk Aplikasi ke Tanah</li>
-                  <li>Pembuangan Air Limbah ke Laut.</li>
-              </ol>
-          </p>
-      </div>
+    <div class="section-title">
+        <div class="text-center">
+            <h4>Persetujuan Teknis Pemenuhan Baku Mutu Air Limbah (Pertek BMAL) </h4>
+        </div>
+    </div>
+    <div id="air-limbah">
+        <p class="intro">
+            Memiliki nomenklatur Izin Pembuangan Air Limbah. Kegiatan pembuangan dan/atau pemanfaatan Air Limbah meliputi :
+            <ol>
+                <li>Pembuangan Air Limbah ke Badan Air Permukaan</li>
+                <li>Pembuangan Air Limbah ke Formasi Tertentu</li>
+                <li>Pemanfaatan Air Limbah ke Formasi Tertentu</li>
+                <li>Pemanfaatan Air Limbah untuk Aplikasi ke Tanah</li>
+                <li>Pembuangan Air Limbah ke Laut.</li>
+            </ol>
+        </p>
+    </div>
   </section>
   <section>
       <div class="row" style="padding: 0 0;">
@@ -116,13 +118,13 @@
   <section>
       <div class="row">
         <div class="col-md-4">
-          <iframe src="{{baseURL}}/assets/document/1. Salinan PP Nomor 22 Tahun 2021.pdf#toolbar=0" width="100%" height="393px"></iframe>
+          <embed src="{{baseURL}}/assets/document/1. Salinan PP Nomor 22 Tahun 2021.pdf#toolbar=0" width="100%" height="393px"></embed>
         </div>
         <div class="col-md-4">  
-          <iframe src="{{baseURL}}/assets/document/PERMEN-LHK-5-2021.pdf#toolbar=0" width="100%" height="393px"></iframe>
+          <embed src="{{baseURL}}/assets/document/PERMEN-LHK-5-2021.pdf#toolbar=0" width="100%" height="393px"></embed>
         </div>
         <div class="col-md-4"> 
-          <iframe src="{{baseURL}}/assets/document/Permen LH 6 2021 (1).pdf#toolbar=0" width="100%" height="393px"></iframe>
+          <embed src="{{baseURL}}/assets/document/Permen LH 6 2021.pdf#toolbar=0" width="100%" height="393px"></embed>
         </div>
       </div>
   </section>

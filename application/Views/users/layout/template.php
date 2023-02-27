@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <!--[if IE]><meta http-equiv="x-ua-compatible" content="IE=9" /><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Spirit8 - Digital Agency One Page Template</title>
+    <title>Dinas Lingkungan Hidup</title>
     <meta
       name="description"
       content="Spirit8 is a Digital agency one page template built based on bootstrap framework. This template is design by Robert Berki and coded by Jenn Pereira. It is simple, mobile responsive, perfect for portfolio and agency websites. Get this for free exclusively at ThemeForces.com"
@@ -92,6 +92,10 @@
       margin-left: -80px;
     }
 
+    .section-title{
+      color: #1f6a3f;
+    }
+
     .section-title > h5{
       padding: 7px 0;
       color: #1f6a3f;
@@ -115,6 +119,7 @@
 
     section{
       padding: 5px 0 50px;
+      /* background-color: #f9fafc; */
     }
 
     #air-limbah{
@@ -128,9 +133,14 @@
     #footer{
       text-align: center;
     }
-    #the-canvas {
-      border: 1px solid black;
-      direction: ltr;
+
+    #pengajuan{
+      background-color: #1f6a3f; 
+      color: #ffffff;
+    }
+
+    #title{
+      font-size: 20px;
     }
   </style>
 
