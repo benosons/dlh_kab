@@ -3,11 +3,10 @@
 
 body,
 html {
-  font-family: sans-serif;
+  font-family: "Lato", sans-serif;
   text-rendering: optimizeLegibility !important;
   -webkit-font-smoothing: antialiased !important;
-  background-color: #eef1f7;
-  color: #000000;
+  color: #5a5a5a;
 }
 
 h1 {
@@ -52,7 +51,7 @@ a:focus {
 }
 
 .section-title hr {
-  border-color: #fcac45;
+  border-color: #28a745;
   border-width: 4px;
   width: 60px;
   float: left;
@@ -82,24 +81,22 @@ ol {
   moz-padding: 0;
 }
 /* Navigation */
-#tf-menu {
-  padding: 20px;
+#nav-menu {
+  padding: 15px;
   transition: all 0.8s;
 }
-#tf-menu.navbar-default {
+#nav-menu.navbar-default {
   background-color: #ffffff;
   border-color: #ffffff;
 }
-#tf-menu a.navbar-brand {
+#nav-menu a.navbar-brand {
   text-transform: uppercase;
   font-size: 22px;
-  color: #28a745;
+  color: #fff;
   font-weight: 900;
-  height: 60px;
-  padding-top: 5px;
 }
 
-#tf-menu.navbar-default .navbar-nav > li > a {
+#nav-menu.navbar-default .navbar-nav > li > a {
   text-transform: uppercase;
   color: #000000;
   font-size: 12px;
@@ -107,6 +104,7 @@ ol {
 }
 .on {
   background-color: #ffffff !important;
+  height: 59px;
   padding: 0 !important;
 }
 .navbar-default .navbar-nav > .active > a,
@@ -129,21 +127,22 @@ ol {
   background-color: #fff;
 }
 /* Home Style */
-#tf-home {
-  background: #1f6a3f;
+#beranda {
+  background: #f9fafc;
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   background-repeat: no-repeat;
-  color: #ffffff;
+  color: #28a745;
 }
 
-#tf-home .overlay {
+#beranda .overlay {
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc000000', endColorstr='#66000000',GradientType=0 ); /* IE6-9 */
   height: 500px;
   background-attachment: fixed;
 }
-#tf-home p.lead {
-  color: #e3e3e3;
+#beranda p.lead {
+  color: #28a745;
 }
 
 .content {
@@ -170,14 +169,9 @@ a.fa.fa-angle-down:hover {
   border: 2px solid #fcac45;
 }
 /* About Section */
-#tf-about {
-  background: #1f6a3f;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  color: #ffffff;
-  padding: 30px 0;
+#wastewater {
+  padding: 80px 0;
+  background: #f9fafc;
 }
 ul.about-list {
   margin: 30px 0 0;
@@ -193,14 +187,70 @@ ul.about-list li span {
 }
 
 /* Team Section */
-#tf-team {
-  background: #1f6a3f;
+#emission {
+  background: url(../img/emisi.jpg);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   background-repeat: no-repeat;
   color: #ffffff;
-  padding: 30px 0;
+}
+#emission .overlay {
+  height: 525px;
+  background: -moz-linear-gradient(
+    top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.73) 17%,
+    rgba(0, 0, 0, 0.66) 35%,
+    rgba(0, 0, 0, 0.55) 62%,
+    rgba(0, 0, 0, 0.4) 100%
+  ); /* FF3.6+ */
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0%, rgba(0, 0, 0, 0.8)),
+    color-stop(17%, rgba(0, 0, 0, 0.73)),
+    color-stop(35%, rgba(0, 0, 0, 0.66)),
+    color-stop(62%, rgba(0, 0, 0, 0.55)),
+    color-stop(100%, rgba(0, 0, 0, 0.4))
+  ); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(
+    top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.73) 17%,
+    rgba(0, 0, 0, 0.66) 35%,
+    rgba(0, 0, 0, 0.55) 62%,
+    rgba(0, 0, 0, 0.4) 100%
+  ); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(
+    top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.73) 17%,
+    rgba(0, 0, 0, 0.66) 35%,
+    rgba(0, 0, 0, 0.55) 62%,
+    rgba(0, 0, 0, 0.4) 100%
+  ); /* Opera 11.10+ */
+  background: -ms-linear-gradient(
+    top,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.73) 17%,
+    rgba(0, 0, 0, 0.66) 35%,
+    rgba(0, 0, 0, 0.55) 62%,
+    rgba(0, 0, 0, 0.4) 100%
+  ); /* IE10+ */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.8) 0%,
+    rgba(0, 0, 0, 0.73) 17%,
+    rgba(0, 0, 0, 0.66) 35%,
+    rgba(0, 0, 0, 0.55) 62%,
+    rgba(0, 0, 0, 0.4) 100%
+  ); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc000000', endColorstr='#66000000',GradientType=0 ); /* IE6-9 */
+  /* height: auto; */
+  background-attachment: fixed;
+  padding: 80px 0;
 }
 .section-title.center {
   padding: 30px 0;
@@ -210,7 +260,7 @@ ul.about-list li span {
   font-weight: 300;
 }
 .section-title.center .line {
-  border-top: 4px solid #cfcfcf;
+  border-top: 4px solid #fcac45;
   height: 10px;
   width: 60px;
   text-align: center;
@@ -242,15 +292,15 @@ img.img-circle.team-img {
   border: 4px solid transparent;
   transition: all 0.5s;
 }
-#tf-team .item .thumbnail:hover > img.img-circle.team-img {
+#emission .item .thumbnail:hover > img.img-circle.team-img {
   border: 4px solid #fcac45;
 }
-#tf-team .thumbnail {
+#emission .thumbnail {
   background: transparent;
   border: 0;
 }
 
-#tf-team .thumbnail .caption {
+#emission .thumbnail .caption {
   padding: 9px;
   color: #f2f2f2;
 }
@@ -280,21 +330,16 @@ img.img-circle.team-img {
 }
 
 /* Services Section */
-#tf-services {
-  background: #1f6a3f;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  color: #ffffff;
-  padding: 30px 0;
+#waste-b3 {
+  padding: 80px 0;
+  background: #f9fafc;
 }
 
 .space {
   margin-top: 40px;
 }
 
-#tf-services i.fa {
+#waste-b3 i.fa {
   font-size: 40px;
   border: 4px solid #fcac45;
   width: 100px;
@@ -305,12 +350,12 @@ img.img-circle.team-img {
   transition: all 0.5s;
 }
 
-#tf-services i.fa.fa-mobile {
+#waste-b3 i.fa.fa-mobile {
   font-size: 50px;
   padding: 20px 25px;
 }
 
-#tf-services .service:hover > i.fa {
+#waste-b3 .service:hover > i.fa {
   background: #fcac45;
   color: #ffffff;
 }
@@ -389,14 +434,9 @@ img.img-circle.team-img {
 }
 /* Gallery Section 
 ==============================*/
-#tf-works {
-  background: #1f6a3f;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  color: #ffffff;
-  padding: 30px 0;
+#contact {
+  padding: 80px 0;
+  background: #f9fafc;
 }
 .categories {
   padding: 10px 0;
@@ -404,7 +444,7 @@ img.img-circle.team-img {
 ul.cat li {
   display: inline-block;
 }
-#tf-works li.pull-right {
+#contact li.pull-right {
   margin-top: 10px;
 }
 ol.type li {
@@ -504,7 +544,7 @@ ol.type li a.active {
 .hover-bg:hover .hover-text {
   opacity: 1;
 }
-#tf-works i.fa {
+#contact i.fa {
   height: 30px;
   width: 30px;
   border: 1px solid #fcac45;
