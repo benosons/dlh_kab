@@ -77,7 +77,7 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->add('/', 'View::login');
+$routes->add('/', 'View::home');
 $routes->add('home', 'View::home');
 $routes->add('profil', 'View::profil');
 $routes->add('visimisi', 'View::visimisi');
