@@ -98,112 +98,117 @@ function loadusers(param){
       },
       success: function(result){
           let data = result.data;
-          var dt = $('#setting-users').DataTable({
-            destroy: true,
-            paging: true,
-            lengthChange: false,
-            searching: true,
-            ordering: true,
-            info: true,
-            autoWidth: false,
-            responsive: false,
-            pageLength: 10,
-            aaData: result.data,
-            aoColumns: [
-                { 'mDataProp': 'user_id', 'width':'10%'},
-                { 'mDataProp': 'user_name'},
-                { 'mDataProp': 'user_fullname'},
-                { 'mDataProp': 'role_name'},
-                { 'mDataProp': 'user_status'},
-                { 'mDataProp': 'user_status'},
-            ],
-            order: [[0, 'ASC']],
-            fixedColumns: true,
-            aoColumnDefs:[
-              { width: 50, targets: 0 },
-              {
-                  mRender: function ( data, type, row ) {
-                      if(!data){
-                        data = '<center>-</center>';
-                      }
-                      return data;
-                  },
-                  aTargets: [ 3 ]
-              },
-              {
-                  mRender: function ( data, type, row ) {
+          let code = result.code;
+          if(code == 1){
+            var dt = $('#setting-users').DataTable({
+              destroy: true,
+              paging: true,
+              lengthChange: false,
+              searching: true,
+              ordering: true,
+              info: true,
+              autoWidth: false,
+              responsive: false,
+              pageLength: 10,
+              aaData: result.data,
+              aoColumns: [
+                  { 'mDataProp': 'user_id', 'width':'10%'},
+                  { 'mDataProp': 'user_name'},
+                  { 'mDataProp': 'user_fullname'},
+                  { 'mDataProp': 'role_name'},
+                  { 'mDataProp': 'user_status'},
+                  { 'mDataProp': 'user_status'},
+              ],
+              order: [[0, 'ASC']],
+              fixedColumns: true,
+              aoColumnDefs:[
+                { width: 50, targets: 0 },
+                {
+                    mRender: function ( data, type, row ) {
+                        if(!data){
+                          data = '<center>-</center>';
+                        }
+                        return data;
+                    },
+                    aTargets: [ 3 ]
+                },
+                {
+                    mRender: function ( data, type, row ) {
 
-                    var stt = '';
-                    
-                      if(row.user_status == 1){
-                        stt = 'checked'
-                      }else if(row.user_status == 0){
-                        stt ='';
-                      }else{
-                        stt = 'disabled'
-                      }
-                      var el = `<div class="form-check form-switch form-switch-md mb-3" dir="ltr">
-                                    <input class="form-check-input update_status" type="checkbox" ${stt} value="${row.user_id}" >
-                                </div>`
+                      var stt = '';
+                      
+                        if(row.user_status == 1){
+                          stt = 'checked'
+                        }else if(row.user_status == 0){
+                          stt ='';
+                        }else{
+                          stt = 'disabled'
+                        }
+                        var el = `<div class="form-check form-switch form-switch-md mb-3" dir="ltr">
+                                      <input class="form-check-input update_status" type="checkbox" ${stt} value="${row.user_id}" >
+                                  </div>`
 
+                        return el;
+                    },
+                    aTargets: [ 4 ]
+                },
+                {
+                    mRender: function ( data, type, row ) {
+
+                      var el = '';
+                        if(row.isLogin == 1){
+                          el ='<span class="badge badge-pill badge-soft-success font-size-11">online</span>';
+                        }else{
+                          el ='<span class="badge badge-pill badge-soft-dark font-size-11">offline</span>';
+                        }
+
+                        return el;
+                    },
+                    aTargets: [ 5 ]
+                },
+                {
+                    mRender: function ( data, type, row ) {
+                      var el = '<div class="btn-group" role="group">';
+                      
+                      if(row.user_status == null){
+                        el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="action('validate','${row.user_id}','')"><i class="bx bx-check-double font-size-16"></i> </button>`
+                      }
+                      el += `<button type="button" class="btn btn-sm btn-danger waves-effect waves-light" onclick="action('delete','${row.user_id}','')"><i class="bx bx-trash font-size-16"></i></button>`
+                      el += `<button type="button" class="btn btn-sm btn-warning waves-effect waves-light" onclick="passreset('${row.user_id}')"><i class="bx bx-key font-size-16"></i></button>`
+
+                      el += '</div>';
                       return el;
-                  },
-                  aTargets: [ 4 ]
+                    },
+                    aTargets: [ 6 ]
+                },
+              ],
+              fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
+                  var index = iDisplayIndexFull + 1;
+                  $('td:eq(0)', nRow).html('#'+index);
+                  return  index;
               },
-              {
-                  mRender: function ( data, type, row ) {
-
-                    var el = '';
-                      if(row.isLogin == 1){
-                        el ='<span class="badge badge-pill badge-soft-success font-size-11">online</span>';
-                      }else{
-                        el ='<span class="badge badge-pill badge-soft-dark font-size-11">offline</span>';
-                      }
-
-                      return el;
-                  },
-                  aTargets: [ 5 ]
-              },
-              {
-                  mRender: function ( data, type, row ) {
-                    var el = '<div class="btn-group" role="group">';
-                    
-                    if(row.user_status == null){
-                      el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="action('validate','${row.user_id}','')"><i class="bx bx-check-double font-size-16"></i> </button>`
-                    }
-                    el += `<button type="button" class="btn btn-sm btn-danger waves-effect waves-light" onclick="action('delete','${row.user_id}','')"><i class="bx bx-trash font-size-16"></i></button>`
-                    el += `<button type="button" class="btn btn-sm btn-warning waves-effect waves-light" onclick="passreset('${row.user_id}')"><i class="bx bx-key font-size-16"></i></button>`
-
-                    el += '</div>';
-                    return el;
-                  },
-                  aTargets: [ 6 ]
-              },
-            ],
-            fnRowCallback: function(nRow, aData, iDisplayIndex, iDisplayIndexFull){
-                var index = iDisplayIndexFull + 1;
-                $('td:eq(0)', nRow).html('#'+index);
-                return  index;
-            },
-            fnDrawCallback: function(){
-              $(".update_status").change(function() {
-                action('update', this.value, this.checked)
-              });
-
-            },
-            fnInitComplete: function () {
-
-                var that = this;
-                var td ;
-                var tr ;
-                this.$('td').click( function () {
-                    td = this;
+              fnDrawCallback: function(){
+                $(".update_status").change(function() {
+                  action('update', this.value, this.checked)
                 });
-                this.$('tr').click( function () {
-                    tr = this;
-                });
-            }
-        });
+
+              },
+              fnInitComplete: function () {
+
+                  var that = this;
+                  var td ;
+                  var tr ;
+                  this.$('td').click( function () {
+                      td = this;
+                  });
+                  this.$('tr').click( function () {
+                      tr = this;
+                  });
+              }
+          });
+        }else{
+          $('#setting-users').DataTable()
+        }
 
         let first_row = dt.row(':first').data();
 
