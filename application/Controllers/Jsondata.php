@@ -367,7 +367,6 @@ class Jsondata extends \CodeIgniter\Controller
 						$st = null;
 						
 						$dataprogram = $model->getpermohonan($role, $userid, $param);
-						
 						foreach ($dataprogram as $key => $value) {
 							$datafilenya = $modelfiles->getfilenya('param_file', $value->id, $value->type, null, $value->kategori);
 							$value->file = (object) $datafilenya;

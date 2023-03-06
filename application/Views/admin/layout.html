@@ -1,38 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Admin & Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      content="Premium Multipurpose Admin & Dashboard Template"
+      name="description"
+    />
+    <meta content="Themesbrand" name="author" />
 
-<head>
-	<meta charset="utf-8" />
-	<title>Admin & Dashboard</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
-	<meta content="Themesbrand" name="author" />
+    <link
+      rel="shortcut icon"
+      href="{{baseURL}}/assets/images/logo-light-dlh.png"
+    />
 
-	<link rel="shortcut icon" href="{{baseURL}}/assets/images/favicon.ico">
+    {% include "admin/layout/css.html" %} {% include "admin/layout/style.html"
+    %}
+  </head>
 
-	{% include "admin/layout/css.html" %}
-	{% include "admin/layout/style.html" %}
-</head>
+  <body data-sidebar="dark" data-layout-mode="light">
+    <input type="hidden" id="role-nya" value="{{role}}" />
+    <input type="hidden" id="survey-nya" value="{{survey}}" />
 
-<body data-sidebar="dark" data-layout-mode="light">
-	<input type="hidden" id="role-nya" value="{{role}}">
-	<input type="hidden" id="survey-nya" value="{{survey}}">
+    <div id="layout-wrapper">
+      {% include "admin/layout/topbar.html" %} {% include
+      "admin/layout/menu.html" %}
+      <div class="main-content">
+        {% block content %} {% endblock %} {% include "admin/layout/footer.html"
+        %}
+      </div>
+    </div>
 
-	<div id="layout-wrapper">
-		{% include "admin/layout/topbar.html" %}
-		{% include "admin/layout/menu.html" %}
-		<div class="main-content">
-			{% block content %} {% endblock %}
-			{% include "admin/layout/footer.html" %}
-		</div>
-	</div>
-
-	{% include "admin/layout/rightbar.html" %}
-
-	{% include "admin/layout/scripts.html" %}
-	{% if script %}
-	<script src = "{{script}}"></script>
-	{% endif %}
-</body>
-
+    {% include "admin/layout/rightbar.html" %} {% include
+    "admin/layout/scripts.html" %} {% if script %}
+    <script src="{{script}}"></script>
+    <script>
+      function hanyaAngka(evt) {
+        var charCode = evt.which ? evt.which : event.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) return false;
+        return true;
+      }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    {% endif %}
+  </body>
 </html>

@@ -97,7 +97,7 @@ $routes->add('users', 'View::users');
 $routes->add('teknis', 'View::teknis');
 $routes->add('operasi', 'View::operasi');
 $routes->add('puas', 'View::puas');
-
+ 
 $routes->add('auth', 'Auth::auth');
 $routes->add('reg', 'Auth::reg');
 $routes->add('logout', 'Auth::logout');
