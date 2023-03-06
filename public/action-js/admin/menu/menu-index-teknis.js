@@ -423,7 +423,7 @@ function loadpermohonan(param) {
     success: function (result) {
       let data = result.data;
       let code = result.code;
-
+     
       if (code != "0") {
         if ($("#isRole").val() == 0) {
           // console.log(data[0].id);
