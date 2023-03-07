@@ -579,6 +579,8 @@
                               id="input_3_Remove"
                               placeholder=""
                               class="form-control"
+                              onkeypress="return hanyaAngka(event)"
+                              maxlength="13"
                             />
                           </div>
                         </div>
@@ -711,6 +713,8 @@
                               id="input_7"
                               placeholder=""
                               class="form-control"
+                              onkeypress="return hanyaAngka(event)"
+                              maxlength="13"
                             />
                           </div>
                         </div>
@@ -818,7 +822,7 @@
                               id="mohon_save"
                               class="btn btn-xs btn-success btn-block"
                             >
-                              <i class="ace-icon fa fa-check"></i>submit
+                              <i class="ace-icon fa fa-check"></i> Simpan
                             </button>
                           </div>
                         </div>
@@ -828,11 +832,10 @@
                       <div class="row">
                         <label class="col-sm-2">Filter Kategori</label>
                         <select
-                          class="col-sm-4"
+                          class="custom-select col-sm-2"
                           id="categoryFilter"
-                          class="form-control"
                         >
-                          <option value="">- Tampilkan semua -</option>
+                          <option value="">- Semua -</option>
                           <option value="1">1. Air Limbah</option>
                           <option value="2">2. Udara</option>
                         </select>
@@ -876,7 +879,12 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                   <div class="modal-header bg-success">
-                    <button type="button" class="close" data-dismiss="modal">
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      id="close_modal_program"
+                    >
                       &times;
                     </button>
                     <h4 class="modal-title">
@@ -1090,6 +1098,7 @@
                       type="button"
                       class="btn btn-xs btn-danger"
                       data-dismiss="modal"
+                      id="close_modal_program"
                     >
                       <i class="ace-icon fa fa-close"></i>close
                     </button>
@@ -1098,7 +1107,7 @@
                       id="mohon_save"
                       class="btn btn-xs btn-success"
                     >
-                      <i class="ace-icon fa fa-check"></i>submit
+                      <i class="ace-icon fa fa-check"></i> Simpan
                     </button>
                   </div>
                 </div>
@@ -1116,7 +1125,12 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                   <div class="modal-header bg-info">
-                    <button type="button" class="close" data-dismiss="modal">
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      id="close_modal_file"
+                    >
                       &times;
                     </button>
                     <h4 class="modal-title">
@@ -1252,6 +1266,7 @@
                       type="button"
                       class="btn btn-xs btn-danger"
                       data-dismiss="modal"
+                      id="close_modal_file"
                     >
                       <i class="ace-icon fa fa-close"></i>close
                     </button>
@@ -1271,7 +1286,12 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                   <div class="modal-header bg-success">
-                    <button type="button" class="close" data-dismiss="modal">
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="modal"
+                      id="close_modal_file_lapangan"
+                    >
                       &times;
                     </button>
                     <h4 class="modal-title">
@@ -1367,6 +1387,7 @@
                       type="button"
                       class="btn btn-xs btn-danger"
                       data-dismiss="modal"
+                      id="close_modal_file_lapangan"
                     >
                       <i class="ace-icon fa fa-close"></i>close
                     </button>
@@ -1415,6 +1436,7 @@
                       type="button"
                       class="btn btn-xs btn-danger"
                       data-dismiss="modal"
+                      id="close_modal_validasi"
                     >
                       <i class="ace-icon fa fa-close"></i>close
                     </button>

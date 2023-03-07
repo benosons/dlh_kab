@@ -423,7 +423,7 @@ function loadpermohonan(param) {
     success: function (result) {
       let data = result.data;
       let code = result.code;
-     
+
       if (code != "0") {
         if ($("#isRole").val() == 0) {
           // console.log(data[0].id);
@@ -1251,7 +1251,7 @@ function loadpermohonan(param) {
                         `,'` +
                         row.type +
                         `','','data_permohonan')">
-                                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                            <i class="ace-icon fa fa-trash bigger-120"></i>
                                           </button></div>`;
                     }
 
@@ -1636,9 +1636,6 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
     // }
 
     $("#modal_file").modal("show");
-    $("#modal_file > .modal-dialog").width(
-      $("#modal_file > .modal-dialog").width() + 100
-    );
     $("#ini-ID").val(id);
     if (kode == "1") {
       $.ajax({
@@ -1669,7 +1666,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
               pageLength: 11,
               aaData: result.data,
               aoColumns: [
-                { mDataProp: "id", width: "10%" },
+                { mDataProp: "id" },
                 { mDataProp: "bab" },
                 { mDataProp: "filename" },
                 // { 'mDataProp': 'size'},

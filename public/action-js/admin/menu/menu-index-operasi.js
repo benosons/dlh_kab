@@ -969,7 +969,7 @@ function loadpermohonan(param) {
                   //   if($('#role').val() == '1' || $('#role').val() == '2') {
 
                   //     el += `<button class="btn btn-xs btn-danger" onclick="action('delete',`+row.id+`,'`+row.type+`','','data_permohonan')">
-                  //             <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                  //             <i class="ace-icon fa fa-trash bigger-120"></i>
                   //           </button>`;
                   //     if(row.status == 1){
                   //       el += `<button title="Verifikasi Lapangan" class="btn btn-xs btn-success" onclick="actionlapangan('view',`+row.id+`,'`+row.type+`')">
@@ -1031,7 +1031,7 @@ function loadpermohonan(param) {
                         `,'` +
                         row.type +
                         `','','data_permohonan')">
-                                        <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                        <i class="ace-icon fa fa-trash bigger-120"></i>
                                       </button></div>`;
                     }
 
@@ -1374,7 +1374,7 @@ function action(mode, id, type, keterangan, param, kategori) {
                         "/" +
                         row.filename +
                         `')">
-                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                            <i class="ace-icon fa fa-trash bigger-120"></i>
                           </button></div>`;
                     }
                   } else {
@@ -1627,7 +1627,7 @@ function actionlapangan(mode, id, type, keterangan, param) {
                         "/" +
                         row.filename +
                         `')">
-                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                            <i class="ace-icon fa fa-trash bigger-120"></i>
                           </button></div>`;
                     }
                   } else {
@@ -1644,7 +1644,7 @@ function actionlapangan(mode, id, type, keterangan, param) {
                       "/" +
                       row.filename +
                       `')">
-                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                            <i class="ace-icon fa fa-trash bigger-120"></i>
                           </button></div>`;
                   }
 
