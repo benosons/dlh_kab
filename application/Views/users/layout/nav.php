@@ -21,6 +21,7 @@
             <li><a href="#emission" class="page-scroll">Emisi</a></li>
             <li><a href="#waste-b3" class="page-scroll">Limbah B3</a></li>
             <li><a href="#contact" class="page-scroll">Hubungi</a></li>
+            <li><a href="login" class="page-scroll">Login</a></li>
         </ul>
     </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

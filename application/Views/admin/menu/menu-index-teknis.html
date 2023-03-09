@@ -1,4 +1,9 @@
 {% extends "admin/layout.html" %} {% block content %}
+<style>
+  .form-group {
+    padding: 20px 0 0;
+  }
+</style>
 <input type="hidden" id="isRole" value="{{role}}" />
 <input type="hidden" id="iskat" />
 <div class="page-content">
@@ -75,22 +80,22 @@
                           </div>
                         </div>
           
-                        <div class="form-group">
+                        <div class="form-group" style="padding: 0 0;">
                           <label class="col-sm-3 control-label no-padding-right" for=""> </label>
               
                           <div class="col-sm-6">
                             <grp id="view-file-nib" style="display:none;">
                               <button type="button" class="btn btn-sm btn-primary btn-white btn-round">
-                                <i class="ace-icon fa fa-file bigger-150 middle orange2"></i>
+                                <i class="bx bx-file"></i>
                                 <span class="bigger-110" id="nama-file-nib"></span>
                               </button>
-                              <a class="btn btn-danger btn-xs btn-round" id="hapus-nib"><i class="fa fa-trash"></i></a>
+                              <a class="btn btn-danger btn-sm btn-round" id="hapus-nib"><i class="bx bx-trash"></i></a>
                             </grp>
           
                             <div class="form-group" id="form-nib-reupload" style="display:block;">        
                               <div class="col-sm-11">
                                 <input type="file" name="id-input-file-5" id="doc_nib_reupload" accept=".pdf" />
-                                <button class="btn btn-success btn-xs btn-round" id="upload-nib" onclick="reupload('nib')" type="button"><i class="fa fa-check-square"></i></button>
+                                <button class="btn btn-success btn-sm btn-round" id="upload-nib" onclick="reupload('nib')" type="button"><i class="bx bx-check-double"></i></button>
                               </div>
                             </div>
                             
@@ -106,24 +111,22 @@
                         </div>
           
                         <div class="form-group">
-                          <label class="col-sm-3 control-label no-padding-right" for=""> Izin / Persetujuan lingkungan atau yang setara
+                          <label class="col-sm-6 control-label no-padding-right" for=""> Izin / Persetujuan lingkungan atau yang setara
                           </label>
               
                           <div class="col-sm-6">
                             <grp id="view-file-izin-lingkungan" style="display:none;">
                               <button type="button" class="btn btn-sm btn-primary btn-white btn-round">
-                                <i class="ace-icon fa fa-file bigger-150 middle orange2"></i>
+                                <i class="bx bx-file"></i>
                                 <span class="bigger-110" id="nama-file-izin-lingkungan"></span>
                               </button>
-                              <button class="btn btn-danger btn-xs btn-round" id="hapus-izin-lingkungan" type="button"><i class="fa fa-trash"></i></button>
+                              <button class="btn btn-danger btn-sm btn-round" id="hapus-izin-lingkungan" type="button"><i class="bx bx-trash"></i></button>
                             </grp>
           
                             <div class="form-group" id="form-izin-lingkungan-reupload" style="display:block;">        
                               <div class="col-sm-11">
                                 <input type="file" name="id-input-file-5" id="doc_izin_lingkungan_reupload" accept=".pdf" />
-                              </div>
-                              <div class="col-sm-1">
-                                <button class="btn btn-success btn-xs btn-round" id="upload-izin-lingkungan" onclick="reupload('izin-lingkungan')" type="button"><i class="fa fa-check-square"></i></button>
+                                <button class="btn btn-success btn-sm btn-round" id="upload-izin-lingkungan" onclick="reupload('izin-lingkungan')" type="button"><i class="bx bx-check-double"></i></button>
                               </div>
                             </div>
           
@@ -138,18 +141,16 @@
                           <div class="col-sm-6">
                             <grp id="view-file-penapisan-mandiri" style="display:none;">
                               <button type="button" class="btn btn-sm btn-primary btn-white btn-round">
-                                <i class="ace-icon fa fa-file bigger-150 middle orange2"></i>
+                                <i class="bx bx-file"></i>
                                 <span class="bigger-110" id="nama-file-penapisan-mandiri"></span>
                               </button>
-                              <button class="btn btn-danger btn-xs btn-round" id="hapus-penapisan-mandiri" type="button"><i class="fa fa-trash"></i></button>
+                              <button class="btn btn-danger btn-sm btn-round" id="hapus-penapisan-mandiri" type="button"><i class="bx bx-trash"></i></button>
                             </grp>
           
                             <div class="form-group" id="form-penapisan-mandiri-reupload" style="display:block;">        
                               <div class="col-sm-11">
                                 <input type="file" name="id-input-file-5" id="doc_penapisan_mandiri_reupload" accept=".pdf" />
-                              </div>
-                              <div class="col-sm-1">
-                                <button class="btn btn-success btn-xs btn-round" id="upload-penapisan-mandiri" onclick="reupload('penapisan-mandiri')" type="button"><i class="fa fa-check-square"></i></button>
+                                <button class="btn btn-success btn-sm btn-round" id="upload-penapisan-mandiri" onclick="reupload('penapisan-mandiri')" type="button"><i class="bx bx-check-double"></i></button>
                               </div>
                             </div>
           
@@ -158,7 +159,7 @@
                         </div>
               
                         <div class="form-group">
-                          <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Nama Penanggung Jawab Usaha/ Kegiatan </label>
+                          <label class="col-sm-6 control-label no-padding-right" for="nama_program"> Nama Penanggung Jawab Usaha/ Kegiatan </label>
               
                           <div class="col-sm-6">
                             <input type="text" id="view_4" placeholder="" class="form-control">
@@ -203,28 +204,26 @@
                           <div class="col-sm-6">
                             <grp id="view-file-permohonan" style="display:none;">
                               <button type="button" class="btn btn-sm btn-primary btn-white btn-round">
-                                <i class="ace-icon fa fa-file bigger-150 middle orange2"></i>
+                                <i class="bx bx-file"></i>
                                 <span class="bigger-110" id="nama-file-permohonan"></span>
                               </button>
-                              <button class="btn btn-danger btn-xs btn-round" id="hapus-permohonan" type="button"><i class="fa fa-trash"></i></button>
+                              <button class="btn btn-danger btn-sm btn-round" id="hapus-permohonan" type="button"><i class="bx bx-trash"></i></button>
                             </grp>
           
                             <div class="form-group" id="form-permohonan-reupload" style="display:block;">        
                               <div class="col-sm-11">
                                 <input type="file" name="id-input-file-5" id="doc_permohonan_reupload" accept=".pdf" />
-                              </div>
-                              <div class="col-sm-1">
-                                <button class="btn btn-success btn-xs btn-round" id="upload-permohonan" onclick="reupload('permohonan')" type="button"><i class="fa fa-check-square"></i></button>
+                                <button class="btn btn-success btn-sm btn-round" id="upload-permohonan" onclick="reupload('permohonan')" type="button"><i class="bx bx-check-double"></i></button>
                               </div>
                             </div>
           
                           </div>
                         </div>
           
-                        <div class="form-group" id="ini-verifikasi">
+                        <div class="form-group" id="ini-verifikasi" style="padding: 0 0;">
                           <label class="col-sm-3 control-label no-padding-right" for=""> </label>
                           <div class="col-sm-6">
-                            <div class="alert alert-block alert-success text-center">
+                            <div class="alert alert-block alert-warning text-center">
                               <p style="margin: 16px 0;">Permohonan Belum di Verifikasi oleh Admin.</p>
                               <p id="harap" style="margin: 16px 0;">Harap Melakukan Upload Ulang file :</p>
                               <ol id="harus-upload">
@@ -237,7 +236,9 @@
                           <label class="col-sm-3 control-label no-padding-right" for=""> </label>
               
                           <div class="col-sm-6">
-                            <button type="button" id="cekunggahan" class="btn btn-xs btn-block btn-primary" ><i class="ace-icon fa fa-check"></i>Persyaratan Permohonan Persetujuan Teknis</button>
+                            <button type="button" id="cekunggahan" class="btn btn-sm btn-block btn-primary" >
+                              <i class="bx bx-check"></i>Persyaratan Permohonan Persetujuan Teknis
+                            </button>
                             <input type="hidden" id="ini-paramnya">
                           </div>
                         </div>
@@ -257,16 +258,16 @@
               
                           <div class="col-sm-6">
                             
-                            <a type="button" id="surveykepuasan" href="https://docs.google.com/forms/d/e/1FAIpQLScCZ8zP_FR49UaFI7tEAPXQOyPQDTTk8d7SW-R8dAGua5gB5w/viewform" target="_blank" class="btn btn-xs btn-block btn-success" ><i class="ace-icon fa fa-heart"></i> Survey Kepuasan</a>
+                            <a type="button" id="surveykepuasan" href="https://docs.google.com/forms/d/e/1FAIpQLScCZ8zP_FR49UaFI7tEAPXQOyPQDTTk8d7SW-R8dAGua5gB5w/viewform" target="_blank" class="btn btn-sm btn-block btn-success" ><i class="ace-icon fa fa-heart"></i> Survey Kepuasan</a>
           
                           </div>
                         </div>
           
-                        <div class="form-group">
+                        <div class="form-group" style="padding: 0 0;">
                           <label class="col-sm-3 control-label no-padding-right" for=""> </label>
               
                           <div class="col-sm-6">
-                            <button type="button" id="deletedataini" class="btn btn-xs btn-block btn-danger" ><i class="ace-icon fa fa-trash"></i> Hapus Permohonan</button>
+                            <button type="button" id="deletedataini" class="btn btn-sm btn-block btn-danger" ><i class="bx bx-trash"></i> Hapus Permohonan</button>
                           </div>
                         </div>
               
@@ -311,12 +312,12 @@
                           <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Nomor KBLI <code>*</code></label>
               
                           <div class="col-sm-6">
-                            <input type="text" name="form-input" id="input_9" placeholder="" class="form-control">
+                            <input type="text" name="form-input" id="input_9" placeholder="" class="form-control" onkeypress="return hanyaAngka(event)" maxlength="5">
                           </div>
                         </div>
           
                         <div class="form-group">
-                          <label class="col-sm-3 control-label no-padding-right" for="doc_izin_lingkungan">Izin / Persetujuan lingkungan atau yang setara <code>*</code></label>
+                          <label class="col-sm-6 control-label no-padding-right" for="doc_izin_lingkungan">Izin / Persetujuan lingkungan atau yang setara <code>*</code></label>
               
                           <div class="col-sm-6">
                             <input type="file" name="id-input-file-5" id="doc_izin_lingkungan" accept=".pdf" />
@@ -334,7 +335,7 @@
                         </div>
               
                         <div class="form-group">
-                          <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Nama Penanggung Jawab Usaha/ Kegiatan <code>*</code></label>
+                          <label class="col-sm-6 control-label no-padding-right" for="nama_program"> Nama Penanggung Jawab Usaha/ Kegiatan <code>*</code></label>
               
                           <div class="col-sm-6">
                             <input type="text" name="form-input" id="input_4" placeholder="" class="form-control">
@@ -350,7 +351,7 @@
                         </div>
               
                         <div class="form-group">
-                          <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Alamat Kantor dan Lokasi Usaha/ Kegiatan <code>*</code></label>
+                          <label class="col-sm-6 control-label no-padding-right" for="nama_program"> Alamat Kantor dan Lokasi Usaha/ Kegiatan <code>*</code></label>
               
                           <div class="col-sm-6">
                             <input type="text" name="form-input" id="input_6" placeholder="" class="form-control">
@@ -386,7 +387,7 @@
                           <label class="col-sm-3 control-label no-padding-right" for="nama_program"></label>
               
                           <div class="col-sm-6">
-                            <button type="button" id="mohon_save" class="btn btn-xs btn-success btn-block" ><i class="ace-icon fa fa-check"></i> Simpan</button>
+                            <button type="button" id="mohon_save" class="btn btn-sm btn-success btn-block" ><i class="bx bx-check"></i> Simpan</button>
           
                           </div>
                         </div>
@@ -557,24 +558,26 @@
                           <div class="form-group row">
                             <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Dokumen Kajian Teknis </label>
                 
-                            <div class="col-xs-4">
-                              <select class="chosen-select form-control" id="bab_kajian"  data-placeholder="Pilih Dokumen ...">
-                                <!-- <option value="0"> </option>
-                                <option value="1"> DESKRIPSI KEGIATAN </option>
-                                <option value="2"> RONA LINGKUNGAN AWAL </option>
-                                <option value="3"> KOMPONEN LINGKUNGAN YANG TERKENA DAMPAK </option>
-                                <option value="4"> PRAKIRAAN DAMPAK </option>
-                                <option value="5"> RENCANA PENGELOLAAN LINGKUNGAN </option>
-                                <option value="6"> RENCANA PEMANTAUAN LINGKUNGAN </option>
-                                <option value="7"> SISTEM PENANGGULANGAN KEADAAAN DARURAT </option>
-                                <option value="8"> INTERNALISASI BIAYA LINGKUNGAN</option>
-                                <option value="9"> PERIODE WAKTU UJI COBA</option>
-                                <option value="10">STRUKTUR ORGANISASI DAN STANDAR KOMPETENSI SUMBER DAYA MANUSIA</option>
-                                <option value="11">SISTEM MANAJEMEN LINGKUNGAN</option> -->
-                              </select>
-                            </div>
-                            <div class="col-xs-3">
-                              <input type="file" name="id-input-file-3" id="doc_kajian" accept=".pdf" />
+                            <div class="row" style="padding: 0 0 10px 10px;">
+                              <div class="col-xs-4 col-sm-7">
+                                <select class="chosen-select form-control" id="bab_kajian"  data-placeholder="Pilih Dokumen ...">
+                                  <!-- <option value="0"> </option>
+                                  <option value="1"> DESKRIPSI KEGIATAN </option>
+                                  <option value="2"> RONA LINGKUNGAN AWAL </option>
+                                  <option value="3"> KOMPONEN LINGKUNGAN YANG TERKENA DAMPAK </option>
+                                  <option value="4"> PRAKIRAAN DAMPAK </option>
+                                  <option value="5"> RENCANA PENGELOLAAN LINGKUNGAN </option>
+                                  <option value="6"> RENCANA PEMANTAUAN LINGKUNGAN </option>
+                                  <option value="7"> SISTEM PENANGGULANGAN KEADAAAN DARURAT </option>
+                                  <option value="8"> INTERNALISASI BIAYA LINGKUNGAN</option>
+                                  <option value="9"> PERIODE WAKTU UJI COBA</option>
+                                  <option value="10">STRUKTUR ORGANISASI DAN STANDAR KOMPETENSI SUMBER DAYA MANUSIA</option>
+                                  <option value="11">SISTEM MANAJEMEN LINGKUNGAN</option> -->
+                                </select>
+                              </div>
+                              <div class="col-xs-3 col-sm-5" style="padding: 5px 0 0 0;">
+                                <input type="file" name="id-input-file-3" id="doc_kajian" accept=".pdf" />
+                              </div>
                             </div>
                             <div class="col-xs-2">
                               <button disabled type="button" class="btn btn-xs btn-success" id="submit_kajian"><i class="ace-icon fa fa-check-square"></i> Simpan</button>
@@ -584,19 +587,21 @@
                           <div class="form-group row" id="ini-lampiran" style="display:none;">
                             <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Dokumen Lampiran </label>
                 
-                            <div class="col-xs-4">
-                              <select class="chosen-select form-control" id="bab_lampiran"  data-placeholder="Pilih Dokumen ...">
-                                <option value="0"> </option>
-                                <option value="1"> LAMPIRAN I </option>
-                                <option value="2"> LAMPIRAN II </option>
-                                <option value="3"> LAMPIRAN III </option>
-                                
-                              </select>
+                            <div class="row" style="padding: 0 0 10px 10px;">
+                              <div class="col-xs-4 col-sm-7">
+                                <select class="chosen-select form-control" id="bab_lampiran"  data-placeholder="Pilih Dokumen ...">
+                                  <option value="0"> </option>
+                                  <option value="1"> LAMPIRAN I </option>
+                                  <option value="2"> LAMPIRAN II </option>
+                                  <option value="3"> LAMPIRAN III </option>
+                                  
+                                </select>
+                              </div>
+                              <div class="col-xs-3 col-sm-5" style="padding: 5px 0 0 0;">
+                                <input type="file" name="id-input-file-lampiran" id="doc_lampiran" accept=".pdf" />
+                              </div>
                             </div>
-                            <div class="col-xs-3">
-                              <input type="file" name="id-input-file-lampiran" id="doc_lampiran" accept=".pdf" />
-                            </div>
-                            <div class="col-xs-2">
+                            <div class="col-xs-2" style="padding-bottom: 15px">
                               <button disabled type="button" class="btn btn-xs btn-success" id="submit_lampiran"><i class="ace-icon fa fa-check-square"></i> Simpan</button>
                             </div>
                           </div>
@@ -649,25 +654,26 @@
                         {% if role == 0 %}
 
                         <div class="form-group row">
-                          <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Dokumen Standar Teknis </label>
-              
-                          <div class="col-xs-4">
-                            <select class="chosen-select form-control" id="bab_standar"  data-placeholder="Pilih Dokumen ...">
-                              <!-- <option value="0"> </option>
-                              <option value="1">DESKRIPSI KEGIATAN</option>
-                              <option value="2">BAKU MUTU AIR LIMBAH NASIONAL</option>
-                              <option value="3">RENCANA PENGELOLAAN LINGKUNGAN</option>
-                              <option value="4">RENCANA PEMANTAUAN LINGKUNGAN</option>
-                              <option value="5">SISTEM PENANGGULANGAN KEADAAAN DARURAT</option>
-                              <option value="6">INTERNALISASI BIAYA LINGKUNGAN</option>
-                              <option value="7">PERIODE WAKTU UJI COBA</option>
-                              <option value="8">STRUKTUR ORGANISASI DAN STANDAR KOMPETENSI SUMBER DAYA MANUSIA</option>
-                              <option value="9">SISTEM MANAJEMEN LINGKUNGAN</option> -->
+                          <label class="col-sm-2 control-label no-padding-right" for="nama_program"> Dokumen Standar Teknis </label>
+                          <div class="row" style="padding: 0 0 10px 10px">
+                            <div class="col-xs-4 col-sm-7">
+                              <select class="chosen-select form-control" id="bab_standar"  data-placeholder="Pilih Dokumen ...">
+                                <!-- <option value="0"> </option>
+                                <option value="1">DESKRIPSI KEGIATAN</option>
+                                <option value="2">BAKU MUTU AIR LIMBAH NASIONAL</option>
+                                <option value="3">RENCANA PENGELOLAAN LINGKUNGAN</option>
+                                <option value="4">RENCANA PEMANTAUAN LINGKUNGAN</option>
+                                <option value="5">SISTEM PENANGGULANGAN KEADAAAN DARURAT</option>
+                                <option value="6">INTERNALISASI BIAYA LINGKUNGAN</option>
+                                <option value="7">PERIODE WAKTU UJI COBA</option>
+                                <option value="8">STRUKTUR ORGANISASI DAN STANDAR KOMPETENSI SUMBER DAYA MANUSIA</option>
+                                <option value="9">SISTEM MANAJEMEN LINGKUNGAN</option> -->
 
-                            </select>
-                          </div>
-                          <div class="col-xs-3">
-                            <input type="file" name="id-input-file-4"  id="doc_standar" accept=".pdf" />
+                              </select>
+                            </div>
+                            <div class="col-xs-3 col-sm-5" style="padding: 5px 0 0 0">
+                              <input type="file" name="id-input-file-4"  id="doc_standar" accept=".pdf" />
+                            </div>
                           </div>
                           <div class="col-xs-2">
                               <button disabled type="button" class="btn btn-xs btn-success" id="submit_standar"><i class="ace-icon fa fa-check-square"></i> Simpan</button>
@@ -675,20 +681,21 @@
                         </div>
                         <div class="form-group row" id="ini-lampiran-2" style="display:none;">
                           <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Dokumen Lampiran </label>
-              
-                          <div class="col-xs-4">
-                            <select class="chosen-select form-control" id="bab_lampiran-2"  data-placeholder="Pilih Dokumen ...">
-                              <option value="0"> </option>
-                              <option value="1"> LAMPIRAN I </option>
-                              <option value="2"> LAMPIRAN II </option>
-                              <option value="3"> LAMPIRAN III </option>
-                              
-                            </select>
+                          <div class="row"style="padding: 0 0 10px 10px">
+                            <div class="col-xs-4 col-sm-7">
+                              <select class="chosen-select form-control" id="bab_lampiran-2"  data-placeholder="Pilih Dokumen ...">
+                                <option value="0"> </option>
+                                <option value="1"> LAMPIRAN I </option>
+                                <option value="2"> LAMPIRAN II </option>
+                                <option value="3"> LAMPIRAN III </option>
+                                
+                              </select>
+                            </div>
+                            <div class="col-xs-3 col-sm-5" style="padding: 5px 0 0 0;">
+                              <input type="file" name="id-input-file-lampiran-2" id="doc_lampiran-2" accept=".pdf" />
+                            </div>
                           </div>
-                          <div class="col-xs-3">
-                            <input type="file" name="id-input-file-lampiran-2" id="doc_lampiran-2" accept=".pdf" />
-                          </div>
-                          <div class="col-xs-2">
+                          <div class="col-xs-2" style="padding-bottom: 15px">
                             <button disabled type="button" class="btn btn-xs btn-success" id="submit_lampiran-2"><i class="ace-icon fa fa-check-square"></i> Simpan</button>
                           </div>
                         </div>
@@ -883,7 +890,7 @@
                           </div>
                         </div>
                         <div class="widget-body">
-                          <div class="widget-main padding-4">
+                          <div class="widget-main padding-4" style="padding: 10px;">
                             <select class="form-control" id="kategori" style="background-color:#fff;">
                               <option value="0">-Pilih Kategori-</option>
                               <option value="1">1. Pembuangan air limbah ke badan air permukaan</option>
@@ -893,7 +900,7 @@
                               <option value="5">5. Pembuangan emisi</option>
                             </select>
                           </div>
-                          <div class="widget-main padding-4">
+                          <div class="widget-main padding-4" style="padding: 10px;">
                             <select class="form-control" id="jenis" style="background-color:#fff;">
                               <option value="0">-Pilih Jenis-</option>
                               <option value="1">Kajian Teknis</option>
@@ -905,8 +912,8 @@
                     </form>
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-xs btn-danger" id="close_modal_validasi" data-dismiss="modal">close</button>
-                    <button type="button" id="simpanaja" class="btn btn-xs btn-success" onclick="validasiV2()" ><i class="ace-icon fa fa-check"></i>verifikasi</button>
+                    <button type="button" class="btn btn-sm btn-danger" id="close_modal_validasi" data-dismiss="modal">close</button>
+                    <button type="button" id="simpanaja" class="btn btn-sm btn-success" onclick="validasiV2()" ><i class="ace-icon fa fa-check"></i>verifikasi</button>
                   </div>
                 </div>
               </div>

@@ -96,12 +96,12 @@ $(document).ready(function () {
       message: "Apakah data yg anda masukan sudah <b>sesuai</b> ?",
       buttons: {
         confirm: {
-          label: '<i class="fa fa-check"></i> Ya',
-          className: "btn-success btn-xs",
+          label: '<i class="bx bx-check"></i> Ya',
+          className: "btn-success btn-sm",
         },
         cancel: {
-          label: '<i class="fa fa-times"></i> Tidak',
-          className: "btn-danger btn-xs",
+          label: '<i class="bx bx-x"></i> Tidak',
+          className: "btn-danger btn-sm",
         },
       },
       callback: function (result) {
@@ -133,7 +133,7 @@ $(document).ready(function () {
           // formData.append("file[doc_izin_lingkungan]", $('#doc_izin_lingkungan')[0].files[0]);
           // formData.append("file[doc_nib]", $('#doc_nib')[0].files[0]);
 
-          if (berapa.length == 8) {
+          if (berapa.length == 9) {
             save(formData);
           }
         }
@@ -256,6 +256,7 @@ function loadpermohonan(param) {
     success: function (result) {
       let data = result.data;
       let code = result.code;
+      
       if (code != "0") {
         if ($("#isRole").val() == 0) {
           let optd = "";
@@ -355,6 +356,7 @@ function loadpermohonan(param) {
                   $("#hapus-permohonan").css("display", "none");
                   $("#ini-verifikasi").hide();
                 } else {
+                  $("#cekunggahan").css("display", "none");
                   $("#hapus-permohonan").show();
                   $("#cekunggahan").hide();
                   if (oknya == 2) {
@@ -463,9 +465,9 @@ function loadpermohonan(param) {
           var dt = $("#all-permohonan").DataTable({
             destroy: true,
             paging: true,
-            lengthChange: false,
+            lengthChange: true,
             searching: true,
-            ordering: true,
+            ordering: false,
             info: true,
             autoWidth: false,
             responsive: false,
@@ -475,7 +477,7 @@ function loadpermohonan(param) {
               { mDataProp: "id", width: "10%" },
               { mDataProp: "p1" },
               { mDataProp: "p2" },
-              { mDataProp: "p6" },
+              { mDataProp: "p3" },
               { mDataProp: "kategori" },
               { mDataProp: "p7" },
               { mDataProp: "p8" },
@@ -568,19 +570,19 @@ function loadpermohonan(param) {
                   //     //     var elemen_0 = `<div class="row">`;
                   //     //         if(ok_0 == null){
                   //     //         elemen_0 += `<div class="col-sm-2">
-                  //     //                         <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_0+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //     //                         <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_0+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //     //                       </div>
                   //     //                       <div class="col-sm-2">
-                  //     //                         <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_0+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //     //                         <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_0+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //     //                       </div>`;
                   //     //         }else if(ok_0 == 1){
                   //     //           elemen_0 += `
                   //     //                       <div class="col-sm-2">
-                  //     //                         <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_0+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //     //                         <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_0+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //     //                       </div>`;
                   //     //         }else if(ok_0 == 2){
                   //     //           elemen_0 += `<div class="col-sm-2">
-                  //     //                         <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_0+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //     //                         <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_0+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //     //                       </div>
                   //     //                       `;
                   //     //         }
@@ -638,20 +640,20 @@ function loadpermohonan(param) {
                   //     //     var elemen_0 = `<div class="row">`
                   //     //     if(ok_0 == null){
                   //     //         elemen_0 += `     <div class="col-sm-2">
-                  //     //                             <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_0+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //     //                             <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_0+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //     //                           </div>
                   //     //                           <div class="col-sm-2">
-                  //     //                             <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_0+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //     //                             <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_0+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //     //                           </div>`
                   //     //     }else if(ok_0 == 1){
                   //     //       elemen_0 += `
                   //     //                           <div class="col-sm-2">
-                  //     //                             <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_0+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //     //                             <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_0+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //     //                           </div>`
 
                   //     //     }else if(ok_0 == 2){
                   //     //       elemen_0 += `     <div class="col-sm-2">
-                  //     //                             <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_0+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //     //                             <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_0+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //     //                           </div>
                   //     //                           `
 
@@ -666,19 +668,19 @@ function loadpermohonan(param) {
                   //     //     var elemen_1 = `<div class="row">`;
                   //     //     if(ok_1 == null){
                   //     //         elemen_1 += `<div class="col-sm-2">
-                  //     //                         <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_1+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //     //                         <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_1+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //     //                       </div>
                   //     //                       <div class="col-sm-2">
-                  //     //                         <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_1+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //     //                         <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_1+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //     //                       </div>`
                   //     //     }else if(ok_1 == 1){
                   //     //       elemen_1 += `
                   //     //               <div class="col-sm-2">
-                  //     //                 <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_1+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //     //                 <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_1+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //     //               </div>`
                   //     //     }else if(ok_1 == 2){
                   //     //       elemen_1 += `<div class="col-sm-2">
-                  //     //                         <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_1+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //     //                         <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_1+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //     //                       </div>
                   //     //                       `
                   //     //     }
@@ -734,19 +736,19 @@ function loadpermohonan(param) {
                   //     //     var elemen_0 = `<div class="row">`
                   //     //         if(ok_0 == null){
                   //     //         elemen_0 += `     <div class="col-sm-2">
-                  //     //                             <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_0+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //     //                             <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_0+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //     //                           </div>
                   //     //                           <div class="col-sm-2">
-                  //     //                             <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_0+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //     //                             <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_0+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //     //                           </div>`
                   //     //         }else if(ok_0 == 1){
                   //     //           elemen_0 += `
                   //     //                           <div class="col-sm-2">
-                  //     //                             <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_0+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //     //                             <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_0+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //     //                           </div>`
                   //     //         }else if(ok_0 == 2){
                   //     //           elemen_0 += `     <div class="col-sm-2">
-                  //     //                                 <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_0+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //     //                                 <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_0+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //     //                               </div>
                   //     //                               `
                   //     //         }
@@ -760,20 +762,20 @@ function loadpermohonan(param) {
                   //     //     var elemen_1 = `<div class="row">`;
                   //     //     if(ok_1 == null){
                   //     //         elemen_1 += `<div class="col-sm-2">
-                  //     //                         <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_1+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //     //                         <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_1+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //     //                       </div>
                   //     //                       <div class="col-sm-2">
-                  //     //                         <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_1+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //     //                         <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_1+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //     //                       </div>`
                   //     //     }else if(ok_1 == 1){
                   //     //       elemen_1 += `
                   //     //                       <div class="col-sm-2">
-                  //     //                         <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_1+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //     //                         <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_1+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //     //                       </div>`
 
                   //     //     }else if(ok_1 == 2){
                   //     //       elemen_1 += `<div class="col-sm-2">
-                  //     //                         <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_1+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //     //                         <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_1+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //     //                       </div>
                   //     //                       `
 
@@ -788,20 +790,20 @@ function loadpermohonan(param) {
                   //     //     var elemen_2 = `<div class="row">`
                   //     //     if(ok_2 == null){
                   //     //         elemen_2 += `<div class="col-sm-2">
-                  //     //                         <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_2+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //     //                         <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_2+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //     //                       </div>
                   //     //                       <div class="col-sm-2">
-                  //     //                         <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_2+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //     //                         <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_2+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //     //                       </div>`
                   //     //     }else if(ok_2 == 1){
 
                   //     //       elemen_2 += `
                   //     //                       <div class="col-sm-2">
-                  //     //                         <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_2+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //     //                         <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_2+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //     //                       </div>`
                   //     //     }else if(ok_2 == 2){
                   //     //       elemen_2 += `<div class="col-sm-2">
-                  //     //                         <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_2+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //     //                         <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_2+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //     //                       </div>
                   //     //                       `
 
@@ -815,7 +817,7 @@ function loadpermohonan(param) {
 
                   //     //         var validasinya = '';
                   //     //         if(ok_0 == 1 && ok_1 == 1 && ok_2 == 1){
-                  //     //           var validasinya = `<button class="btn btn-xs btn-block btn-info" onclick="action('view',`+row.id+`,'`+row.type+`')">
+                  //     //           var validasinya = `<button class="btn btn-sm btn-block btn-info" onclick="action('view',`+row.id+`,'`+row.type+`')">
                   //     //                                 <i class="ace-icon fa fa-file bigger-120"></i> Data Unggahan
                   //     //                               </button>`;
                   //     //           }
@@ -863,19 +865,19 @@ function loadpermohonan(param) {
                   //     var elemen_0 = `<div class="row">`
                   //         if(ok_0 == null){
                   //         elemen_0 += `     <div class="col-sm-2">
-                  //                             <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_0+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //                             <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_0+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //                           </div>
                   //                           <div class="col-sm-2">
-                  //                             <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_0+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //                             <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_0+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //                           </div>`
                   //         }else if(ok_0 == 1){
                   //           elemen_0 += `
                   //                           <div class="col-sm-2">
-                  //                             <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_0+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //                             <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_0+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //                           </div>`
                   //         }else if(ok_0 == 2){
                   //           elemen_0 += `     <div class="col-sm-2">
-                  //                                 <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_0+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //                                 <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_0+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //                               </div>
                   //                               `
                   //         }
@@ -889,20 +891,20 @@ function loadpermohonan(param) {
                   //     var elemen_1 = `<div class="row">`;
                   //     if(ok_1 == null){
                   //         elemen_1 += `<div class="col-sm-2">
-                  //                         <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_1+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //                         <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_1+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //                       </div>
                   //                       <div class="col-sm-2">
-                  //                         <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_1+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //                         <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_1+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //                       </div>`
                   //     }else if(ok_1 == 1){
                   //       elemen_1 += `
                   //                       <div class="col-sm-2">
-                  //                         <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_1+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //                         <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_1+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //                       </div>`
 
                   //     }else if(ok_1 == 2){
                   //       elemen_1 += `<div class="col-sm-2">
-                  //                         <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_1+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //                         <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_1+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //                       </div>
                   //                       `
 
@@ -913,20 +915,20 @@ function loadpermohonan(param) {
                   //     var elemen_2 = `<div class="row">`
                   //     if(ok_2 == null){
                   //         elemen_2 += `<div class="col-sm-2">
-                  //                         <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_2+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //                         <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_2+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //                       </div>
                   //                       <div class="col-sm-2">
-                  //                         <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_2+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //                         <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_2+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //                       </div>`
                   //     }else if(ok_2 == 1){
 
                   //       elemen_2 += `
                   //                       <div class="col-sm-2">
-                  //                         <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(`+id_2+`, 2)"> <i class="ace-icon fa fa-times"></i></a>
+                  //                         <a type="button" class="btn btn-white btn-sm btn-danger" onclick="okdong(`+id_2+`, 2)"> <i class="ace-icon bx bx-x"></i></a>
                   //                       </div>`
                   //     }else if(ok_2 == 2){
                   //       elemen_2 += `<div class="col-sm-2">
-                  //                         <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(`+id_2+`, 1)"> <i class="ace-icon fa fa-check"></i></a>
+                  //                         <a type="button" class="btn btn-white btn-sm btn-success" onclick="okdong(`+id_2+`, 1)"> <i class="ace-icon bx bx-check"></i></a>
                   //                       </div>
                   //                       `
 
@@ -936,18 +938,18 @@ function loadpermohonan(param) {
 
                   //         var validasinya = '';
                   //         if(ok_0 == 1 ){
-                  //           var validasinya = `<button class="btn btn-xs btn-block btn-info" onclick="action('view',`+row.id+`,'`+row.type+`')">
+                  //           var validasinya = `<button class="btn btn-sm btn-block btn-info" onclick="action('view',`+row.id+`,'`+row.type+`')">
                   //                                 <i class="ace-icon fa fa-file bigger-120"></i> Data Unggahan
                   //                               </button>`;
                   //           }
 
                   // }
 
-                  // var elo = `<button class="btn btn-xs btn-info" onclick="action('view',`+row.id+`,'`+row.type+`')">
+                  // var elo = `<button class="btn btn-sm btn-info" onclick="action('view',`+row.id+`,'`+row.type+`')">
                   //             <i class="ace-icon fa fa-file bigger-120"></i>
                   //           </button>`;
                   //           var el = `<div class="btn-group">
-                  //               <button data-toggle="dropdown" class="btn btn-xs btn-indo dropdown-toggle" aria-expanded="false">
+                  //               <button data-toggle="dropdown" class="btn btn-sm btn-indo dropdown-toggle" aria-expanded="false">
                   //                 File
                   //                 <i class="ace-icon fa fa-angle-down icon-on-right"></i>
                   //               </button>
@@ -968,33 +970,33 @@ function loadpermohonan(param) {
 
                   //   if($('#role').val() == '1' || $('#role').val() == '2') {
 
-                  //     el += `<button class="btn btn-xs btn-danger" onclick="action('delete',`+row.id+`,'`+row.type+`','','data_permohonan')">
-                  //             <i class="ace-icon fa fa-trash bigger-120"></i>
+                  //     el += `<button class="btn btn-sm btn-danger" onclick="action('delete',`+row.id+`,'`+row.type+`','','data_permohonan')">
+                  //             <i class="bx bx-trash font-size-16"></i>
                   //           </button>`;
                   //     if(row.status == 1){
-                  //       el += `<button title="Verifikasi Lapangan" class="btn btn-xs btn-success" onclick="actionlapangan('view',`+row.id+`,'`+row.type+`')">
-                  //             <i class="ace-icon fa fa-check-square-o bigger-120"></i>
+                  //       el += `<button title="Verifikasi Lapangan" class="btn btn-sm btn-success" onclick="actionlapangan('view',`+row.id+`,'`+row.type+`')">
+                  //             <i class="bx bx-check-square font-size-16"></i>
                   //           </button>`;
                   //     }
                   //   }else{
 
                   //     if(row.status == 1){
-                  //       el += `<button title="Verifikasi Lapangan" class="btn btn-xs btn-success" onclick="actionlapangan('view',`+row.id+`,'`+row.type+`')">
-                  //             <i class="ace-icon fa fa-check-square-o bigger-120"></i>
+                  //       el += `<button title="Verifikasi Lapangan" class="btn btn-sm btn-success" onclick="actionlapangan('view',`+row.id+`,'`+row.type+`')">
+                  //             <i class="bx bx-check-square font-size-16"></i>
                   //           </button>`;
                   //     }else{
-                  //       el += `<button class="btn btn-xs btn-danger" onclick="inidelete('data_permohonan','${row.id}','${row.type}','${row.created_by}','${row.created_date}')">
-                  //       <i class="ace-icon fa fa-trash bigger-120"></i>
+                  //       el += `<button class="btn btn-sm btn-danger" onclick="inidelete('data_permohonan','${row.id}','${row.type}','${row.created_by}','${row.created_date}')">
+                  //       <i class="bx bx-trash font-size-16"></i>
                   //     </button>`;
                   //     }
                   //   }
 
                   if (type == "display") {
-                    var el = "";
+                    var el = `<div class="btn-group">`;
 
                     // if(row.param){
                     //   el += `<div class="btn-group">
-                    //             <button class="btn btn-xs btn-primary" onclick="action('view',`+row.id+`,'`+row.type+`', '', '', '`+row.param+`')">
+                    //             <button class="btn btn-sm btn-primary" onclick="action('view',`+row.id+`,'`+row.type+`', '', '', '`+row.param+`')">
                     //             <i class="ace-icon fa fa-file bigger-120"></i>
                     //             </button>
                     //           </div>`
@@ -1002,37 +1004,38 @@ function loadpermohonan(param) {
 
                     if (row.kategori) {
                       el +=
-                        `<div class="btn-group"><button class="btn btn-xs btn-primary" onclick="action('view',` +
+                        `<button class="btn btn-sm btn-primary waves-effect waves-light" onclick="action('view',` +
                         row.id +
                         `,'` +
                         row.type +
                         `',${row.kategori})">
-                                      <i class="ace-icon fa fa-file bigger-120"></i>
-                                    </button></div>`;
+                          <i class="bx bx-file font-size-16"></i>
+                        </button>`;
                     }
 
-                    el += `<div class="btn-group">
-                                            <button class="btn btn-xs btn-info" onclick="popupvalidasi(${row.id}, '${row.type}', ${row.param}, ${row.kategori})"> <i class="ace-icon fa fa-th-list"></i> </button>
-                                          </div>`;
+                    el += `<button class="btn btn-sm btn-info waves-effect waves-light" onclick="popupvalidasi(${row.id}, '${row.type}', ${row.param}, ${row.kategori})"> 
+                            <i class="bx bx-list-ul font-size-16"></i>
+                          </button>`;
 
                     if (row.status == 1) {
                       el +=
-                        `<div class="btn-group"><button title="Verifikasi Lapangan" class="btn btn-xs btn-success" onclick="actionlapangan('view',` +
+                        `<button title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view',` +
                         row.id +
                         `,'` +
                         row.type +
                         `')">
-                                      <i class="ace-icon fa fa-check-square-o bigger-120"></i>
-                                    </button></div>`;
+                          <i class="bx bx-check-square font-size-16"></i>
+                        </button>`;
                     } else {
                       el +=
-                        `<div class="btn-group"><button class="btn btn-xs btn-danger" onclick="action('delete',` +
+                        `<button class="btn btn-sm btn-danger waves-effect waves-light" onclick="action('delete',` +
                         row.id +
                         `,'` +
                         row.type +
                         `','','data_permohonan')">
-                                        <i class="ace-icon fa fa-trash bigger-120"></i>
-                                      </button></div>`;
+                          <i class="bx bx-trash font-size-16"></i>
+                        </button>
+                      </div>`;
                     }
 
                     el += ``;
@@ -1108,6 +1111,7 @@ function loadpermohonan(param) {
       } else {
         if ($("#isRole").val() == 2) {
           $("#initambah").show();
+          $("#cekunggahan").css("display", "none");
           $("#cekunggahan").hide();
           $("#deletedataini").hide();
         } else {
@@ -1142,7 +1146,7 @@ function save(formData) {
         confirmButtonText: `Ok`,
       }).then((result) => {
         $(document).ready(function () {
-          // location.reload()
+          location.reload();
           loadpermohonan(2);
         });
       });
@@ -1241,14 +1245,14 @@ function action(mode, id, type, keterangan, param, kategori) {
             pageLength: 10,
             aaData: result.data,
             aoColumns: [
-              { mDataProp: "id", width: "10%" },
+              { mDataProp: "id", width: "1%" },
               { mDataProp: "jenis" },
               { mDataProp: "filename" },
               { mDataProp: "status", width: "15%" },
               { mDataProp: "created_date" },
               { mDataProp: "updated_date" },
               { mDataProp: "keterangan" },
-              { mDataProp: "id" },
+              { mDataProp: "id", width: "15%" },
             ],
             order: [[0, "ASC"]],
             fixedColumns: true,
@@ -1337,18 +1341,15 @@ function action(mode, id, type, keterangan, param, kategori) {
               {
                 mRender: function (data, type, row) {
                   var el =
-                    `<div class="btn-group"><a class="btn btn-xs btn-warning" target="_blank" href="public/` +
-                    row.path +
-                    "/" +
-                    row.filename +
-                    `">
-                            <i class="ace-icon fa fa-download bigger-120"></i>
-                          </a></div>`;
+                    `<div class="btn-group">
+                      <a class="btn btn-xs btn-warning" target="_blank" href="public/` +row.path +"/" +row.filename +`">
+                        <i class="bx bxs-download font-size-16"></i>
+                      </a>`;
 
                   if ($("#role").val() == 0) {
                     if (row.status == "1") {
                       el +=
-                        `<div class="btn-group"><button class="btn btn-xs btn-info" onclick="revisi('` +
+                        `<button class="btn btn-xs btn-info" onclick="revisi('` +
                         row.id +
                         `','` +
                         row.type +
@@ -1361,11 +1362,11 @@ function action(mode, id, type, keterangan, param, kategori) {
                         `','` +
                         row.jenis +
                         `')">
-                                  <i class="ace-icon fa fa-edit bigger-120"></i>
-                                </button></div>`;
+                          <i class="bx bx-edit font-size-16"></i>
+                        </button>`;
 
                       el +=
-                        `<div class="btn-group"><button class="btn btn-xs btn-danger" onclick="actionfile('delete','` +
+                        `<button class="btn btn-xs btn-danger" onclick="actionfile('delete','` +
                         row.id +
                         `','` +
                         row.type +
@@ -1374,75 +1375,66 @@ function action(mode, id, type, keterangan, param, kategori) {
                         "/" +
                         row.filename +
                         `')">
-                            <i class="ace-icon fa fa-trash bigger-120"></i>
-                          </button></div>`;
+                          <i class="bx bx-trash font-size-16"></i>
+                        </button>`;
                     }
                   } else {
                     el +=
-                      `<div class="btn-group"><button class="btn btn-xs btn-success" onclick="action('update','` +
+                      `<button class="btn btn-xs btn-success" onclick="action('update','` +
                       row.id +
                       `','` +
                       row.type +
                       `')">
-                            <i class="ace-icon fa fa-check-square-o bigger-120"></i>
-                          </button></div>`;
+                        <i class="bx bx-check-double"></i>
+                      </button>`;
                   }
 
-                  el += `<div class="btn-group">
-                                    <button data-toggle="dropdown" class="btn btn-xs btn-indo dropdown-toggle" aria-expanded="false">
-                                      <i class="ace-icon fa fa-clock-o bigger-120"></i>
-                                    </button>
-
-                                    <ul class="dropdown-menu dropdown-info dropdown-menu-right" style="width:25rem">
-                                    <div class="timeline-container">
-                                    <div class="timeline-items">
-                
-                                      <div class="timeline-item clearfix">
-                                        <div class="timeline-info">
-                                          <span class="label label-primary label-sm">Create</span>
-                
-                                        </div>
-                
-                                        <div class="widget-box transparent">
-                                          <div class="widget-body">
-                                            <div class="widget-main">
-                                                <i class="ace-icon fa fa-clock-o bigger-110"></i>
-                                                ${row.created_date}
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>`;
-
+                  el += `<button data-toggle="dropdown" class="btn btn-xs btn-secondary dropdown-toggle" aria-expanded="false">
+                          <i class="bx bx-history font-size-16"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-info dropdown-menu-right" style="width:25rem">
+                          <div class="timeline-container">
+                            <div class="timeline-items">
+                              <div class="timeline-item clearfix">
+                                <div class="timeline-info">
+                                  <span class="label label-primary label-sm">Create</span>
+                                </div>
+                                <div class="widget-box transparent">
+                                  <div class="widget-body">
+                                    <div class="widget-main">
+                                      <i class="bx bx-history font-size-16"></i>
+                                      ${row.created_date}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>`;
                   for (let index = 0; index < row.history.length; index++) {
                     el += `<div class="timeline-item clearfix">
-                                        <div class="timeline-info">
-                                        ${
-                                          row.history[index]["status"] == 1
-                                            ? '<span class="label label-warning label-sm">Revisi</span>'
-                                            : '<span class="label label-success label-sm">Selesai</span>'
-                                        }
-                                          
-                                        </div>
-                
-                                        <div class="widget-box transparent">
-                                          <div class="widget-body">
-                                            <div class="widget-main">
-                                                <i class="ace-icon fa fa-clock-o bigger-110"></i>
-                                                ${
-                                                  row.history[index][
-                                                    "createdate"
-                                                  ]
-                                                }
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>`;
+                            <div class="timeline-info">
+                              ${
+                                row.history[index]["status"] == 1
+                                  ? '<span class="label label-warning label-sm">Revisi</span>'
+                                  : '<span class="label label-success label-sm">Selesai</span>'
+                              }
+                            </div>
+                            <div class="widget-box transparent">
+                              <div class="widget-body">
+                                <div class="widget-main">
+                                  <i class="bx bx-history font-size-16"></i>
+                                  ${
+                                    row.history[index][
+                                      "createdate"
+                                    ]
+                                  }
+                                </div>
+                              </div>
+                            </div>
+                          </div>`;
                   }
-
                   el += `</div>
-                                  </div>
-                                    </ul>
-                                  </div>`;
+                        </div>
+                      </ul>
+                    </div>`;
 
                   return el;
                 },
@@ -1506,12 +1498,12 @@ function action(mode, id, type, keterangan, param, kategori) {
       message: "Anda Yakin <b>Hapus</b> data ini?",
       buttons: {
         confirm: {
-          label: '<i class="fa fa-check"></i> Ya',
-          className: "btn-success btn-xs",
+          label: '<i class="bx bx-check"></i> Ya',
+          className: "btn-success btn-sm",
         },
         cancel: {
-          label: '<i class="fa fa-times"></i> Tidak',
-          className: "btn-danger btn-xs",
+          label: '<i class="bx bx-x"></i> Tidak',
+          className: "btn-danger btn-sm",
         },
       },
       callback: function (result) {
@@ -1627,12 +1619,12 @@ function actionlapangan(mode, id, type, keterangan, param) {
                         "/" +
                         row.filename +
                         `')">
-                            <i class="ace-icon fa fa-trash bigger-120"></i>
+                            <i class="bx bx-trash font-size-16"></i>
                           </button></div>`;
                     }
                   } else {
                     // el += `<button class="btn btn-xs btn-success" onclick="action('update','`+row.id+`','`+row.type+`')">
-                    //           <i class="ace-icon fa fa-check-square-o bigger-120"></i>
+                    //           <i class="bx bx-check-square font-size-16"></i>
                     //         </button>`;
                     el +=
                       `<div class="btn-group"><button class="btn btn-xs btn-danger" onclick="actionfilelapang('delete','` +
@@ -1644,7 +1636,7 @@ function actionlapangan(mode, id, type, keterangan, param) {
                       "/" +
                       row.filename +
                       `')">
-                            <i class="ace-icon fa fa-trash bigger-120"></i>
+                            <i class="bx bx-trash font-size-16"></i>
                           </button></div>`;
                   }
 
@@ -1706,12 +1698,12 @@ function actionlapangan(mode, id, type, keterangan, param) {
       message: "Anda Yakin <b>Hapus</b> data ini?",
       buttons: {
         confirm: {
-          label: '<i class="fa fa-check"></i> Ya',
-          className: "btn-success btn-xs",
+          label: '<i class="bx bx-check"></i> Ya',
+          className: "btn-success btn-sm",
         },
         cancel: {
-          label: '<i class="fa fa-times"></i> Tidak',
-          className: "btn-danger btn-xs",
+          label: '<i class="bx bx-x"></i> Tidak',
+          className: "btn-danger btn-sm",
         },
       },
       callback: function (result) {
@@ -1813,12 +1805,12 @@ function actionfile(mode, id, type, path) {
     message: "Anda Yakin <b>Hapus</b> data ini?",
     buttons: {
       confirm: {
-        label: '<i class="fa fa-check"></i> Ya',
-        className: "btn-success btn-xs",
+        label: '<i class="bx bx-check"></i> Ya',
+        className: "btn-success btn-sm",
       },
       cancel: {
-        label: '<i class="fa fa-times"></i> Tidak',
-        className: "btn-danger btn-xs",
+        label: '<i class="bx bx-x"></i> Tidak',
+        className: "btn-danger btn-sm",
       },
     },
     callback: function (result) {
@@ -1847,12 +1839,12 @@ function actionfilelapang(mode, id, type, path) {
     message: "Anda Yakin <b>Hapus</b> data ini?",
     buttons: {
       confirm: {
-        label: '<i class="fa fa-check"></i> Ya',
-        className: "btn-success btn-xs",
+        label: '<i class="bx bx-check"></i> Ya',
+        className: "btn-success btn-sm",
       },
       cancel: {
-        label: '<i class="fa fa-times"></i> Tidak',
-        className: "btn-danger btn-xs",
+        label: '<i class="bx bx-x"></i> Tidak',
+        className: "btn-danger btn-sm",
       },
     },
     callback: function (result) {
@@ -1962,12 +1954,12 @@ function inidelete(param, id, type, by, date) {
     message: "Anda Yakin <b>Hapus</b> data ini?",
     buttons: {
       confirm: {
-        label: '<i class="fa fa-check"></i> Ya',
-        className: "btn-success btn-xs",
+        label: '<i class="bx bx-check"></i> Ya',
+        className: "btn-success btn-sm",
       },
       cancel: {
-        label: '<i class="fa fa-times"></i> Tidak',
-        className: "btn-danger btn-xs",
+        label: '<i class="bx bx-x"></i> Tidak',
+        className: "btn-danger btn-sm",
       },
     },
     callback: function (result) {
@@ -2029,40 +2021,50 @@ function popupvalidasi(id, type, param, kategori) {
           ? 'class="text-success"'
           : 'class="text-danger"';
         isok += ok == 1 ? 1 : 0;
-        el += `
-                      <div class="row">`;
+        el += `<div class="row" style="padding: 1px 0;">`;
         if (ok == 2) {
-          el += `<div class="col-sm-1">
-                                      <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(${id}, 1)"> <i class="ace-icon fa fa-check"></i></a>
-                                  </div>`;
-          el += `<div class="col-sm-1">
-                                      <a type="button" class="btn btn-white btn-xs btn-default" disabled> <i class="ace-icon fa fa-times"></i></a>
-                                  </div>`;
+          el += `<div class="col-sm-2">
+                  <div class="btn-group">
+                    <a type="button" class="btn btn-white btn-sm btn-success waves-effect waves-light" onclick="okdong(${id}, 1)"> 
+                      <i class="bx bx-check font-size-16"></i>
+                    </a>`;
+          el += `
+                    <a type="button" class="btn btn-white btn-sm btn-default waves-effect waves-light" disabled>
+                      <i class="bx bx-x font-size-16"></i>
+                    </a>
+                  </div>
+                </div>`;
           classe = 'class="text-danger"';
         } else if (ok == 1) {
-          el += `<div class="col-sm-1">
-                                      <a type="button" class="btn btn-white btn-xs btn-default" disabled> <i class="ace-icon fa fa-check"></i></a>
-                                  </div>`;
-          el += `<div class="col-sm-1">
-                                      <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(${id}, 2)"> <i class="ace-icon fa fa-times"></i></a>
-                                  </div>`;
+          el += `<div class="col-sm-2">
+                  <div class="btn-group">
+                    <a type="button" class="btn btn-white btn-sm btn-default waves-effect waves-light" disabled> 
+                      <i class="bx bx-check font-size-16"></i>
+                    </a>`;
+          el += `
+                    <a type="button" class="btn btn-white btn-sm btn-danger waves-effect waves-light" onclick="okdong(${id}, 2)"> 
+                      <i class="bx bx-x font-size-16"></i>
+                    </a>
+                  </div>
+                </div>`;
         } else {
-          el += `<div class="col-sm-1">
-                                      <a type="button" class="btn btn-white btn-xs btn-success" onclick="okdong(${id}, 1)"> <i class="ace-icon fa fa-check"></i></a>
-                                  </div>
-                                  <div class="col-sm-1">
-                                      <a type="button" class="btn btn-white btn-xs btn-danger" onclick="okdong(${id}, 2)"> <i class="ace-icon fa fa-times"></i></a>
-                                  </div>`;
+          el += `<div class="col-sm-2">
+                  <div class="btn-group">
+                      <a type="button" class="btn btn-white btn-sm btn-success waves-effect waves-light" onclick="okdong(${id}, 1)"> 
+                        <i class="bx bx-check font-size-16"></i>
+                      </a>
+                      <a type="button" class="btn btn-white btn-sm btn-danger waves-effect waves-light" onclick="okdong(${id}, 2)"> 
+                        <i class="bx bx-x font-size-16"></i>
+                      </a>
+                    </div>
+                  </div>`;
         }
-
-        el += `<div class="col-sm-10">
-                                         <span class="lbl"> <a ${classe} target="_blank" type="button" href="public/${
+        el += `<div class="col-sm-10" style="padding: 5px 0 0 10px;">
+                <span class="lbl"> <a ${classe} target="_blank" type="button" href="public/${
           path + "/" + filename
-        }"> <i class="ace-icon fa fa-file"></i> ${
+        }"> <i class="bx bx-file"></i> ${
           data[key]["jenis"]
-        } </a> </span>
-                                      </div>
-                                    </div>`;
+        } </a> </span></div></div>`;
       }
 
       if (isok < 1) {
