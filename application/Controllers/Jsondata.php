@@ -458,6 +458,16 @@ class Jsondata extends \CodeIgniter\Controller
 													break;
 
 											}
+
+											if(count($data)){
+												$filterBy = 'doc_lampiran'; // or Finance etc.
+
+												$data = array_filter($data, function ($var) use ($filterBy) {
+													
+													return ($var->jenis != $filterBy);
+												});
+												
+											}
 											if(count($data) == $total_file){
 												$stt = [];
 												foreach ($data as $key1 => $value1) {
