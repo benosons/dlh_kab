@@ -1668,20 +1668,15 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                 {
                   mRender: function (data, type, row) {
                     var el =
-                      `<div class="btn-group"><a class="btn btn-sm btn-warning" target="_blank" href="public/` +
-                      row.path +
-                      "/" +
-                      row.filename +
-                      `">
-                                      <i class="bx bx-download font-size-16"></i>
-                                    </a></div>`;
+                      `<div class="btn-group">
+                        <a class="btn btn-sm btn-warning" target="_blank" href="public/${row.path}/${row.filename}">
+                            <i class="bx bx-download font-size-16"></i>
+                        </a>`;
 
                     if ($("#role").val() == 0) {
                       if (row.status == "1") {
                         el +=
-                          `<div class="btn-group"><button class="btn btn-sm btn-info" onclick="revisistandar('` +
-                          row.id +
-                          `','` +
+                          `<button class="btn btn-sm btn-info" onclick="revisistandar('${row.id}','` +
                           row.type +
                           `','` +
                           row.jenis +
@@ -1693,10 +1688,10 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                           row.bab +
                           `', '${row.kategori}')">
                                       <i class="bx bx-edit font-size-16"></i>
-                                    </button></div>`;
+                                    </button>`;
 
                         el +=
-                          `<div class="btn-group"><button class="btn btn-sm btn-danger" onclick="actionfile('delete','` +
+                          `<button class="btn btn-sm btn-danger" onclick="actionfile('delete','` +
                           row.id +
                           `','` +
                           row.type +
@@ -1706,21 +1701,20 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                           row.filename +
                           `')">
                                       <i class="bx bx-trash font-size-16"></i>
-                                    </button></div>`;
+                                    </button>`;
                       }
                     } else {
                       el +=
-                        `<div class="btn-group"><button class="btn btn-sm btn-success" onclick="action('update','` +
+                        `<button class="btn btn-sm btn-success" onclick="action('update','` +
                         row.id +
                         `','` +
                         row.type +
                         `','','2')">
                                       <i class="bx bx-check-square font-size-16"></i>
-                                    </button></div>`;
+                                    </button>`;
                     }
 
-                    el += `<div class="btn-group">
-                                    <button data-toggle="dropdown" class="btn btn-xs btn-secondary dropdown-toggle" aria-expanded="false">
+                    el += `<button data-toggle="dropdown" class="btn btn-xs btn-secondary dropdown-toggle" aria-expanded="false">
                                       <i class="bx bx-history font-size-16"></i>
                                     </button>
 
@@ -1772,8 +1766,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
 
                     el += `</div>
                                   </div>
-                                    </ul>
-                                  </div>`;
+                                    </ul>`;
 
                     return el;
                   },
