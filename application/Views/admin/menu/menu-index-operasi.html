@@ -1138,23 +1138,23 @@
                     {% if role == 0 %}
 
                     <ul class="nav nav-tabs" id="myTab">
-                      <li class="active">
-                        <a data-toggle="tab" href="#kajian" aria-expanded="true"
+                      <li class="nav-item">
+                        <a class="nav-link active" data-toggle="tab" href="#kajian" aria-expanded="true"
                           >Permohonan SLO</a
                         >
                       </li>
                     </ul>
-                    <div class="tab-content">
+                    <div class="tab-content" style="padding-top: 30px;">
                       <div id="kajian" class="tab-pane active">
-                        <div class="form-group row">
-                          <label
-                            class="col-sm-2 control-label no-padding-right"
-                            for="nama_program"
-                          >
-                            Dokumen
-                          </label>
-                          <div class="row" style="padding: 0 0 10px 10px">
-                            <div class="col-xs-5 col-sm-7">
+                        <div class="form-group row" style="padding-top: 0;">
+                          <div class="row" style="padding: 0 0 25px 0">
+                            <label
+                              class="col-sm-2 control-label no-padding-right"
+                              for="nama_program" style="padding: 6px 0 0 23px; width: 200px;"
+                            >
+                              Dokumen
+                            </label>
+                            <div class="col-xs-4 col-sm-4" style="width: 295px;">
                               <select
                                 class="chosen-select form-control"
                                 id="jenis_doc"
@@ -1162,27 +1162,26 @@
                               ></select>
                             </div>
                             <div
-                              class="col-xs-4 col-sm-5"
-                              style="padding: 5px 0 0 0"
+                              class="col-xs-3 col-sm-4"
                             >
                               <input
                                 type="file"
                                 name="id-input-file-3"
                                 id="doc_"
+                                class="form-control"
                                 accept=".pdf"
                               />
                             </div>
-                          </div>
-                          <div class="col-xs-2" style="padding-bottom: 15px">
-                            <button
-                              disabled
-                              type="button"
-                              class="btn btn-xs btn-success"
-                              id="submit_doc"
-                            >
-                              <i class="ace-icon fa fa-check-square-o"></i>
-                              Simpan
-                            </button>
+                            <div class="col-xs-2 col-sm-2" style="padding-bottom: 15px">
+                                <button
+                                disabled
+                                type="button"
+                                class="btn btn-xs btn-success"
+                                id="submit_doc"
+                                >
+                                  <i class="bx bx-check"></i>Simpan
+                                </button>
+                            </div>
                           </div>
                         </div>
 

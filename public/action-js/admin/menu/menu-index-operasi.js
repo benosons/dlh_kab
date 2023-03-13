@@ -11,6 +11,8 @@ $(document).ready(function () {
       no_file: "tidak ada file ...",
       btn_choose: "Pilih File",
       btn_change: "Ganti",
+      icon_remove: "",
+      no_icon: "",
       droppable: false,
       onchange: null,
       thumbnail: false, //| true | large
@@ -268,7 +270,7 @@ function loadpermohonan(param) {
           );
           switch (data[0].kategori) {
             case "1": //limbah
-              optd = `<option value=""> </option>
+              optd = `<option value="">Pilih Dokumen</option>
                             <option value="doc_permohonan_slo"> Surat Permohonan SLO </option>
                             <option value="doc_izin_usaha"> Perizinan Berusaha </option>
                             <option value="doc_persetujauan_lingkungan"> Persetujuan Lingkungan / Izin Lingkungan </option>
