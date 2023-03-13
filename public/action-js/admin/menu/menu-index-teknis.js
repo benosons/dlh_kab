@@ -1675,27 +1675,12 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
 
                     if ($("#role").val() == 0) {
                       if (row.status == "1") {
-                        el +=
-                          `<button class="btn btn-sm btn-info" onclick="revisistandar('${row.id}','` +
-                          row.type +
-                          `','` +
-                          row.jenis +
-                          `','` +
-                          row.path +
-                          "/" +
-                          row.filename +
-                          `','` +
-                          row.bab +
-                          `', '${row.kategori}')">
-                                      <i class="bx bx-edit font-size-16"></i>
-                                    </button>`;
+                        el += `<button class="btn btn-sm btn-info" onclick="revisistandar('${row.id}','${row.type}','${row.jenis}','${row.path}/${row.filename}','${row.bab}','${row.kategori}')">
+                                  <i class="bx bx-edit font-size-16"></i>
+                                </button>`;
 
                         el +=
-                          `<button class="btn btn-sm btn-danger" onclick="actionfile('delete','` +
-                          row.id +
-                          `','` +
-                          row.type +
-                          `', '` +
+                          `<button class="btn btn-sm btn-danger" onclick="actionfile('delete','${row.id}','${row.type}', '` +
                           row.path +
                           "/" +
                           row.filename +
@@ -1714,7 +1699,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                                     </button>`;
                     }
 
-                    el += `<button data-toggle="dropdown" class="btn btn-xs btn-secondary dropdown-toggle" aria-expanded="false">
+                    el += `<button data-toggle="dropdown" class="btn btn-sm btn-secondary dropdown-toggle" aria-expanded="false">
                                       <i class="bx bx-history font-size-16"></i>
                                     </button>
 
