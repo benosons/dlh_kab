@@ -1679,24 +1679,14 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                                   <i class="bx bx-edit font-size-16"></i>
                                 </button>`;
 
-                        el +=
-                          `<button class="btn btn-sm btn-danger" onclick="actionfile('delete','${row.id}','${row.type}', '` +
-                          row.path +
-                          "/" +
-                          row.filename +
-                          `')">
-                                      <i class="bx bx-trash font-size-16"></i>
-                                    </button>`;
+                        el += `<button class="btn btn-sm btn-danger" onclick="actionfile('delete','${row.id}','${row.type}','${row.path}/${row.filename}')">
+                                  <i class="bx bx-trash font-size-16"></i>
+                                </button>`;
                       }
                     } else {
-                      el +=
-                        `<button class="btn btn-sm btn-success" onclick="action('update','` +
-                        row.id +
-                        `','` +
-                        row.type +
-                        `','','2')">
-                                      <i class="bx bx-check-square font-size-16"></i>
-                                    </button>`;
+                      el += `<button class="btn btn-sm btn-success" onclick="action('update','${row.id}','${row.type}','','2')">
+                                <i class="bx bx-check-square font-size-16"></i>
+                              </button>`;
                     }
 
                     el += `<button data-toggle="dropdown" class="btn btn-sm btn-secondary dropdown-toggle" aria-expanded="false">
