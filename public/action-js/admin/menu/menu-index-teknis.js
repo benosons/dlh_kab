@@ -10,6 +10,8 @@ $(document).ready(function () {
       no_file: "tidak ada file ...",
       btn_choose: "Pilih File",
       btn_change: "Ganti",
+      icon_remove: "",
+      no_icon: "",
       droppable: false,
       onchange: null,
       thumbnail: false, //| true | large
@@ -47,6 +49,8 @@ $(document).ready(function () {
       no_file: "tidak ada file ...",
       btn_choose: "Pilih File",
       btn_change: "Ganti",
+      icon_remove: '',
+      no_icon: '',
       droppable: false,
       onchange: null,
       thumbnail: false, //| true | large
@@ -126,6 +130,8 @@ $(document).ready(function () {
       no_file: "tidak ada file ...",
       btn_choose: "Pilih File",
       btn_change: "Ganti",
+      icon_remove: "",
+      no_icon: "",
       droppable: false,
       onchange: null,
       thumbnail: false, //| true | large
@@ -151,6 +157,8 @@ $(document).ready(function () {
       no_file: "tidak ada file ...",
       btn_choose: "Pilih File",
       btn_change: "Ganti",
+      no_icon: '',
+      icon_remove: '',
       droppable: false,
       onchange: null,
       thumbnail: false, //| true | large
@@ -1385,7 +1393,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
       kode = $("#ini-paramnya").val();
     }
 
-    let opt = '<option value="0"> </option>';
+    let opt = '<option value="0">Pilih Dokumen</option>';
 
     if (kategori == 1 && kode == 1) {
       opt += `<option value="1">BAB 1 - Deskripsi Kegiatan</option>
@@ -1649,13 +1657,13 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
             var dt = $("#data-file-kajian").DataTable({
               destroy: true,
               paging: true,
-              lengthChange: false,
+              lengthChange: true,
               searching: true,
               ordering: true,
               info: true,
               autoWidth: false,
               responsive: false,
-              pageLength: 11,
+              pageLength: 10,
               aaData: result.data,
               aoColumns: [
                 { mDataProp: "id" },
@@ -1972,7 +1980,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
             var dt = $("#data-file-standar").DataTable({
               destroy: true,
               paging: true,
-              lengthChange: false,
+              lengthChange: true,
               searching: true,
               ordering: true,
               info: true,
@@ -2082,7 +2090,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                 {
                   mRender: function (data, type, row) {
                     let des = [
-                      "-",
+                      "Pilih Dokumen",
                       "DESKRIPSI KEGIATAN",
                       "BAKU MUTU AIR LIMBAH NASIONAL",
                       "RENCANA PENGELOLAAN LINGKUNGAN",
@@ -2128,18 +2136,18 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                 {
                   mRender: function (data, type, row) {
                     var el =
-                      `<div class="btn-group"><a class="btn btn-xs btn-warning" target="_blank" href="public/` +
+                      `<div class="btn-group"><a class="btn btn-sm btn-warning" target="_blank" href="public/` +
                       row.path +
                       "/" +
                       row.filename +
                       `">
-                                      <i class="ace-icon fa fa-download bigger-120"></i>
+                                      <i class="bx bx-download font-size-16"></i>
                                     </a></div>`;
 
                     if ($("#role").val() == 0) {
                       if (row.status == "1") {
                         el +=
-                          `<div class="btn-group"><button class="btn btn-xs btn-info" onclick="revisistandar('` +
+                          `<div class="btn-group"><button class="btn btn-sm btn-info" onclick="revisistandar('` +
                           row.id +
                           `','` +
                           row.type +
@@ -2152,11 +2160,11 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                           `','` +
                           row.bab +
                           `', '${row.kategori}')">
-                                      <i class="ace-icon fa fa-edit bigger-120"></i>
+                                      <i class="bx bx-edit font-size-16"></i>
                                     </button></div>`;
 
                         el +=
-                          `<div class="btn-group"><button class="btn btn-xs btn-danger" onclick="actionfile('delete','` +
+                          `<div class="btn-group"><button class="btn btn-sm btn-danger" onclick="actionfile('delete','` +
                           row.id +
                           `','` +
                           row.type +
@@ -2165,23 +2173,23 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                           "/" +
                           row.filename +
                           `')">
-                                      <i class="ace-icon fa fa-trash-o bigger-120"></i>
+                                      <i class="bx bx-trash font-size-16"></i>
                                     </button></div>`;
                       }
                     } else {
                       el +=
-                        `<div class="btn-group"><button class="btn btn-xs btn-success" onclick="action('update','` +
+                        `<div class="btn-group"><button class="btn btn-sm btn-success" onclick="action('update','` +
                         row.id +
                         `','` +
                         row.type +
                         `','','2')">
-                                      <i class="ace-icon bx bx-check-square-o bigger-120"></i>
+                                      <i class="bx bx-check-square font-size-16"></i>
                                     </button></div>`;
                     }
 
                     el += `<div class="btn-group">
-                                    <button data-toggle="dropdown" class="btn btn-xs btn-indo dropdown-toggle" aria-expanded="false">
-                                      <i class="ace-icon fa fa-clock-o bigger-120"></i>
+                                    <button data-toggle="dropdown" class="btn btn-xs btn-secondary dropdown-toggle" aria-expanded="false">
+                                      <i class="bx bx-history font-size-16"></i>
                                     </button>
 
                                     <ul class="dropdown-menu dropdown-info dropdown-menu-right" style="width:25rem">
@@ -2197,7 +2205,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                                         <div class="widget-box transparent">
                                           <div class="widget-body">
                                             <div class="widget-main">
-                                                <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                                                <i class="bx bx-history font-size-16"></i>
                                                 ${row.created_date}
                                             </div>
                                           </div>
@@ -2218,7 +2226,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                                         <div class="widget-box transparent">
                                           <div class="widget-body">
                                             <div class="widget-main">
-                                                <i class="ace-icon fa fa-clock-o bigger-110"></i>
+                                                <i class="bx bx-history font-size-16"></i>
                                                 ${
                                                   row.history[index][
                                                     "createdate"
@@ -2391,7 +2399,7 @@ function loadstatus(id, param, jenis, kategori) {
           }
         } else if (jenis == "doc_standar") {
           for (let i = 0; i < data.length; i++) {
-            $('#bab_standar option[value="' + data[i]["bab"] + '"]').prop(
+            $('#bab_standar option[value="' + data[i]["bab "] + '"]').prop(
               "disabled",
               true
             );
