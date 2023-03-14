@@ -1383,7 +1383,6 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                                   }
                                   el +=  `</ul>
                               </div>
-
                           </div>
                       </div>
                   </div>`
@@ -1689,60 +1688,49 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                               </button>`;
                     }
 
-                    el += `<button data-toggle="dropdown" class="btn btn-sm btn-secondary dropdown-toggle" aria-expanded="false">
-                                      <i class="bx bx-history font-size-16"></i>
-                                    </button>
-
-                                    <ul class="dropdown-menu dropdown-info dropdown-menu-right" style="width:25rem">
-                                    <div class="timeline-container">
-                                    <div class="timeline-items">
-                
-                                      <div class="timeline-item clearfix">
-                                        <div class="timeline-info">
-                                          <span class="label label-primary label-sm">Create</span>
-                
-                                        </div>
-                
-                                        <div class="widget-box transparent">
-                                          <div class="widget-body">
-                                            <div class="widget-main">
-                                                <i class="bx bx-history font-size-16"></i>
-                                                ${row.created_date}
-                                            </div>
+                    el += `<a href="#" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i class="bx bx-history font-size-16"></i>
+                          </a>
+                          <div class="dropdown-menu" style="">
+                            <div class="card">
+                              <div class="card-body">
+                                <div class="">
+                                  <ul class="verti-timeline list-unstyled">
+                                    <li class="event-list">
+                                      <div class="event-timeline-dot">
+                                        <i class="bx bx-right-arrow-circle"></i>
+                                      </div>
+                                      <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                          <div>
+                                            <h5 class="font-size-15"><a href="javascript: void(0);" class="text-dark">Pengajuan</a></h5>
+                                            <span class="text-primary">${row.created_date}</span>
                                           </div>
                                         </div>
-                                      </div>`;
-
-                    for (let index = 0; index < row.history.length; index++) {
-                      el += `<div class="timeline-item clearfix">
-                                        <div class="timeline-info">
-                                        ${
-                                          row.history[index]["status"] == 1
-                                            ? '<span class="label label-warning label-sm">Revisi</span>'
-                                            : '<span class="label label-success label-sm">Selesai</span>'
-                                        }
-                                          
-                                        </div>
-                
-                                        <div class="widget-box transparent">
-                                          <div class="widget-body">
-                                            <div class="widget-main">
-                                                <i class="bx bx-history font-size-16"></i>
-                                                ${
-                                                  row.history[index][
-                                                    "createdate"
-                                                  ]
-                                                }
-                                            </div>
+                                      </div>
+                                    </li>`
+                                  for (let index = 0; index < row.history.length; index++) {
+                                    el +=  `
+                                    <li class="event-list">
+                                      <div class="event-timeline-dot">
+                                          <i class="bx bx-right-arrow-circle"></i>
+                                      </div>
+                                      <div class="d-flex">
+                                          <div class="flex-grow-1">
+                                              <div>
+                                                  <h5 class="font-size-15"><a href="javascript: void(0);" class="text-dark">
+                                                  ${row.history[index]["status"] == 1 ? '<span class="label label-warning label-sm">Revisi</span>' : '<span class="label label-success label-sm">Selesai</span>' }</a></h5>
+                                                  <span class="text-primary">${row.history[index]["createdate"]}</span>
+                                              </div>
                                           </div>
-                                        </div>
-                                      </div>`;
-                    }
-
-                    el += `</div>
-                                  </div>
-                                    </ul>`;
-
+                                      </div>
+                                    </li>`
+                                  }
+                                  el +=  `</ul>
+                              </div>
+                          </div>
+                        </div>
+                      </div>`
                     return el;
                   },
                   aTargets: [6],
