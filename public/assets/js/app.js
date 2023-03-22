@@ -93,6 +93,8 @@
   }
   a("#side-menu").metisMenu(),
     a("#vertical-menu-btn").on("click", function (e) {
+      $("body").hasClass('sidebar-enable vertical-collpsed') ? sessionStorage.setItem("sidebar", 0) : sessionStorage.setItem("sidebar", 1)
+      
       e.preventDefault(),
         a("body").toggleClass("sidebar-enable"),
         992 <= a(window).width()
