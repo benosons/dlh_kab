@@ -256,7 +256,7 @@ function loadpermohonan(param) {
       param: param,
     },
     success: function (result) {
-      let data = result.data;
+      let data = result.data[0].permohonan;
       let code = result.code;
       
       if (code != "0") {

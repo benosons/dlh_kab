@@ -1,6 +1,18 @@
 "use strict";
 console.log("You are running jQuery version: " + $.fn.jquery);
 $(document).ready(function () {
+    $("#data_permohonan_btn").click(function(){
+      $("#profile-perusahaan-page").hide();
+      $("#permohonan-teknis-page").show();
+      $("#data_perusahaan_btn").removeClass("active");
+      $("#data_permohonan_btn").addClass("nav-link active");
+    });
+    $("#data_perusahaan_btn").click(function(){
+      $("#profile-perusahaan-page").show();
+      $("#permohonan-teknis-page").hide();
+      $("#data_permohonan_btn").removeClass("active");
+      $("#data_perusahaan_btn").addClass("nav-link active");
+    });
   $("#nav-menu li").removeClass();
   // $('#nav-menu li#menu-data').addClass('open');
   $("#nav-menu li#menu-teknis").addClass("active");
@@ -232,6 +244,106 @@ $(document).ready(function () {
     actionlapangan("view", $("#idpermohonan").val(), $("#initype").val());
   });
 
+
+  $("#mohon_save_perusahaan").on("click", function () {
+    bootbox.confirm({
+      message: "Apakah data yg anda masukan sudah <b>sesuai</b> ?",
+      buttons: {
+        confirm: {
+          label: '<i class="bx bx-check"></i> Ya',
+          className: "btn-success btn-xs",
+        },
+        cancel: {
+          label: '<i class="bx bx-x"></i> Tidak',
+          className: "btn-danger btn-xs",
+        },
+      },
+      callback: function (result) {
+        if (result) {
+          var formDataP = new FormData();
+          formDataP.append("param", "data_perusahaan");
+
+          formDataP.append("input_1", $("#input_1").val());
+          
+          formDataP.append("input_2", $("#input_2").val());
+          
+          formDataP.append("input_3", $("#input_3").val());
+          
+          formDataP.append("input_9", $("#input_9").val());
+          
+          formDataP.append("input_4", $("#input_4").val());
+          
+          formDataP.append("input_5", $("#input_5").val());
+          // for (let index = 1; index <= 9; index++) {
+          //   if ($("#input_" + index).val()) {
+          //     formDataP.append("input_" + index, $("#input_" + index).val());
+          //     $("#input_" + index)
+          //       .parent()
+          //       .parent()
+          //       .removeClass("has-error");
+          //     berapa.push(index);
+          //   } else {
+          //     $("#input_" + index)
+          //       .parent()
+          //       .parent()
+          //       .addClass("has-error");
+          //   }
+          // }
+
+          formDataP.append(
+            "file[doc_izin_lingkungan]",
+            $("#doc_izin_lingkungan")[0].files[0]
+          );
+
+          formDataP.append(
+            "file[doc_nib]", 
+            $("#doc_nib")[0].files[0]
+          );
+
+          formDataP.append(
+            "file[doc_penapisan_mandiri]",
+            $("#doc_penapisan_mandiri")[0].files[0]
+          );
+          // formDataP.append("bab_kajian", $('#bab_kajian').val());
+          // formDataP.append("file[doc_standar]", $('#doc_standar')[0].files[0]);
+          // formDataP.append("bab_standar", $('#bab_standar').val());
+          saveperusahaan(formDataP);
+        } 
+      }
+    })
+  });
+
+  function saveperusahaan(formDataP) {
+    var dialog = bootbox.dialog({
+      message:
+        '<p class="text-center mb-0"><i class="fa fa-spin fa-spinner"></i> Mohon Tunggu ...</p>',
+      closeButton: false,
+    });
+  
+    $.ajax({
+      type: "post",
+      processData: false,
+      contentType: false,
+      url: "addperusahaan",
+      data: formDataP,
+      success: function (result) {
+        dialog.modal("hide");
+        Swal.fire({
+          type: "success",
+          title: "Berhasil Tambah Permohonan !",
+          showConfirmButton: true,
+          // showCancelButton: true,
+          confirmButtonText: `Ok`,
+        }).then((result) => {
+          $(document).ready(function () {
+            location.reload();
+          });
+        });
+      },
+    });
+  }
+
+
   $("#mohon_save").on("click", function () {
     bootbox.confirm({
       message: "Apakah data yg anda masukan sudah <b>sesuai</b> ?",
@@ -266,11 +378,11 @@ $(document).ready(function () {
                 .addClass("has-error");
             }
           }
-
-          formData.append(
-            "file[doc_permohonan]",
-            $("#doc_permohonan")[0].files[0]
-          );
+          
+          // formData.append(
+          //   "file[doc_permohonan]",
+          //   $("#doc_permohonan")[0].files[0]
+          // );
           formData.append(
             "file[doc_izin_lingkungan]",
             $("#doc_izin_lingkungan")[0].files[0]
@@ -429,15 +541,96 @@ function loadpermohonan(param) {
       param: param,
     },
     success: function (result) {
-      let data = result.data;
       let code = result.code;
-
       if (code != "0") {
         if ($("#isRole").val() == 0) {
+          let data = result.data[0][0].permohonan;
+          let datas = result.data[0][0];
+
           $("#idpermohonan").val(data[0].id);
           $("#initype").val(data[0].type);
           $("#inikategori").val(data[0].kategori);
-          $("#initambah").hide();
+          $("#initambah").show();
+          var dt = $("#permohonan-table").DataTable({
+            destroy: true,
+            paging: true,
+            lengthChange: true,
+            searching: true,
+            ordering: false,
+            info: true,
+            autoWidth: false,
+            responsive: false,
+            pageLength: 10,
+            aaData: datas.permohonan,
+            aoColumns: [
+              { mDataProp: "id", width: "10%" },
+              { mDataProp: "p6" },
+              { mDataProp: "p7" },
+              { mDataProp: "p8" },
+              { mDataProp: "id" },
+            ],
+            order: [[0, "ASC"]],
+            fixedColumns: true,
+            aoColumnDefs: [
+              { width: 50, targets: 0 },
+              {
+                render: function (data, type, row) {
+                  if (type == "display") {
+                    var file = row.file;
+                    var oks = 0;
+                    for (const key in file) {
+                      oks = file[key]["ok"] == 1 ? oks + 1 : +0;
+                    }
+
+                    var el = '<div class="btn-group">';
+
+                    if (row.param) {
+                      if (oks == 4) {
+                        el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="action('view',${row.id},'${row.type}', '', '', '${row.param}',${row.kategori})">
+                                <i class="bx bx-file font-size-16"></i>
+                              </button>`;
+                      }
+                    }
+                    el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="popupvalidasi(${row.id}, '${row.type}', ${row.param}, ${row.kategori})">
+                            <i class="bx bx-list-ul font-size-16"></i>
+                          </button>`;
+                    if (row.status == 1) {
+                      el +=
+                        `<button type="button" title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view','${row.id}','${row.type}')"><i class="bx bx-check-square font-size-16"></i></button>`;
+                    } else {
+                      el +=
+                        `<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>`;
+                    }
+                    el += "</div>";
+                    return el;
+                  }
+                  return data;
+                },
+                aTargets: [4],
+              },
+            ],
+            fnRowCallback: function (
+              nRow,
+              aData,
+              iDisplayIndex,
+              iDisplayIndexFull
+            ) {
+              var index = iDisplayIndexFull + 1;
+              $("td:eq(0)", nRow).html("#" + index);
+              return index;
+            },
+            fnInitComplete: function () {
+              var that = this;
+              var td;
+              var tr;
+              this.$("td").click(function () {
+                td = this;
+              });
+              this.$("tr").click(function () {
+                tr = this;
+              });
+            },
+          });
           $("#ini-form-add").hide();
           $("#ini-form-view").show();
           if (!data[0]["param"]) {
@@ -463,40 +656,42 @@ function loadpermohonan(param) {
           }
 
           $("#deletedataini").show();
-          for (var index = 1; index <= 9; index++) {
-            $("#view_" + index).val(data[0]["p" + index]);
-            $("#view_" + index).prop("disabled", true);
-          }
+          // console.log(result.data[0]);
+          $("#view_1").val(datas["nama_usaha"]).prop("disabled", true);
+          $("#view_2").val(datas["bidang_usaha"]).prop("disabled", true);
+          $("#view_3").val(datas["nib"]).prop("disabled", true);
+          $("#view_4").val(datas["penanggung_jawab"]).prop("disabled", true);
+          $("#view_5").val(datas["jabatan"]).prop("disabled", true);
+          $("#view_9").val(datas["no_kbli"]).prop("disabled", true);
 
-          $("#ini-paramnya").val(data[0]["param"]);
-
+          $("#ini-paramnya").val(datas["param"]);
           var harap = [];
-          for (var f in data[0]["file"]) {
-            var jenisnya = data[0].file[f]["jenis"];
-            var oknya = data[0].file[f]["ok"];
+          for (var f in datas["file"]) {
+            var jenisnya = datas.file[f]["jenis"];
+            var oknya = datas.file[f]["ok"];
 
             switch (jenisnya) {
               case "doc_permohonan":
-                $("#nama-file-permohonan").html(data[0].file[f]["filename"]);
+                $("#nama-file-permohonan").html(datas.file[f]["filename"]);
                 $("#nama-file-permohonan").attr(
                   "onclick",
                   "downloadatuh('" +
                     "public/" +
-                    data[0].file[f]["path"] +
+                    datas.file[f]["path"] +
                     "/" +
-                    data[0].file[f]["filename"] +
+                    datas.file[f]["filename"] +
                     "')"
                 );
                 $("#hapus-permohonan").attr(
                   "onclick",
                   "actionfile('delete','" +
-                    data[0].file[f]["id"] +
+                    datas.file[f]["id"] +
                     "','" +
-                    data[0].type +
+                    datas.type +
                     "','" +
-                    data[0].file[f]["path"] +
+                    datas.file[f]["path"] +
                     "/" +
-                    data[0].file[f]["filename"] +
+                    datas.file[f]["filename"] +
                     "')"
                 );
 
@@ -518,27 +713,27 @@ function loadpermohonan(param) {
                 break;
               case "doc_izin_lingkungan":
                 $("#nama-file-izin-lingkungan").html(
-                  data[0].file[f]["filename"]
+                  datas.file[f]["filename"]
                 );
                 $("#nama-file-izin-lingkungan").attr(
                   "onclick",
                   "downloadatuh('" +
                     "public/" +
-                    data[0].file[f]["path"] +
+                    datas.file[f]["path"] +
                     "/" +
-                    data[0].file[f]["filename"] +
+                    datas.file[f]["filename"] +
                     "')"
                 );
                 $("#hapus-izin-lingkungan").attr(
                   "onclick",
                   "actionfile('delete','" +
-                    data[0].file[f]["id"] +
+                    datas.file[f]["id"] +
                     "','" +
-                    data[0].type +
+                    datas.type +
                     "','" +
-                    data[0].file[f]["path"] +
+                    datas.file[f]["path"] +
                     "/" +
-                    data[0].file[f]["filename"] +
+                    datas.file[f]["filename"] +
                     "')"
                 );
 
@@ -559,26 +754,26 @@ function loadpermohonan(param) {
                 }
                 break;
               case "doc_nib":
-                $("#nama-file-nib").html(data[0].file[f]["filename"]);
+                $("#nama-file-nib").html(datas.file[f]["filename"]);
                 $("#nama-file-nib").attr(
                   "onclick",
                   "downloadatuh('" +
                     "public/" +
-                    data[0].file[f]["path"] +
+                    datas.file[f]["path"] +
                     "/" +
-                    data[0].file[f]["filename"] +
+                    datas.file[f]["filename"] +
                     "')"
                 );
                 $("#hapus-nib").attr(
                   "onclick",
                   "actionfile('delete','" +
-                    data[0].file[f]["id"] +
+                    datas.file[f]["id"] +
                     "','" +
-                    data[0].type +
+                    datas.type +
                     "','" +
-                    data[0].file[f]["path"] +
+                    datas.file[f]["path"] +
                     "/" +
-                    data[0].file[f]["filename"] +
+                    datas.file[f]["filename"] +
                     "')"
                 );
 
@@ -601,27 +796,27 @@ function loadpermohonan(param) {
                 break;
               case "doc_penapisan_mandiri":
                 $("#nama-file-penapisan-mandiri").html(
-                  data[0].file[f]["filename"]
+                  datas.file[f]["filename"]
                 );
                 $("#nama-file-penapisan_mandiri").attr(
                   "onclick",
                   "downloadatuh('" +
                     "public/" +
-                    data[0].file[f]["path"] +
+                    datas.file[f]["path"] +
                     "/" +
-                    data[0].file[f]["filename"] +
+                    datas.file[f]["filename"] +
                     "')"
                 );
                 $("#hapus-penapisan-mandiri").attr(
                   "onclick",
                   "actionfile('delete','" +
-                    data[0].file[f]["id"] +
+                    datas.file[f]["id"] +
                     "','" +
-                    data[0].type +
+                    datas.type +
                     "','" +
-                    data[0].file[f]["path"] +
+                    datas.file[f]["path"] +
                     "/" +
-                    data[0].file[f]["filename"] +
+                    datas.file[f]["filename"] +
                     "')"
                 );
 
@@ -651,6 +846,7 @@ function loadpermohonan(param) {
           }
         } 
         else {
+          let data = result.data;
           var dt = $("#all-permohonan").DataTable({
             destroy: true,
             paging: true,

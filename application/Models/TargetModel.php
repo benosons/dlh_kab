@@ -488,6 +488,20 @@ class TargetModel extends Model{
           return  $query->getResult();
           
     }
+    
+    public function getfilecomp($table = null, $id = null)
+    {
+          $builder = $this->db->table($table);
+          $builder->where(['id_parent' => $id]);
+          
+          // $builder->whereIn('jenis', ['doc_permohonan', 'doc_izin_lingkungan', 'doc_nib', 'doc_penapisan_mandiri']);
+          $query = $builder->get();
+
+
+          // echo $this->db->getLastQuery();die;
+          return  $query->getResult();
+          
+    }
 
     public function updateparam($id = null, $data = null)
     {

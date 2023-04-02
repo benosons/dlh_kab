@@ -119,6 +119,7 @@ $routes->post('uploadfilelapangan', 'Jsondata::uploadfilelapangan');
 $routes->post('actionUsers', 'Jsondata::actionUsers');
 $routes->post('addUser', 'Jsondata::addUser');
 $routes->post('addpermohonan', 'Jsondata::addpermohonan');
+$routes->post('addperusahaan', 'Jsondata::addperusahaan');
 $routes->post('addkepuasan', 'Jsondata::addkepuasan');
 $routes->post('editfile', 'Jsondata::editfile');
 $routes->post('checkUser', 'Jsondata::checkUser');

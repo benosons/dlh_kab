@@ -1,0 +1,334 @@
+<div class="row">
+  <div class="col-12">
+    <div class="page-title-box d-sm-flex align-items-center justify-content-between" style="padding-top: 20px;">
+      <h4 class="mb-sm-0 font-size-18">
+        Profile Perusahaan
+      </h4>
+      <div class="page-title-right">
+        <ol class="breadcrumb m-0">
+          <li class="breadcrumb-item">
+            <a href="javascript: void(0);">Permohonan</a>
+          </li>
+          <li class="breadcrumb-item active">Persetujuan Teknis</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 widget-container-col">
+        <div class="widget-box widget-color-orange">
+            <div class="widget-header">
+                <div class="widget-toolbar no-border">
+                </div>
+            </div>
+            <div class="widget-body">
+                <div class="widget-main">
+                    <input type="hidden" id="idpermohonan">
+                    <input type="hidden" id="inikategori">
+                    <input type="hidden" id="initype">
+                    <form class="form-horizontal" role="form" id="ini-form-view" style="display: none;">
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for="kode_program"> Nama Badan Usaha/ Kegiatan </label>
+                          <div class="col-sm-6">
+                            <input type="text" id="view_1" placeholder="" class="form-control">
+                          </div>
+                        </div>
+              
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Bidang Usaha/ Kegiatan </label>
+                          <div class="col-sm-6">
+                            <input type="text" id="view_2" placeholder="" class="form-control">
+                          </div>
+                        </div>
+              
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Nomor Induk Berusaha </label>
+                          <div class="col-sm-6">
+                            <input type="text" id="view_3" placeholder="" class="form-control">
+                          </div>
+                        </div>
+          
+                        <div class="form-group" style="padding: 0 0;">
+                          <label class="col-sm-3 control-label no-padding-right" for=""> </label>
+              
+                          <div class="col-sm-6">
+                            <grp id="view-file-nib" style="display:none;">
+                              <button type="button" class="btn btn-sm btn-outline-secondary btn-round">
+                                <i class="bx bx-file"></i>
+                                <span class="bigger-110" id="nama-file-nib"></span>
+                              </button>
+                              <a class="btn btn-danger btn-sm btn-round" id="hapus-nib"><i class="bx bx-trash"></i></a>
+                            </grp>
+          
+                            <div class="form-group" id="form-nib-reupload" style="display:block;">        
+                              <div class="col-sm-11">
+                                <input type="file" name="id-input-file-5" id="doc_nib_reupload" accept=".pdf" />
+                                <button class="btn btn-success btn-sm btn-round" id="upload-nib" onclick="reupload('nib')" type="button"><i class="bx bx-check-double"></i></button>
+                              </div>
+                            </div>
+                            
+                          </div>
+                        </div>
+          
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Nomor KBLI </label>
+              
+                          <div class="col-sm-6">
+                            <input type="text" id="view_9" placeholder="" class="form-control">
+                          </div>
+                        </div>
+          
+                        <div class="form-group">
+                          <label class="col-sm-6 control-label no-padding-right" for=""> Izin / Persetujuan lingkungan atau yang setara
+                          </label>
+              
+                          <div class="col-sm-6">
+                            <grp id="view-file-izin-lingkungan" style="display:none;">
+                              <button type="button" class="btn btn-sm btn-outline-secondary btn-round">
+                                <i class="bx bx-file"></i>
+                                <span class="bigger-110" id="nama-file-izin-lingkungan"></span>
+                              </button>
+                              <button class="btn btn-danger btn-sm btn-round" id="hapus-izin-lingkungan" type="button"><i class="bx bx-trash"></i></button>
+                            </grp>
+          
+                            <div class="form-group" id="form-izin-lingkungan-reupload" style="display:block;">        
+                              <div class="col-sm-11">
+                                <input type="file" name="id-input-file-5" id="doc_izin_lingkungan_reupload" accept=".pdf" />
+                                <button class="btn btn-success btn-sm btn-round" id="upload-izin-lingkungan" onclick="reupload('izin-lingkungan')" type="button"><i class="bx bx-check-double"></i></button>
+                              </div>
+                            </div>
+          
+                          </div>
+                          
+                        </div>
+          
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for=""> Hasil Penapisan Mandiri
+                          </label>
+              
+                          <div class="col-sm-6">
+                            <grp id="view-file-penapisan-mandiri" style="display:none;">
+                              <button type="button" class="btn btn-sm btn-outline-secondary btn-round">
+                                <i class="bx bx-file"></i>
+                                <span class="bigger-110" id="nama-file-penapisan-mandiri"></span>
+                              </button>
+                              <button class="btn btn-danger btn-sm btn-round" id="hapus-penapisan-mandiri" type="button"><i class="bx bx-trash"></i></button>
+                            </grp>
+          
+                            <div class="form-group" id="form-penapisan-mandiri-reupload" style="display:block;">        
+                              <div class="col-sm-11">
+                                <input type="file" name="id-input-file-5" id="doc_penapisan_mandiri_reupload" accept=".pdf" />
+                                <button class="btn btn-success btn-sm btn-round" id="upload-penapisan-mandiri" onclick="reupload('penapisan-mandiri')" type="button"><i class="bx bx-check-double"></i></button>
+                              </div>
+                            </div>
+          
+                          </div>
+                          
+                        </div>
+              
+                        <div class="form-group">
+                          <label class="col-sm-6 control-label no-padding-right" for="nama_program"> Nama Penanggung Jawab Usaha/ Kegiatan </label>
+              
+                          <div class="col-sm-6">
+                            <input type="text" id="view_4" placeholder="" class="form-control">
+                          </div>
+                        </div>
+              
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Jabatan </label>
+              
+                          <div class="col-sm-6">
+                            <input type="text" id="view_5" placeholder="" class="form-control">
+                          </div>
+                        </div>
+<!--               
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Alamat Kantor dan Lokasi Usaha/ Kegiatan </label>
+              
+                          <div class="col-sm-6">
+                            <input type="text" id="view_6" placeholder="" class="form-control">
+                          </div>
+                        </div>
+              
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for="nama_program"> No. Telepon </label>
+              
+                          <div class="col-sm-6">
+                            <input type="text" id="view_7" placeholder="" class="form-control">
+                          </div>
+                        </div>
+              
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Email </label>
+              
+                          <div class="col-sm-6">
+                            <input type="email" id="view_8" placeholder="" class="form-control">
+                          </div>
+                        </div>
+          
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for=""> Permohonan </label>
+              
+                          <div class="col-sm-6">
+                            <grp id="view-file-permohonan" style="display:none;">
+                              <button type="button" class="btn btn-sm btn-outline-secondary btn-round">
+                                <i class="bx bx-file"></i>
+                                <span class="bigger-110" id="nama-file-permohonan"></span>
+                              </button>
+                              <button class="btn btn-danger btn-sm btn-round" id="hapus-permohonan" type="button"><i class="bx bx-trash"></i></button>
+                            </grp>
+          
+                            <div class="form-group" id="form-permohonan-reupload" style="display:block;">        
+                              <div class="col-sm-11">
+                                <input type="file" name="id-input-file-5" id="doc_permohonan_reupload" accept=".pdf" />
+                                <button class="btn btn-success btn-sm btn-round" id="upload-permohonan" onclick="reupload('permohonan')" type="button"><i class="bx bx-check-double"></i></button>
+                              </div>
+                            </div>
+          
+                          </div>
+                        </div> -->
+          
+                        <div class="form-group" id="ini-verifikasi" style="padding: 0 0;">
+                          <label class="col-sm-3 control-label no-padding-right" for=""> </label>
+                          <div class="col-sm-6">
+                            <div class="alert alert-block alert-warning text-center">
+                              <p id="harap" style="margin: 16px 0;">Harap Melakukan Upload Ulang file :</p>
+                              <ol id="harus-upload">
+                              </ol>
+                            </div>
+                          </div>
+                        </div>
+          
+                        <!-- <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for=""> </label>
+              
+                          <div class="col-sm-6">
+                            <button type="button" id="cekunggahan" class="btn btn-sm btn-block btn-primary" >
+                              <i class="bx bx-check"></i>Persyaratan Permohonan Persetujuan Teknis
+                            </button>
+                            <input type="hidden" id="ini-paramnya">
+                          </div>
+                        </div>
+          
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for=""> </label>
+              
+                          <div class="col-sm-6">
+                            
+                            <button type="button" id="verlapanganini" class="btn btn-xs btn-block btn-warning" ><i class="ace-icon fa fa-check-square"></i>Dokumen BA & Pertek</button>
+          
+                          </div>
+                        </div>
+          
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for=""> </label>
+              
+                          <div class="col-sm-6">
+                            
+                            <a type="button" id="surveykepuasan" href="https://docs.google.com/forms/d/e/1FAIpQLScCZ8zP_FR49UaFI7tEAPXQOyPQDTTk8d7SW-R8dAGua5gB5w/viewform" target="_blank" class="btn btn-sm btn-block btn-success" ><i class="ace-icon fa fa-heart"></i> Survey Kepuasan</a>
+          
+                          </div>
+                        </div> -->
+          
+                        <div class="form-group" style="padding: 0 0;">
+                          <label class="col-sm-3 control-label no-padding-right" for=""> </label>
+              
+                          <div class="col-sm-6">
+                            <button type="button" id="deletedataini" class="btn btn-sm btn-block btn-danger" ><i class="bx bx-trash"></i> Hapus Profile</button>
+                          </div>
+                        </div>
+                    </form>
+
+                    <form class="form-horizontal" role="form" id="ini-form-add">
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for="kode_program"> Nama Badan Usaha/ Kegiatan <code>*</code></label>
+              
+                          <div class="col-sm-6">
+                            <input type="text" name="form-input" id="input_1" placeholder="" class="form-control">
+                          </div>
+                        </div>
+              
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Bidang Usaha/ Kegiatan <code>*</code></label>
+              
+                          <div class="col-sm-6">
+                            <input type="text" name="form-input" id="input_2" placeholder="" class="form-control">
+                          </div>
+                        </div>
+              
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Nomor Induk Berusaha <code>*</code></label>
+              
+                          <div class="col-sm-6">
+                            <input type="text" name="form-input" id="input_3" placeholder="" class="form-control" onkeypress="return hanyaAngka(event)" maxlength="13">
+                          </div>
+                        </div>
+          
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for="doc_nib"></label>
+              
+                          <div class="col-sm-6">
+                            <input type="file" name="id-input-file-5" id="doc_nib" accept=".pdf" />
+                            <code>File .PDF - Max 5 mb</code>
+                          </div>
+                        </div>
+          
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Nomor KBLI <code>*</code></label>
+              
+                          <div class="col-sm-6">
+                            <input type="text" name="form-input" id="input_9" placeholder="" class="form-control" onkeypress="return hanyaAngka(event)" maxlength="5">
+                          </div>
+                        </div>
+          
+                        <div class="form-group">
+                          <label class="col-sm-6 control-label no-padding-right" for="doc_izin_lingkungan">Izin / Persetujuan lingkungan atau yang setara <code>*</code></label>
+              
+                          <div class="col-sm-6">
+                            <input type="file" name="id-input-file-5" id="doc_izin_lingkungan" accept=".pdf" />
+                            <code>File .PDF - Max 5 mb</code>
+                          </div>
+                        </div>
+                        
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for="doc_penapisan_mandiri">Hasil Penapisan Mandiri <code>*</code></label>
+              
+                          <div class="col-sm-6">
+                            <input type="file" name="id-input-file-5" id="doc_penapisan_mandiri" accept=".pdf" />
+                            <code>File .PDF - Max 5 mb</code>
+                          </div>
+                        </div>
+              
+                        <div class="form-group">
+                          <label class="col-sm-6 control-label no-padding-right" for="nama_program"> Nama Penanggung Jawab Usaha/ Kegiatan <code>*</code></label>
+              
+                          <div class="col-sm-6">
+                            <input type="text" name="form-input" id="input_4" placeholder="" class="form-control">
+                          </div>
+                        </div>
+              
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Jabatan <code>*</code></label>
+              
+                          <div class="col-sm-6">
+                            <input type="text" name="form-input" id="input_5" placeholder="" class="form-control">
+                          </div>
+                        </div>
+          
+                        <div class="form-group">
+                          <label class="col-sm-3 control-label no-padding-right" for="nama_program"></label>
+              
+                          <div class="col-sm-6">
+                            <button type="button" id="mohon_save_perusahaan" class="btn btn-sm btn-success btn-block" ><i class="bx bx-check"></i> Simpan</button>
+          
+                          </div>
+                        </div>
+              
+              
+                      </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

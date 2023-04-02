@@ -27,13 +27,24 @@ class ProgramModel extends Model{
 
           if($role == '0'){ 
             $builder = $this->db->table('data_permohonan');
-            $query   = $builder->getWhere(['created_by' => $userid, 'type' => $type]);
+            $query   = $builder->getWhere(['created_by' => $userid, 'type' => $type, 'parent_id' => $userid]);
             return  $query->getResult();
           }
           $builder = $this->db->table('data_permohonan');
           $query   = $builder->getWhere(['type' => $type]);
           // echo $this->db->getLastQuery();die;
           return  $query->getResult();
+    }
+    
+    public function getperusahaan($role=null, $userid=null)
+    { 
+
+          if($role == '0'){ 
+            $builder = $this->db->table('data_perusahaan');
+            $query = $builder->getwhere(['created_by' => $userid]);
+            return  $query->getResult();
+          }
+          // echo $this->db->getLastQuery();die;
     }
 
     public function countpermohonan($role=null,$userid=null,$type=null)
@@ -49,6 +60,11 @@ class ProgramModel extends Model{
           $query   = $builder->getWhere(['status' => null, 'kategori' => null, 'param' => null]);
           // echo $this->db->getLastQuery();die;
           return  $query->getResult();
+    }
+
+    public function saveParamComp($data = null)
+    {
+        return  $this->db->table('data_perusahaan')->insert($data);
     }
 
     public function saveParam($table = null, $data = null)
