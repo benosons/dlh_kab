@@ -22,29 +22,29 @@ class ProgramModel extends Model{
           return  $query->getResult();
     }
 
-    public function getpermohonan($role=null,$userid=null,$type=null)
+    public function getpermohonan($id = null, $role = null, $userid = null, $type = null)
     { 
 
           if($role == '0'){ 
             $builder = $this->db->table('data_permohonan');
-            $query   = $builder->getWhere(['created_by' => $userid, 'type' => $type, 'parent_id' => $userid]);
+            $query   = $builder->getWhere(['created_by' => $userid, 'type' => $type, 'id_perusahaan' => $id]);
+            // echo $this->db->getLastQuery();die;
+
             return  $query->getResult();
-          }
+          } 
           $builder = $this->db->table('data_permohonan');
           $query   = $builder->getWhere(['type' => $type]);
-          // echo $this->db->getLastQuery();die;
           return  $query->getResult();
     }
     
     public function getperusahaan($role=null, $userid=null)
     { 
-
-          if($role == '0'){ 
+      if($role == '0'){ 
             $builder = $this->db->table('data_perusahaan');
             $query = $builder->getwhere(['created_by' => $userid]);
             return  $query->getResult();
           }
-          // echo $this->db->getLastQuery();die;
+          echo $this->db->getLastQuery();die;
     }
 
     public function countpermohonan($role=null,$userid=null,$type=null)

@@ -781,16 +781,29 @@ class Jsondata extends \CodeIgniter\Controller
 				// }
 				$company = $model->getperusahaan('0', $userid);
 				foreach ($company as $key => $value) {
-					$datafilenya = $modelfiles->getfilecomp('param_file', $value->id);
-					$value->file = (object) $datafilenya;
-					$dataprogram 		= $model->getpermohonan($role, $userid, $param);
-					$value->permohonan 	= $dataprogram;
-					foreach ($dataprogram as $key => $value) {
-						$datafilenya = $modelfiles->getfilenya('param_file', $value->id, $value->type, null, $value->kategori);
-						$value->file = (object) $datafilenya;
+					$datafilenya = json_decode( json_encode($modelfiles->getfilecomp('param_file', $value->id)), true);
+					$value->file = [];
+					$value->permohonan = [];
+					foreach ($datafilenya as $keyf => $valuef) {
+						array_push($value->file, $valuef);
 					}
+
+					$dataprogram = json_decode(json_encode($model->getpermohonan($value->id, $role, $userid, $param)), true);
+					foreach ($dataprogram as $keyp => $valuep) {
+						$valuep['file'] = [];
+						$datafilenya = json_decode(json_encode($modelfiles->getfilenya('param_file', $valuep['id'], $valuep['type'], null, $valuep['kategori'])), true);
+						foreach ($datafilenya as $keyff => $valueff) {
+							array_push($valuep['file'], $valueff);
+						}
+						array_push($value->permohonan, $valuep);
+					}
+					// foreach ($dataprogram as $key => $value) {
+					// 	$value->file = (object) $datafilenya;
+					// }
+					
+					$fulldata = $value;
 				}
-				array_push($fulldata, $company);
+				
 			}
 			if($fulldata){
 				$response = [
@@ -1985,7 +1998,7 @@ class Jsondata extends \CodeIgniter\Controller
 					$stat = $files[$key]->move($folder.'/'.$key, $files[$key]->getName());
 					
 					$data_file = [
-						'id_parent'			=> $userid,
+						'id_parent'			=> $id,
 						'type'				=> $request->getVar('type'),
 						'jenis'				=> $key,
 						'filename'			=> $files[$key]->getName(),
@@ -2038,6 +2051,7 @@ class Jsondata extends \CodeIgniter\Controller
 		$data['created_date'] 	= $this->now;
 		$data['updated_date'] 	= $this->now;
 		$data['type'] 			= $request->getVar('type');
+		$data['id_perusahaan'] 	= $request->getVar('id_perusahaan');
 
 		$res = $model->saveParam($param, $data);
 		$id  = $model->insertID();

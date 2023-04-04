@@ -55,12 +55,14 @@
                   <div class="widget-box widget-color-orange">
                     <div class="widget-header">
                       <div class="widget-toolbar no-border">
-                        <button  id="initambah" class="btn btn-xs btn-inverse bigger" data-toggle="modal" data-target="#modal_program">
+                        <button  id="initambah" class="btn btn-xs btn-info bigger">
                           <i class="ace-icon fa fa-plus"></i>
                           Tambah Permohonan
                         </button>
                       </div>
                     </div>
+                    <br/>
+
                     <div class="widget-body">
                       <div class="widget-main">
                         {% if role == 0 %}
@@ -552,62 +554,60 @@
             {% endif %}
 
             <!-- Modal -->
-            <div id="modal_program" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+            <div id="modal_program" class="modal fade" role="dialog">
               <div class="modal-dialog modal-lg">
                 <!-- Modal content-->
                 <div class="modal-content">
                   <div class="modal-header bg-success">
-                    <button type="button" class="close" data-dismiss="modal" id="close_modal_program">&times;</button>
-                    <h4 class="modal-title">Permohonan Persetujuan Teknis Pemenuhan Baku Mutu Air Limbah</h4>
+                    <h4 class="modal-title">Permohonan Persetujuan Teknis </h4>
                   </div>
                   <div class="modal-body">
                     <form class="form-horizontal" role="form">
-                      <!-- #section:elements.form -->
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right" for="kode_program"> Nama Badan Usaha/ Kegiatan </label>
 
                         <div class="col-sm-9">
                           <input type="text" id="input_1" placeholder="" class="form-control">
                         </div>
-                      </div>
-
+                      </div> -->
+<!-- 
                       <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Bidang Usaha/ Kegiatan </label>
 
                         <div class="col-sm-9">
                           <input type="text" id="input_2" placeholder="" class="form-control">
                         </div>
-                      </div>
+                      </div> -->
 
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Nomor Induk Berusaha </label>
 
                         <div class="col-sm-9">
                           <input type="text" id="input_3" placeholder="" class="form-control" onkeypress="return hanyaAngka(event)" maxlength="13">
                         </div>
-                      </div>
+                      </div> -->
 
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Nama Penanggung Jawab Usaha/ Kegiatan </label>
 
                         <div class="col-sm-9">
                           <input type="text" id="input_4" placeholder="" class="form-control">
                         </div>
-                      </div>
+                      </div> -->
 
-                      <div class="form-group">
+                      <!-- <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Jabatan </label>
 
                         <div class="col-sm-9">
                           <input type="text" id="input_5" placeholder="" class="form-control">
                         </div>
-                      </div>
+                      </div> -->
 
                       <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Alamat Kantor dan Lokasi Usaha/ Kegiatan </label>
 
                         <div class="col-sm-9">
-                          <input type="text" id="input_6" placeholder="" class="form-control">
+                          <input type="text" id="input_6" placeholder="" class="form-control" name="form-input">
                         </div>
                       </div>
 
@@ -615,7 +615,7 @@
                         <label class="col-sm-3 control-label no-padding-right" for="nama_program"> No. Telepon </label>
 
                         <div class="col-sm-9">
-                          <input type="text" id="input_7" placeholder="" class="form-control" onkeypress="return hanyaAngka(event)" maxlength="13">
+                          <input type="text" id="input_7" placeholder="" class="form-control" onkeypress="return hanyaAngka(event)" maxlength="13" name="form-input">
                         </div>
                       </div>
 
@@ -623,10 +623,18 @@
                         <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Email </label>
 
                         <div class="col-sm-9">
-                          <input type="text" id="input_8" placeholder="" class="form-control">
+                          <input type="text" id="input_8" placeholder="" class="form-control" name="form-input">
                         </div>
                       </div>
 
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label no-padding-right" for="doc_permohonan">Permohonan <code>*</code></label>
+            
+                        <div class="col-sm-6">
+                          <input type="file" name="id-input-file-5" id="doc_permohonan" accept=".pdf" />
+                          <code>File .PDF - Max 5 mb</code>
+                        </div>
+                      </div>
 
                     </form>
                   </div>
