@@ -43,8 +43,12 @@ class ProgramModel extends Model{
             $builder = $this->db->table('data_perusahaan');
             $query = $builder->getwhere(['created_by' => $userid]);
             return  $query->getResult();
-          }
-          echo $this->db->getLastQuery();die;
+      }
+
+      $builder = $this->db->table('data_perusahaan');
+      $query = $builder->get();
+      return  $query->getResult();
+          // echo $this->db->getLastQuery();die;
     }
 
     public function countpermohonan($role=null,$userid=null,$type=null)

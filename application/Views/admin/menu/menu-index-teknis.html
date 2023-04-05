@@ -77,6 +77,7 @@
                                 <th>Alamat Kantor</th>
                                 <th>No.Telp</th>
                                 <th>Email</th>
+                                <th>File</th>
                                 <th>Action</th>
                               </tr>
                             </thead>
@@ -555,7 +556,7 @@
 
             <!-- Modal -->
             <div id="modal_program" class="modal fade" role="dialog">
-              <div class="modal-dialog modal-lg">
+              <div class="modal-dialog">
                 <!-- Modal content-->
                 <div class="modal-content">
                   <div class="modal-header bg-success">
@@ -563,6 +564,7 @@
                   </div>
                   <div class="modal-body">
                     <form class="form-horizontal" role="form">
+                      <input type="hidden" id="ideditpermohonan" />
                       <!-- <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right" for="kode_program"> Nama Badan Usaha/ Kegiatan </label>
 
@@ -604,33 +606,33 @@
                       </div> -->
 
                       <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Alamat Kantor dan Lokasi Usaha/ Kegiatan </label>
+                        <label class="col-sm-12 control-label no-padding-right" for="nama_program"> Alamat Kantor dan Lokasi Usaha/ Kegiatan </label>
 
-                        <div class="col-sm-9">
+                        <div class="col-sm-12">
                           <input type="text" id="input_6" placeholder="" class="form-control" name="form-input">
                         </div>
                       </div>
 
                       <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="nama_program"> No. Telepon </label>
+                        <label class="col-sm-6 control-label no-padding-right" for="nama_program"> No. Telepon </label>
 
-                        <div class="col-sm-9">
+                        <div class="col-sm-12">
                           <input type="text" id="input_7" placeholder="" class="form-control" onkeypress="return hanyaAngka(event)" maxlength="13" name="form-input">
                         </div>
                       </div>
 
                       <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Email </label>
+                        <label class="col-sm-6 control-label no-padding-right" for="nama_program"> Email </label>
 
-                        <div class="col-sm-9">
+                        <div class="col-sm-12">
                           <input type="text" id="input_8" placeholder="" class="form-control" name="form-input">
                         </div>
                       </div>
 
-                      <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="doc_permohonan">Permohonan <code>*</code></label>
+                      <div class="form-group" id="form-upload-permohonan">
+                        <label class="col-sm-6 control-label no-padding-right" for="doc_permohonan">Permohonan <code>*</code></label>
             
-                        <div class="col-sm-6">
+                        <div class="col-sm-12">
                           <input type="file" name="id-input-file-5" id="doc_permohonan" accept=".pdf" />
                           <code>File .PDF - Max 5 mb</code>
                         </div>

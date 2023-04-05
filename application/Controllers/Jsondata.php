@@ -366,419 +366,19 @@ class Jsondata extends \CodeIgniter\Controller
 			$fulldatapermohonan = [];
 			
 			if ($role == 100 || $role == 10) {
-				$dataprogram = $model->getpermohonan($role, $userid, $param);
-				foreach ($dataprogram as $key => $value) {
-				$datafilenya = $modelfiles->getfilenya('param_file', $value->id, $value->type, null, $value->kategori);
-				$value->file = (object) $datafilenya;
-				if($value->type == 1 || $value->type == 2){
-					if($role == 100 || $role == 10){
-						$data = $modelfiles->getparam('param_file', $value->id, $value->type, null, $value->kategori);
-						if($value->type == 1){
-							// if($value->param == 1){
-							// 	$total_file = 0;		
-							// 	switch ($value->kategori) {
-							// 		case '1':
-							// 			$total_file = 11;
-							// 			break;
-							// 		case '2':
-							// 			$total_file = 10;
-							// 			break;
-							// 		case '3':
-							// 			$total_file = 10;
-							// 			break;
-							// 		case '4':
-							// 			$total_file = 11;
-							// 			break;
-							// 		case '5':
-							// 			$total_file = 9;
-							// 			break;
-							// 	}
-							// 	if(count($data)){
-							// 		$filterBy = 'doc_lampiran'; // or Finance etc.
-							// 		$data = array_filter($data, function ($var) use ($filterBy) {
-							// 			return ($var->jenis != $filterBy);
-							// 		});
-							// 	}
-							// 	if(count($data) == $total_file){
-							// 		$stt = [];
-							// 		foreach ($data as $key1 => $value1) {	
-							// 			if($value1->status == '0'){
-							// 				array_push($stt, $value1->status);
-							// 			}
-							// 		}
-							// 		if(count($stt) >= $total_file){
-							// 			$data = [
-							// 				'updated_date'	=> $this->now,
-							// 				'updated_by' 	=> $userid,
-							// 				'status' 		=> 1,
-							// 			];
-							// 			$st = 1;
-							// 			$res = $modelfiles->updatestatusmaster('data_permohonan', $value->id, $data);
-							// 		}else{
-							// 			$data = [
-							// 				'updated_date'	=> $this->now,
-							// 				'updated_by' 	=> $userid,
-							// 				'status' 		=> 0,
-							// 			];
-							// 			$st = 0;
-							// 			$res = $modelfiles->updatestatusmaster('data_permohonan', $value->id, $data);
-							// 		}
-							// 	}else{
-							// 		$st = 0;
-							// 	}
-							// }else if($value->param == 2){
-							// 	$total_file = 0;
-							// 	switch ($value->kategori) {
-							// 		case '1':
-							// 			$total_file = 9;
-							// 			break;
-							// 		case '3':
-							// 			$total_file = 9;
-							// 			break;
-							// 		case '4':
-							// 			$total_file = 9;
-							// 			break;
-							// 		case '5':
-							// 			$total_file = 8;
-							// 			break;
-							// 	}
-							// 	if(count($data)){
-							// 		$filterBy = 'doc_lampiran'; // or Finance etc.
-							// 		$data = array_filter($data, function ($var) use ($filterBy) {	
-							// 			return ($var->jenis != $filterBy);
-							// 		});
-							// 	}
-							// 	if(count($data) == $total_file){
-							// 		$stt = [];
-							// 		foreach ($data as $key1 => $value1) {
-							// 			if($value1->status == '0'){
-							// 				array_push($stt, $value1->status);
-							// 			}
-							// 		}
-							// 		if(count($stt) >= $total_file){
-							// 			$data = [
-							// 				'updated_date'	=> $this->now,
-							// 				'updated_by' 	=> $userid,
-							// 				'status' 		=> 1,
-							// 			];
-							// 			$st = 1;
-							// 			$res = $modelfiles->updatestatusmaster('data_permohonan', $value->id, $data);
-							// 		}else{
-							// 			$data = [
-							// 				'updated_date'	=> $this->now,
-							// 				'updated_by' 	=> $userid,
-							// 				'status' 		=> 0,
-							// 			];
-							// 			$st = 0;
-							// 			$res = $modelfiles->updatestatusmaster('data_permohonan', $value->id, $data);		
-							// 		}
-							// 	}else{
-							// 		$st = 0;
-							// 	}
-							// }else{
-							// 	$st = 0;
-							// }
-						}
-						if($value->type == 2){		
-							if(count($data) == 7){
-								$stt = [];
-								foreach ($data as $key1 => $value1) {
-									if($value1->status == '0'){
-										array_push($stt, $value1->status);
-									}
-								}
-								if(count($stt) >= 7){
-									$data = [
-										'updated_date'	=> $this->now,
-										'updated_by' 	=> $userid,
-										'status' 		=> 1,
-									];
-									$st = 1;
-									$res = $modelfiles->updatestatusmaster('data_permohonan', $value->id, $data);
-								}else{
-									$data = [
-										'updated_date'	=> $this->now,
-										'updated_by' 	=> $userid,
-										'status' 		=> 0,
-									];
-									$st = 0;
-									$res = $modelfiles->updatestatusmaster('data_permohonan', $value->id, $data);
-								}
-							}else{
-								$st = 0;
-							}
-						}
+				$company = $model->getperusahaan();
+				foreach ($company as $key => $value) {
+					$datafilenya = json_decode( json_encode($modelfiles->getfilecomp('param_file', $value->id)), true);
+					$value->file = [];
+					foreach ($datafilenya as $keyf => $valuef) {
+						array_push($value->file, $valuef);
 					}
+
+					array_push($fulldata, $value);
 				}
-				if($role == 100 || $role == 10){
-					$value->status = $st;
-				}
-				array_push($fulldata, $value);
-				}
+
 			} else {
-				// $dataprogram = $model->getpermohonan($role, $userid, $param);
-				// foreach ($dataprogram as $key => $value) {
-				// 	$datafilenya = $modelfiles->getfilenya('param_file', $value->id, $value->type, null, $value->kategori);
-				// 	$value->file = (object) $datafilenya;
-				// 	if($value->type == 1 || $value->type == 2){
-				// 		if($role == 100 || $role == 10){
-				// 			$data = $modelfiles->getparam('param_file', $value->id, $value->type, null, $value->kategori);
-				// 			if($value->type == 1){
-				// 				if($value->param == 1){
-				// 					$total_file = 0;		
-				// 					switch ($value->kategori) {
-				// 						case '1':
-				// 							$total_file = 11;
-				// 							break;
-				// 						case '2':
-				// 							$total_file = 10;
-				// 							break;
-				// 						case '3':
-				// 							$total_file = 10;
-				// 							break;
-				// 						case '4':
-				// 							$total_file = 11;
-				// 							break;
-				// 						case '5':
-				// 							$total_file = 9;
-				// 							break;
-				// 					}
-				// 					if(count($data)){
-				// 						$filterBy = 'doc_lampiran'; // or Finance etc.
-				// 						$data = array_filter($data, function ($var) use ($filterBy) {
-				// 							return ($var->jenis != $filterBy);
-				// 						});
-				// 					}
-				// 					if(count($data) == $total_file){
-				// 						$stt = [];
-				// 						foreach ($data as $key1 => $value1) {	
-				// 							if($value1->status == '0'){
-				// 								array_push($stt, $value1->status);
-				// 							}
-				// 						}
-				// 						if(count($stt) >= $total_file){
-				// 							$data = [
-				// 								'updated_date'	=> $this->now,
-				// 								'updated_by' 	=> $userid,
-				// 								'status' 		=> 1,
-				// 							];
-				// 							$st = 1;
-				// 							$res = $modelfiles->updatestatusmaster('data_permohonan', $value->id, $data);
-				// 						}else{
-				// 							$data = [
-				// 								'updated_date'	=> $this->now,
-				// 								'updated_by' 	=> $userid,
-				// 								'status' 		=> 0,
-				// 							];
-				// 							$st = 0;
-				// 							$res = $modelfiles->updatestatusmaster('data_permohonan', $value->id, $data);
-				// 						}
-				// 					}else{
-				// 						$st = 0;
-				// 					}
-				// 				}else if($value->param == 2){
-				// 					$total_file = 0;
-				// 					switch ($value->kategori) {
-				// 						case '1':
-				// 							$total_file = 9;
-				// 							break;
-				// 						case '3':
-				// 							$total_file = 9;
-				// 							break;
-				// 						case '4':
-				// 							$total_file = 9;
-				// 							break;
-				// 						case '5':
-				// 							$total_file = 8;
-				// 							break;
-				// 					}
-				// 					if(count($data)){
-				// 						$filterBy = 'doc_lampiran'; // or Finance etc.
-				// 						$data = array_filter($data, function ($var) use ($filterBy) {	
-				// 							return ($var->jenis != $filterBy);
-				// 						});
-				// 					}
-				// 					if(count($data) == $total_file){
-				// 						$stt = [];
-				// 						foreach ($data as $key1 => $value1) {
-				// 							if($value1->status == '0'){
-				// 								array_push($stt, $value1->status);
-				// 							}
-				// 						}
-				// 						if(count($stt) >= $total_file){
-				// 							$data = [
-				// 								'updated_date'	=> $this->now,
-				// 								'updated_by' 	=> $userid,
-				// 								'status' 		=> 1,
-				// 							];
-				// 							$st = 1;
-				// 							$res = $modelfiles->updatestatusmaster('data_permohonan', $value->id, $data);
-				// 						}else{
-				// 							$data = [
-				// 								'updated_date'	=> $this->now,
-				// 								'updated_by' 	=> $userid,
-				// 								'status' 		=> 0,
-				// 							];
-				// 							$st = 0;
-				// 							$res = $modelfiles->updatestatusmaster('data_permohonan', $value->id, $data);		
-				// 						}
-				// 					}else{
-				// 						$st = 0;
-				// 					}
-				// 				}else{
-				// 					$st = 0;
-				// 				}
-				// 			}
-				// 			if($value->type == 2){		
-				// 				if(count($data) == 7){
-				// 					$stt = [];
-				// 					foreach ($data as $key1 => $value1) {
-				// 						if($value1->status == '0'){
-				// 							array_push($stt, $value1->status);
-				// 						}
-				// 					}
-				// 					if(count($stt) >= 7){
-				// 						$data = [
-				// 							'updated_date'	=> $this->now,
-				// 							'updated_by' 	=> $userid,
-				// 							'status' 		=> 1,
-				// 						];
-				// 						$st = 1;
-				// 						$res = $modelfiles->updatestatusmaster('data_permohonan', $value->id, $data);
-				// 					}else{
-				// 						$data = [
-				// 							'updated_date'	=> $this->now,
-				// 							'updated_by' 	=> $userid,
-				// 							'status' 		=> 0,
-				// 						];
-				// 						$st = 0;
-				// 						$res = $modelfiles->updatestatusmaster('data_permohonan', $value->id, $data);
-				// 					}
-				// 				}else{
-				// 					$st = 0;
-				// 				}
-				// 			}
-				// 		}
-				// 	}
-				// 	if($role == 100 || $role == 10){
-				// 		$value->status = $st;
-				// 	}
-				// 	array_push($fulldatapermohonan, $value);
-				// }
-				// foreach ($dataperusahaan as $a => $b) {
-				// 	$b->permohonan 	= $fulldatapermohonan;
-				// 	$value			= $fulldatapermohonan[0];
-				// 	$datafilenya 	= $modelfiles->getfilenya('param_file', $value->created_by, $value->type, null, $value->kategori);
-				// 	$b->file 		= (object) $datafilenya;
-				// 	if($value->type == 1){
-				// 		if($value->param == 1){
-				// 			$total_file = 0;		
-				// 			switch ($value->kategori) {
-				// 				case '1':
-				// 					$total_file = 11;
-				// 					break;
-				// 				case '2':
-				// 					$total_file = 10;
-				// 					break;
-				// 				case '3':
-				// 					$total_file = 10;
-				// 					break;
-				// 				case '4':
-				// 					$total_file = 11;
-				// 					break;
-				// 				case '5':
-				// 					$total_file = 9;
-				// 					break;
-				// 			}
-				// 			if(count($datafilenya)){
-				// 				$filterBy = 'doc_lampiran'; // or Finance etc.
-				// 				$datafilenya = array_filter($datafilenya, function ($var) use ($filterBy) {
-				// 					return ($var->jenis != $filterBy);
-				// 				});
-				// 			}
-				// 			if(count($datafilenya) == $total_file){
-				// 				$stt = [];
-				// 				foreach ($datafilenya as $key1 => $value1) {	
-				// 					if($value1->status == '0'){
-				// 						array_push($stt, $value1->status);
-				// 					}
-				// 				}
-				// 				if(count($stt) >= $total_file){
-				// 					$datafilenya = [
-				// 						'updated_date'	=> $this->now,
-				// 						'updated_by' 	=> $userid,
-				// 						'status' 		=> 1,
-				// 					];
-				// 					$st = 1;
-				// 					$res = $modelfiles->updatestatusmaster('data_permohonan', $value->id, $datafilenya);
-				// 				}else{
-				// 					$datafilenya = [
-				// 						'updated_date'	=> $this->now,
-				// 						'updated_by' 	=> $userid,
-				// 						'status' 		=> 0,
-				// 					];
-				// 					$st = 0;
-				// 					$res = $modelfiles->updatestatusmaster('data_permohonan', $value->id, $datafilenya);
-				// 				}
-				// 			}else{
-				// 				$st = 0;
-				// 			}
-				// 		}else if($value->param == 2){
-				// 			$total_file = 0;
-				// 			switch ($value->kategori) {
-				// 				case '1':
-				// 					$total_file = 9;
-				// 					break;
-				// 				case '3':
-				// 					$total_file = 9;
-				// 					break;
-				// 				case '4':
-				// 					$total_file = 9;
-				// 					break;
-				// 				case '5':
-				// 					$total_file = 8;
-				// 					break;
-				// 			}
-				// 			if(count($datafilenya)){
-				// 				$filterBy = 'doc_lampiran'; // or Finance etc.
-				// 				$datafilenya = array_filter($datafilenya, function ($var) use ($filterBy) {	
-				// 					return ($var->jenis != $filterBy);
-				// 				});
-				// 			}
-				// 			if(count($datafilenya) == $total_file){
-				// 				$stt = [];
-				// 				foreach ($datafilenya as $key1 => $value1) {
-				// 					if($value1->status == '0'){
-				// 						array_push($stt, $value1->status);
-				// 					}
-				// 				}
-				// 				if(count($stt) >= $total_file){
-				// 					$datafilenya = [
-				// 						'updated_date'	=> $this->now,
-				// 						'updated_by' 	=> $userid,
-				// 						'status' 		=> 1,
-				// 					];
-				// 					$st = 1;
-				// 					$res = $modelfiles->updatestatusmaster('data_permohonan', $value->id, $datafilenya);
-				// 				}else{
-				// 					$datafilenya = [
-				// 						'updated_date'	=> $this->now,
-				// 						'updated_by' 	=> $userid,
-				// 						'status' 		=> 0,
-				// 					];
-				// 					$st = 0;
-				// 					$res = $modelfiles->updatestatusmaster('data_permohonan', $value->id, $datafilenya);		
-				// 				}
-				// 			}else{
-				// 				$st = 0;
-				// 			}
-				// 		}else{
-				// 			$st = 0;
-				// 		}
-				// 	}
-					
-				// 	array_push($fulldata, $b);
-				// }
+				
 				$company = $model->getperusahaan('0', $userid);
 				foreach ($company as $key => $value) {
 					$datafilenya = json_decode( json_encode($modelfiles->getfilecomp('param_file', $value->id)), true);
@@ -2042,54 +1642,67 @@ class Jsondata extends \CodeIgniter\Controller
 		$modelfile 	= new \App\Models\TargetModel();
 
 		$data = [];
-
-		for ($i=1; $i <= 9 ; $i++) { 
-			$data['p'.$i] = $request->getVar('input_'.$i);
-		}
-
-		$data['created_by']	 	= $userid;
-		$data['created_date'] 	= $this->now;
-		$data['updated_date'] 	= $this->now;
-		$data['type'] 			= $request->getVar('type');
-		$data['id_perusahaan'] 	= $request->getVar('id_perusahaan');
-
-		$res = $model->saveParam($param, $data);
-		$id  = $model->insertID();
-
-		if(!empty($_FILES)){
-
-			$files	 	= $request->getFiles()['file'];
-			$path		= FCPATH.'public';
-			$tipe		= 'uploads/perusahaan';
-			$date 		= date('Y/m/d');
-			$folder		= $path.'/'.$tipe.'/'.$date.'/'.$request->getVar('type').'/'.$userid;
-			$bab		= '';
-			
-			foreach ($files as $key => $value) {
-				
-				if (!is_dir($folder.'/'.$key)) {
-					mkdir($folder.'/'.$key, 0777, TRUE);
-				}
-
-				$stat = $files[$key]->move($folder.'/'.$key, $files[$key]->getName());
-				
-				$data_file = [
-					'id_parent'			=> $id,
-					'type'				=> $request->getVar('type'),
-					'jenis'				=> $key,
-					'filename'			=> $files[$key]->getName(),
-					'ext'				=> null,
-					'size'				=> $files[$key]->getSize(),
-					'path'				=> $tipe.'/'.$date.'/'.$request->getVar('type').'/'.$userid.'/'.$key,
-					'created_date'		=> $this->now,
-					'updated_date'		=> $this->now,
-					'create_by'			=> $userid,
-					'bab'				=> $bab,
-				];
-
-				$resfile = $modelfile->saveParam('param_file', $data_file);
+		
+		if(!$request->getVar('id_permohonan')){
+			for ($i=1; $i <= 9 ; $i++) { 
+				$data['p'.$i] = $request->getVar('input_'.$i);
 			}
 
+			$data['created_by']	 	= $userid;
+			$data['created_date'] 	= $this->now;
+			$data['updated_date'] 	= $this->now;
+			$data['type'] 			= $request->getVar('type');
+			$data['id_perusahaan'] 	= $request->getVar('id_perusahaan');
+
+			$res = $model->saveParam($param, $data);
+			$id  = $model->insertID();
+
+			if(!empty($_FILES)){
+
+				$files	 	= $request->getFiles()['file'];
+				$path		= FCPATH.'public';
+				$tipe		= 'uploads/perusahaan';
+				$date 		= date('Y/m/d');
+				$folder		= $path.'/'.$tipe.'/'.$date.'/'.$request->getVar('type').'/'.$userid;
+				$bab		= '';
+				
+				foreach ($files as $key => $value) {
+					
+					if (!is_dir($folder.'/'.$key)) {
+						mkdir($folder.'/'.$key, 0777, TRUE);
+					}
+
+					$stat = $files[$key]->move($folder.'/'.$key, $files[$key]->getName());
+					
+					$data_file = [
+						'id_parent'			=> $id,
+						'type'				=> $request->getVar('type'),
+						'jenis'				=> $key,
+						'filename'			=> $files[$key]->getName(),
+						'ext'				=> null,
+						'size'				=> $files[$key]->getSize(),
+						'path'				=> $tipe.'/'.$date.'/'.$request->getVar('type').'/'.$userid.'/'.$key,
+						'created_date'		=> $this->now,
+						'updated_date'		=> $this->now,
+						'create_by'			=> $userid,
+						'bab'				=> $bab,
+					];
+
+					$resfile = $modelfile->saveParam('param_file', $data_file);
+				}
+
+			}
+
+		}else{
+			
+			for ($i=6; $i <= 8 ; $i++) { 
+				$data['p'.$i] = $request->getVar('input_'.$i);
+			}
+
+			$data['updated_date'] 		= $this->now;
+			$data['updated_by'] 		= $userid;
+			
+			$res = $modelfile->updateper($request->getVar('id_permohonan'), $data);
 		}
 
 		$response = [
