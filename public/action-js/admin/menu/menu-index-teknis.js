@@ -13,6 +13,11 @@ $(document).ready(function () {
       $("#data_permohonan_btn").removeClass("active");
       $("#data_perusahaan_btn").addClass("nav-link active");
     });
+
+    $("#back-all-permohonan").click(function(){
+      $("#permohonan-all").show();
+      $("#detail").hide();
+    });
   $("#nav-menu li").removeClass();
   // $('#nav-menu li#menu-data').addClass('open');
   $("#nav-menu li#menu-teknis").addClass("active");
@@ -263,7 +268,7 @@ $(document).ready(function () {
         if (result) {
           var formDataP = new FormData();
           formDataP.append("param", "data_perusahaan");
-
+          formData.append("type", "1");
           formDataP.append("input_1", $("#input_1").val());
           
           formDataP.append("input_2", $("#input_2").val());
@@ -475,6 +480,7 @@ $(document).ready(function () {
     );
   });
 
+  
   $("#deletedataini").on("click", function () {
     action(
       "delete",
@@ -578,7 +584,6 @@ function loadpermohonan(param) {
           $("#initype").val(data.type);
           $("#inikategori").val(data.kategori);
           $("#initambah").show();
-
           if(typeof data.permohonan != 'undefined'){
             var dt = $("#permohonan-table").DataTable({
               destroy: true,
@@ -647,11 +652,10 @@ function loadpermohonan(param) {
                       for (const key in file) {
                         oks = file[key]["ok"] == 1 ? oks + 1 : +0;
                       }
-
                       var el = '<div class="btn-group">';
 
                       if (row.param) {
-                        if (oks == 4) {
+                        if (oks == 1) {
                           el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="action('view',${row.id},'${row.type}', '', '', '${row.param}',${row.kategori})">
                                   <i class="bx bx-file font-size-16"></i>
                                 </button>`;
@@ -915,150 +919,127 @@ function loadpermohonan(param) {
           }
         } else {
           let data = result.data;
-          var dt = $("#all-permohonan").DataTable({
-            destroy: true,
-            paging: true,
-            lengthChange: true,
-            searching: true,
-            ordering: false,
-            info: true,
-            autoWidth: false,
-            responsive: false,
-            pageLength: 10,
-            aaData: result.data,
-            aoColumns: [
-              { mDataProp: "id", width: "10%" },
-              { mDataProp: "nama_usaha" },
-              { mDataProp: "no_kbli" },
-              { mDataProp: "nib" },
-              { mDataProp: "bidang_usaha" },
-              { mDataProp: "penganggung_jawab" },
-              { mDataProp: "jabatan" },
-              { mDataProp: "kategori" },
-              { mDataProp: "id" },
-            ],
-            order: [[0, "ASC"]],
-            fixedColumns: true,
-            aoColumnDefs: [
-              { width: 50, targets: 0 },
-              {
-                render: function (data, type, row) {
-                  if (type == "display") {
-                    if (!row.kategori) {
-                      return "-";
-                    }
 
-                    let iskat = "";
-                    let kategori = [
-                      "",
-                      "Pembuangan air limbah ke badan air permukaan",
-                      "Pembuangan air limbah ke formasi tertentu",
-                      "Pemanfaatan air limbah untuk aplikasi ke tanah",
-                      "Pemanfaatan air limbah ke formasi tertentu",
-                      "Pembuangan emisi",
-                    ];
+            // Table perusahaan
+            var dt = $("#all-permohonan").DataTable({
+              destroy: true,
+              paging: true,
+              lengthChange: true,
+              searching: true,
+              ordering: false,
+              info: true,
+              autoWidth: false,
+              responsive: false,
+              pageLength: 10,
+              aaData: data,
+              aoColumns: [
+                { mDataProp: "id", width: "10%" },
+                { mDataProp: "nama_usaha" },
+                { mDataProp: "bidang_usaha" },
+                { mDataProp: "nib" },
+                { mDataProp: "no_kbli" },
+                { mDataProp: "penanggung_jawab" },
+                { mDataProp: "jabatan" },
+                { mDataProp: "id" },
+              ],
+              order: [[0, "ASC"]],
+              fixedColumns: true,
+              aoColumnDefs: [
+                { width: 50, targets: 0 },
+                // {
+                //   render: function (data, type, row) {
+                //     if (type == "display") {
+                //       if (!row.kategori) {
+                //         return "-";
+                //       }
 
-                    return kategori[row.kategori];
-                  }
-                  return data;
-                },
-                aTargets: [4],
-              },
-              {
-                render: function (data, type, row) {
-                  if (type == "display") {
-                    if (!row.param) {
-                      return "-";
-                    }
-                    let par = ["", "Kajian Teknis", "Standar Teknis"];
-                    return par[row.param];
-                  }
-                  return data;
-                },
-                aTargets: [5],
-              },
-              {
-                render: function (data, type, row) {
-                  if (type == "display") {
-                    var file = row.file;
-                    var oks = 0;
-                    for (const key in file) {
-                      oks = file[key]["ok"] == 1 ? oks + 1 : +0;
-                    }
+                //       let iskat = "";
+                //       let kategori = [
+                //         "",
+                //         "Pembuangan air limbah ke badan air permukaan",
+                //         "Pembuangan air limbah ke formasi tertentu",
+                //         "Pemanfaatan air limbah untuk aplikasi ke tanah",
+                //         "Pemanfaatan air limbah ke formasi tertentu",
+                //         "Pembuangan emisi",
+                //       ];
 
-                    var el = '<div class="btn-group">';
-
-                    if (row.param) {
-                      if (oks == 4) {
-                        el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="action('view',${row.id},'${row.type}', '', '', '${row.param}',${row.kategori})">
-                                <i class="bx bx-file font-size-16"></i>
-                              </button>`;
+                //       return kategori[row.kategori];
+                //     }
+                //     return data;
+                //   },
+                //   aTargets: [4],
+                // },
+                // {
+                //   render: function (data, type, row) {
+                //     if (type == "display") {
+                //       if (!row.param) {
+                //         return "-";
+                //       }
+                //       let par = ["", "Kajian Teknis", "Standar Teknis"];
+                //       return par[row.param];
+                //     }
+                //     return data;
+                //   },
+                //   aTargets: [5],
+                // },
+                {
+                  render: function (data, type, row) {
+                    if (type == "display") {
+                      var file = row.file;
+                      var oks = 0;
+                      for (const key in file) {
+                        oks = file[key]["ok"] == 1 ? oks + 1 : +0;
                       }
+
+                      var el = '<div class="btn-group">';
+                      if (row.param) {
+                        if (oks == 1) {
+                          el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="action('view',${row.id},'${row.type}', '', '', '${row.param}',${row.kategori})">
+                                  <i class="bx bx-file font-size-16"></i>
+                                </button>`;
+                        }
+                      }
+                      el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="detailper(${row.id})">
+                              <i class="bx bx-list-ul font-size-16"></i>
+                            </button>`;
+                      if (row.status == 1) {
+                        el +=
+                          `<button type="button" title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view','${row.id}','${row.type}')"><i class="bx bx-check-square font-size-16"></i></button>`;
+                      } else {
+                        el +=
+                          `<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>`;
+                      }
+                      el += "</div>";
+                      return el;
                     }
-                    el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="popupvalidasi(${row.id}, '${row.type}', ${row.param}, ${row.kategori})">
-                            <i class="bx bx-list-ul font-size-16"></i>
-                          </button>`;
-                    if (row.status == 1) {
-                      el +=
-                        `<button type="button" title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view','${row.id}','${row.type}')"><i class="bx bx-check-square font-size-16"></i></button>`;
-                    } else {
-                      el +=
-                        `<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>`;
-                    }
-                    el += "</div>";
-                    return el;
-                  }
-                  return data;
+                    return data;
+                  },
+                  aTargets: [7],
                 },
-                aTargets: [8],
+              ],
+              fnRowCallback: function (
+                nRow,
+                aData,
+                iDisplayIndex,
+                iDisplayIndexFull
+              ) {
+                var index = iDisplayIndexFull + 1;
+                $("td:eq(0)", nRow).html("#" + index);
+                return index;
               },
-            ],
-            fnRowCallback: function (
-              nRow,
-              aData,
-              iDisplayIndex,
-              iDisplayIndexFull
-            ) {
-              var index = iDisplayIndexFull + 1;
-              $("td:eq(0)", nRow).html("#" + index);
-              return index;
-            },
-            fnInitComplete: function () {
-              var that = this;
-              var td;
-              var tr;
-              this.$("td").click(function () {
-                td = this;
-              });
-              this.$("tr").click(function () {
-                tr = this;
-              });
-            },
-          });
-
+              fnInitComplete: function () {
+                var that = this;
+                var td;
+                var tr;
+                this.$("td").click(function () {
+                  td = this;
+                });
+                this.$("tr").click(function () {
+                  tr = this;
+                });
+              },
+            });
           // $("#all-permohonan_filter.dataTables_filter").append($("#categoryFilter"));
-
-          var categoryIndex = 0;
-          $("#all-permohonan th").each(function (i) {
-            if ($($(this)).html() == "Kategori") {
-              categoryIndex = i;
-              return false;
-            }
-          });
-
-          $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
-            var selectedItem = $("#categoryFilter").val();
-            var category = data[categoryIndex];
-            if (selectedItem === "" || category.includes(selectedItem)) {
-              return true;
-            }
-            return false;
-          });
-
-          $("#categoryFilter").change(function (e) {
-            dt.draw();
-          });
-          dt.draw();
         }
       } else {
         if ($("#isRole").val() == 0) {
@@ -1124,6 +1105,209 @@ function upload(formData) {
     },
   });
 }
+
+function detailper(id) {
+  $("#permohonan-all").hide();
+  $("#detail").show();
+  $.ajax({
+    type: "post",
+    dataType: "json",
+    url: "loaddetailpermohonan",
+    data: {
+      param: id,
+    },
+    success: function (result) {
+      let code = result.code;
+      if ( code != "0") {
+        $("#categoryFiltertext").show();
+        $("#categoryFilter").show();
+        let data = result.data;
+        // Table detail permohonan
+        var dt = $("#permohonan-detail").DataTable({
+          destroy: true,
+          paging: true,
+          lengthChange: true,
+          searching: true,
+          ordering: false,
+          info: true,
+          autoWidth: false,
+          responsive: false,
+          pageLength: 10,
+          aaData: data,
+          aoColumns: [
+            { mDataProp: "id", width: "10%" },
+            { mDataProp: "p6" },
+            { mDataProp: "p7" },
+            { mDataProp: "kategori" },
+            { mDataProp: "param" },
+            { mDataProp: "id" },
+          ],
+          order: [[0, "ASC"]],
+          fixedColumns: true,
+          aoColumnDefs: [
+            { width: 50, targets: 0 },
+            // {
+            //   render: function (datas, type, row) {
+            //     if (type == "display") {
+            //       var el = ''
+            //       var idfile_permohonan = row.id
+            //       row.file.forEach(element => {
+                    
+            //         idfile_permohonan = element.id
+            //         var type_permohonan = element.type
+            //         var namafile_permohonan = element.filename
+            //         var path_file = element.path
+            //         el += `<grp id="view-file-permohonan">
+            //                   <button type="button" class="btn btn-sm btn-outline-secondary btn-round">
+            //                     <i class="bx bx-file"></i>
+            //                     <span class="bigger-110" id="nama-file-permohonan" onclick="downloadatuh('${'public/'+path_file}/${namafile_permohonan}')">${namafile_permohonan}</span>
+            //                   </button>
+            //                   <button class="btn btn-danger btn-sm btn-round" id="hapus-permohonan" type="button" onclick="actionfile('delete', '${idfile_permohonan}', '${type_permohonan}', '${path_file}/${namafile_permohonan}')"><i class="bx bx-trash"></i></button>
+            //                 </grp>
+            //               `
+                    
+            //       });
+            //       el += `<div class="form-group" id="form-permohonan-reupload" style="display:${row.file.length ? 'none' : 'block'};">        
+            //                   <div class="col-sm-11">
+            //                     <input type="file" name="id-input-file-5" id="doc_permohonan_reupload" accept=".pdf" onchange="filepermohonan(this)" />
+            //                     <button class="btn btn-success btn-sm btn-round" id="upload-permohonan" onclick="reupload('permohonan', ${idfile_permohonan})" type="button"><i class="bx bx-check-double"></i></button>
+            //                   </div>
+            //                 </div>`
+
+            //       el += ''
+                  
+            //       return el;
+            //     }
+            //     return datas;
+            //   },
+            //   aTargets: [4],
+            // },
+            {
+              render: function (data, type, row) {
+                if (type == "display") {
+                  if (!row.kategori) {
+                    return "-";
+                  }
+
+                  let iskat = "";
+                  let kategori = [
+                    "",
+                    "Pembuangan air limbah ke badan air permukaan",
+                    "Pembuangan air limbah ke formasi tertentu",
+                    "Pemanfaatan air limbah untuk aplikasi ke tanah",
+                    "Pemanfaatan air limbah ke formasi tertentu",
+                    "Pembuangan emisi",
+                  ];
+
+                  return kategori[row.kategori];
+                }
+                return data;
+              },
+              aTargets: [3],
+            },
+            {
+              render: function (data, type, row) {
+                if (type == "display") {
+                  if (!row.param) {
+                    return "-";
+                  }
+                  let par = ["", "Kajian Teknis", "Standar Teknis"];
+                  return par[row.param];
+                }
+                return data;
+              },
+              aTargets: [4],
+            },
+            {
+              render: function (data, type, row) {
+                if (type == "display") {
+                  var file = row.file;
+                  var oks = 0;
+                  for (const key in file) {
+                    oks = file[key]["ok"] == 1 ? oks + 1 : +0;
+                  }
+                  var el = '<div class="btn-group">';
+
+                  if (row.param) {
+                      el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="action('view',${row.id},'${row.type}', '', '', '${row.param}',${row.kategori})">
+                              <i class="bx bx-file font-size-16"></i>
+                            </button>`;
+                  }
+                  el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="popupvalidasi(${row.id}, '${row.type}', ${row.param}, ${row.kategori})">
+                          <i class="bx bx-list-ul font-size-16"></i>
+                        </button>`;
+                  if (row.status == 1) {
+                    el +=
+                      `<button type="button" title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view','${row.id}','${row.type}')"><i class="bx bx-check-square font-size-16"></i></button>`;
+                  } else {
+                    el +=
+                      `<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>`;
+                  }
+                  el += "</div>";
+                  return el;
+                }
+                return data;
+              },
+              aTargets: [5],
+            },
+          ],
+          fnRowCallback: function (
+            nRow,
+            aData,
+            iDisplayIndex,
+            iDisplayIndexFull
+          ) {
+            var index = iDisplayIndexFull + 1;
+            $("td:eq(0)", nRow).html("#" + index);
+            return index;
+          },
+          fnInitComplete: function () {
+            var that = this;
+            var td;
+            var tr;
+            this.$("td").click(function () {
+              td = this;
+            });
+            this.$("tr").click(function () {
+              tr = this;
+            });
+          },
+        }); 
+
+        //category filter
+        var categoryIndex = 0;
+        $("#permohonan-detail th").each(function (i) {
+          if ($($(this)).html() == "Kategori") {
+            categoryIndex = i;
+            return false;
+          }
+        });
+
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+          var selectedItem = $("#categoryFilter").val();
+          var category = data[categoryIndex];
+          if (selectedItem === "" || category.includes(selectedItem)) {
+            return true;
+          }
+          return false;
+        });
+
+        $("#categoryFilter").change(function (e) {
+          dt.draw();
+        });
+        dt.draw();
+
+      } else {
+        $("#categoryFiltertext").hide();
+        $("#categoryFilter").hide();
+        var tb = $("#permohonan-detail").DataTable();
+          tb.clear().draw();
+      }
+    },
+  });
+}
+
+
 
 function action(mode, id, type, keterangan, param, kode, kategori) {
   if (mode == "view") {
@@ -2694,7 +2878,7 @@ function checklog(id) {
 
 function popupvalidasi(id, type, param, kategori) {
   $("#idv2").val(id);
-  $("#modal_program").modal("show");
+  $("#modal_validasi").modal("show");
   $("#kategori").val(kategori ? kategori : 0);
   $("#jenis").val(param ? param : 0);
   if (!param) {
@@ -2784,11 +2968,14 @@ function popupvalidasi(id, type, param, kategori) {
           data[key]["jenis"]
         } </a></span></div></div>`;
       }
-
-      if (isok < 4) {
+      if (isok == 0) {
         $("#kategori").hide();
         $("#jenis").hide();
         $("#simpanaja").hide();
+      }else{
+        $("#kategori").show();
+        $("#jenis").show();
+        $("#simpanaja").show();
       }
 
       $("#file-unggahan").html(el);

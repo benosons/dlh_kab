@@ -33,7 +33,7 @@ class ProgramModel extends Model{
             return  $query->getResult();
           } 
           $builder = $this->db->table('data_permohonan');
-          $query   = $builder->getWhere(['type' => $type]);
+          $query   = $builder->getWhere(['id_perusahaan' => $id]);
           return  $query->getResult();
     }
     
@@ -47,8 +47,8 @@ class ProgramModel extends Model{
 
       $builder = $this->db->table('data_perusahaan');
       $query = $builder->get();
+//      echo $this->db->getLastQuery();die;
       return  $query->getResult();
-          // echo $this->db->getLastQuery();die;
     }
 
     public function countpermohonan($role=null,$userid=null,$type=null)
@@ -62,17 +62,17 @@ class ProgramModel extends Model{
 
           $builder = $this->db->table('data_permohonan');
           $query   = $builder->getWhere(['status' => null, 'kategori' => null, 'param' => null]);
-          // echo $this->db->getLastQuery();die;
           return  $query->getResult();
-    }
-
-    public function saveParamComp($data = null)
-    {
-        return  $this->db->table('data_perusahaan')->insert($data);
-    }
-
-    public function saveParam($table = null, $data = null)
-    {
+      }
+      
+      public function saveParamComp($table = null, $data = null)
+      {
+//            echo $this->db->getLastQuery();die;
+            return $this->db->table($table)->insert($data);
+      }
+      
+      public function saveParam($table = null, $data = null)
+      {
         return  $this->db->table($table)->insert($data);
     }
 

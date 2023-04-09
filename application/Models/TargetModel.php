@@ -479,11 +479,8 @@ class TargetModel extends Model{
      
           $builder = $this->db->table($table);
           $builder->where(['id_parent' => $id, 'type' => $type]);
-          
           $builder->whereIn('jenis', ['doc_permohonan', 'doc_izin_lingkungan', 'doc_nib', 'doc_penapisan_mandiri']);
           $query = $builder->get();
-
-
           // echo $this->db->getLastQuery();die;
           return  $query->getResult();
           

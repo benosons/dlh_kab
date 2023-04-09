@@ -373,9 +373,19 @@ class Jsondata extends \CodeIgniter\Controller
 					foreach ($datafilenya as $keyf => $valuef) {
 						array_push($value->file, $valuef);
 					}
-
-					array_push($fulldata, $value);
+					
+					$value->permohonan = [] ;
+					$dataprogram = json_decode(json_encode($model->getpermohonan($value->id, $role, $userid, null)), true);
+					foreach ($dataprogram as $keyp => $valuep) {
+						$valuep['file'] = [];
+						$datafilenya = json_decode(json_encode($modelfiles->getfilenya('param_file', $valuep['id'], $valuep['type'], null, $valuep['kategori'])), true);
+						foreach ($datafilenya as $keyff => $valueff) {
+							array_push($valuep['file'], $valueff);
+						}
+						array_push($value->permohonan, $valuep);
+					}
 				}
+				$fulldata = $company;
 
 			} else {
 				
@@ -400,7 +410,6 @@ class Jsondata extends \CodeIgniter\Controller
 					// foreach ($dataprogram as $key => $value) {
 					// 	$value->file = (object) $datafilenya;
 					// }
-					
 					$fulldata = $value;
 				}
 				
@@ -423,6 +432,54 @@ class Jsondata extends \CodeIgniter\Controller
 			exit;
 		}
 		catch (\Exception $e){
+			die($e->getMessage());
+		}
+	}
+
+	public function loaddetailpermohonan(){
+		try {
+			$session = session();
+			
+			$request	= $this->request;
+			$param		= $request->getVar('param');
+			$role		= $this->data['role'];
+			$userid		= $this->data['userid'];
+
+			$model		= new \App\Models\ProgramModel();
+			$modelparam	= new \App\Models\ParamModel();
+			$modelfiles	= new \App\Models\TargetModel();
+
+			$fulldata	= [];
+			$st			= null;
+			$dataprogram = json_decode(json_encode($model->getpermohonan($param, $role, $userid, null)), true);
+			if ($dataprogram != null) {
+				foreach ($dataprogram as $keyp => $valuep) {
+					$valuep['file'] = [];
+					$datafilenya = json_decode(json_encode($modelfiles->getfilenya('param_file', $valuep['id'], $valuep['type'], null, $valuep['kategori'])), true);
+					foreach ($datafilenya as $keyff => $valueff) {
+						array_push($valuep['file'], $valueff);
+					}
+					array_push($fulldata, $valuep);
+				}
+			}
+			
+			if($fulldata){
+				$response = [
+					'status'   => 'sukses',
+					'code'     => '1',
+					'data' 		 => $fulldata
+				];
+			}else{
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+		} catch (\Exception $e) {
 			die($e->getMessage());
 		}
 	}
@@ -1577,16 +1634,16 @@ class Jsondata extends \CodeIgniter\Controller
 				'updated_date' 		=> $this->now,
 			];
 			
-			$save 	= $model->saveParamComp($data);
+			$save 	= $model->saveParamComp($param, $data);
 			$id  	= $model->insertID();
-			
+
 			if(!empty($_FILES)){
 
 				$files	 	= $request->getFiles()['file'];
 				$path		= FCPATH.'public';
-				$tipe		= 'uploads/permohonan';
+				$tipe		= 'uploads/perusahaan';
 				$date 		= date('Y/m/d');
-				$folder		= $path.'/'.$tipe.'/'.$date.'/'.$request->getVar('type').'/'.$userid;
+				$folder		= $path.'/'.$tipe.'/'.$date.'/'.$userid;
 				$bab		= '';
 				
 				foreach ($files as $key => $value) {
@@ -1661,7 +1718,7 @@ class Jsondata extends \CodeIgniter\Controller
 
 				$files	 	= $request->getFiles()['file'];
 				$path		= FCPATH.'public';
-				$tipe		= 'uploads/perusahaan';
+				$tipe		= 'uploads/permohonan';
 				$date 		= date('Y/m/d');
 				$folder		= $path.'/'.$tipe.'/'.$date.'/'.$request->getVar('type').'/'.$userid;
 				$bab		= '';
