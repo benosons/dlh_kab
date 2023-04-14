@@ -356,7 +356,7 @@ class Jsondata extends \CodeIgniter\Controller
 			$type		= $request->getVar('type');
 			$role		= $this->data['role'];
 			$userid		= $this->data['userid'];
-
+			
 			$model		= new \App\Models\ProgramModel();
 			$modelparam	= new \App\Models\ParamModel();
 			$modelfiles	= new \App\Models\TargetModel();
@@ -1611,68 +1611,69 @@ class Jsondata extends \CodeIgniter\Controller
 			$model		= new \App\Models\ProgramModel();
 			$modelfile	= new \App\Models\TargetModel();
 			
-			// $data 		= [];
-			// $data['nama_usaha'] 			= $request->getVar('input_1');
-			// $data['bidang_usaha'] 		= $request->getVar('input_2');
-			// $data['nib'] 				= $request->getVar('input_3');
-			// $data['penanggung_jawab']	= $request->getVar('input_4');
-			// $data['jabatan'] 			= $request->getVar('input_5');
-			// $data['no_kbli'] 			= $request->getVar('input_9');
-			// $data['created_by']	 		= $userid;
-			// $data['created_date'] 		= $this->now;
-			// $data['updated_date'] 		= $this->now;
-			
-			$data = [
-				'nama_usaha'		=> $request->getVar('input_1'),
-				'bidang_usaha'		=> $request->getVar('input_2'),
-				'nib'				=> $request->getVar('input_3'),
-				'penanggung_jawab'	=> $request->getVar('input_4'),
-				'jabatan' 			=> $request->getVar('input_5'),
-				'no_kbli' 			=> $request->getVar('input_9'),
-				'created_by' 		=> $userid,
-				'created_date' 		=> $this->now,
-				'updated_date' 		=> $this->now,
-			];
-			
-			$save 	= $model->saveParamComp($param, $data);
-			$id  	= $model->insertID();
+			$data 		= [];
 
-			if(!empty($_FILES)){
-
-				$files	 	= $request->getFiles()['file'];
-				$path		= FCPATH.'public';
-				$tipe		= 'uploads/perusahaan';
-				$date 		= date('Y/m/d');
-				$folder		= $path.'/'.$tipe.'/'.$date.'/'.$userid;
-				$bab		= '';
+			if(!$request->getVar('id_perusahaan')){
+				$data['nama_usaha'] 		= $request->getVar('input_1');
+				$data['bidang_usaha'] 		= $request->getVar('input_2');
+				$data['nib'] 				= $request->getVar('input_3');
+				$data['penanggung_jawab']	= $request->getVar('input_4');
+				$data['jabatan'] 			= $request->getVar('input_5');
+				$data['no_kbli'] 			= $request->getVar('input_9');
+				$data['created_by']	 		= $userid;
+				$data['created_date'] 		= $this->now;
+				$data['updated_date'] 		= $this->now;
 				
-				foreach ($files as $key => $value) {
-					
-					if (!is_dir($folder.'/'.$key)) {
-						mkdir($folder.'/'.$key, 0777, TRUE);
-					}
-	
-					$stat = $files[$key]->move($folder.'/'.$key, $files[$key]->getName());
-					
-					$data_file = [
-						'id_parent'			=> $id,
-						'type'				=> $request->getVar('type'),
-						'jenis'				=> $key,
-						'filename'			=> $files[$key]->getName(),
-						'ext'				=> null,
-						'size'				=> $files[$key]->getSize(),
-						'path'				=> $tipe.'/'.$date.'/'.$request->getVar('type').'/'.$userid.'/'.$key,
-						'created_date'		=> $this->now,
-						'updated_date'		=> $this->now,
-						'create_by'			=> $userid,
-						'bab'				=> $bab,
-					];
-	
-					$resfile = $modelfile->saveParam('param_file', $data_file);
-				}
-	
-			}
+				$save 	= $model->saveParamComp($param, $data);
+				$id  	= $model->insertID();
 
+				if(!empty($_FILES)){
+
+					$files	 	= $request->getFiles()['file'];
+					$path		= FCPATH.'public';
+					$tipe		= 'uploads/perusahaan';
+					$date 		= date('Y/m/d');
+					$folder		= $path.'/'.$tipe.'/'.$date.'/'.$userid;
+					$bab		= '';
+					
+					foreach ($files as $key => $value) {
+						
+						if (!is_dir($folder.'/'.$key)) {
+							mkdir($folder.'/'.$key, 0777, TRUE);
+						}
+		
+						$stat = $files[$key]->move($folder.'/'.$key, $files[$key]->getName());
+						
+						$data_file = [
+							'id_parent'			=> $id,
+							'type'				=> $request->getVar('type'),
+							'jenis'				=> $key,
+							'filename'			=> $files[$key]->getName(),
+							'ext'				=> null,
+							'size'				=> $files[$key]->getSize(),
+							'path'				=> $tipe.'/'.$date.'/'.$request->getVar('type').'/'.$userid.'/'.$key,
+							'created_date'		=> $this->now,
+							'updated_date'		=> $this->now,
+							'create_by'			=> $userid,
+							'bab'				=> $bab,
+						];
+		
+						$resfile = $modelfile->saveParam('param_file', $data_file);
+					}
+		
+				}
+			}else{
+				$data['nama_usaha'] 		= $request->getVar('input_1');
+				$data['bidang_usaha'] 		= $request->getVar('input_2');
+				$data['nib'] 				= $request->getVar('input_3');
+				$data['penanggung_jawab']	= $request->getVar('input_4');
+				$data['jabatan'] 			= $request->getVar('input_5');
+				$data['no_kbli'] 			= $request->getVar('input_9');
+				$data['updated_at']			= $userid;
+				$data['updated_date'] 		= $this->now;
+				
+				$save 	= $model->updateperusahaan($request->getVar('id_perusahaan'), $data);
+			}
 			$response = [
 				'status'   => 'sukses',
 				'code'     => '0',

@@ -1,0 +1,61 @@
+<div id="modal_edit_perusahaan" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-success">
+            <h4 class="modal-title">Edit Profile Perusahaan </h4>
+            </div>
+            <div class="modal-body">
+            <form class="form-horizontal" role="form">
+                <input type="hidden" id="ideditperusahaan" />
+                <div class="form-group">
+                <label class="col-sm-12 control-label no-padding-right" for="nama_program"> Nama Badan Usaha/ Kegiatan </label>
+
+                <div class="col-sm-12">
+                    <input type="text" id="edit_1" placeholder="" class="form-control" name="form-input">
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="col-sm-12 control-label no-padding-right" for="nama_program"> Bidang Usaha/ Kegiatan </label>
+
+                <div class="col-sm-12">
+                    <input type="text" id="edit_2" placeholder="" class="form-control" name="form-input">
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="col-sm-6 control-label no-padding-right" for="nama_program"> Nomor Induk Berusaha </label>
+
+                <div class="col-sm-12"> 
+                    <input type="text" id="edit_3" placeholder="" class="form-control" onkeypress="return hanyaAngka(event)" maxlength="13" name="form-input">
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="col-sm-6 control-label no-padding-right" for="nama_program"> Nomor KBLI </label>
+
+                <div class="col-sm-12">
+                    <input type="text" id="edit_9" placeholder="" class="form-control" onkeypress="return hanyaAngka(event)" maxlength="13" name="form-input">
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="col-sm-12 control-label no-padding-right" for="nama_program"> Nama Penanggung Jawab Usaha/ Kegiatan </label>
+
+                <div class="col-sm-12">
+                    <input type="text" id="edit_4" placeholder="" class="form-control" name="form-input">
+                </div>
+                </div>
+                <div class="form-group">
+                <label class="col-sm-12 control-label no-padding-right" for="nama_program"> Jabatan </label>
+
+                <div class="col-sm-12">
+                    <input type="text" id="edit_5" placeholder="" class="form-control" name="form-input">
+                </div>
+                </div>
+
+            </form>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal" id="close_modal_edit_perusahaan"><i class="ace-icon fa fa-close"></i>close</button>
+            <button type="button" id="save_edit_perusahaan" class="btn btn-sm btn-success" ><i class="ace-icon fa fa-check"></i> Simpan</button>
+            </div>
+        </div>
+    </div>
+</div>

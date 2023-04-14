@@ -530,5 +530,15 @@ class TargetModel extends Model{
     }
     
 
+    public function updateperusahaan($id = null, $data = null)
+    {
+
+      $builder = $this->db->table('data_perusahaan');
+      $query   = $builder->where('id', $id);
+      $query->update($data);
+      // echo $this->db->getLastQuery();die;
+      return true;
+    }
+
 
 }

@@ -18,6 +18,7 @@ $(document).ready(function () {
       $("#permohonan-all").show();
       $("#detail").hide();
     });
+
   $("#nav-menu li").removeClass();
   // $('#nav-menu li#menu-data').addClass('open');
   $("#nav-menu li#menu-teknis").addClass("active");
@@ -249,6 +250,75 @@ $(document).ready(function () {
   $("#verlapanganini").on("click", function () {
     actionlapangan("view", $("#idpermohonan").val(), $("#initype").val());
   });
+ 
+  $("#save_edit_perusahaan").on("click", function () {
+    bootbox.confirm({
+      message: "Apakah data yg anda masukan sudah <b>sesuai</b> ?",
+      buttons: {
+        confirm: {
+          label: '<i class="bx bx-check"></i> Ya',
+          className: "btn-success btn-xs",
+        },
+        cancel: {
+          label: '<i class="bx bx-x"></i> Tidak',
+          className: "btn-danger btn-xs",
+        },
+      },
+      callback: function (result) {
+        if (result) {
+          var formDataPe = new FormData();
+          if($('#ideditperusahaan').val()){
+            formDataPe.append("id_perusahaan", $('#ideditperusahaan').val());
+          }
+          formDataPe.append("param", "data_perusahaan");
+          formDataPe.append("type", "1");
+          formDataPe.append("input_1", $("#edit_1").val());
+          
+          formDataPe.append("input_2", $("#edit_2").val());
+          
+          formDataPe.append("input_3", $("#edit_3").val());
+          
+          formDataPe.append("input_9", $("#edit_9").val());
+          
+          formDataPe.append("input_4", $("#edit_4").val());
+          
+          formDataPe.append("input_5", $("#edit_5").val());
+          updateperusahaan(formDataPe);
+        } 
+      }
+    });
+
+  });
+
+  function updateperusahaan(formDataPe){
+    var dialog = bootbox.dialog({
+      message:
+      '<p class="text-center mb-0"><i class="fa fa-spin fa-spinner"></i> Mohon Tunggu ...</p>',
+    closeButton: false,
+    });
+
+    $.ajax({
+      type: "post",
+      processData: false,
+      contentType: false,
+      url: "addperusahaan",
+      data: formDataPe,
+      success: function (result) {
+        dialog.modal("hide");
+        Swal.fire({
+          type: "success",
+          title: "Berhasil Merubah Data Perusahaan !",
+          showConfirmButton: true,
+          // showCancelButton: true,
+          confirmButtonText: `Ok`,
+        }).then((result) => {
+          $(document).ready(function () {
+            location.reload();
+          });
+        });
+      },
+    });
+  }
 
 
   $("#mohon_save_perusahaan").on("click", function () {
@@ -267,8 +337,11 @@ $(document).ready(function () {
       callback: function (result) {
         if (result) {
           var formDataP = new FormData();
+          if($('#ideditperusahaan').val()){
+            formData.append("id_perusahaan", $('#ideditperusahaan').val());
+          }
           formDataP.append("param", "data_perusahaan");
-          formData.append("type", "1");
+          formDataP.append("type", "1");
           formDataP.append("input_1", $("#input_1").val());
           
           formDataP.append("input_2", $("#input_2").val());
@@ -480,6 +553,205 @@ $(document).ready(function () {
     );
   });
 
+  $("#editdataini").on("click", function () {
+      $('#modal_edit_perusahaan').modal('show');
+      editperusahaan(1);
+  });
+
+  function editperusahaan(param) {
+    $.ajax({
+      type: "post",
+      dataType: "json",
+      url: "loadpermohonan",
+      data: {
+        param: param,
+      },
+      success: function (result) {
+        let code = result.code;
+          if (code != "0") {
+            let data = result.data
+            $('#modal_edit_perusahaan').modal('show');
+
+            $("#ideditperusahaan").val(data["id"]);
+            $("#edit_1").val(data["nama_usaha"]).prop("disabled", false);
+            $("#edit_2").val(data["bidang_usaha"]).prop("disabled", false);
+            $("#edit_3").val(data["nib"]).prop("disabled", false);
+            $("#edit_4").val(data["penanggung_jawab"]).prop("disabled", false);
+            $("#edit_5").val(data["jabatan"]).prop("disabled", false);
+            $("#edit_9").val(data["no_kbli"]).prop("disabled", false);
+          
+            for (var f in data["file"]) {
+              var jenisnya = data.file[f]["jenis"];
+              var oknya = data.file[f]["ok"];
+              
+              switch (jenisnya) {
+                case "doc_permohonans":
+                  $("#nama-file-permohonan").html(data.file[f]["filename"]);
+                  $("#nama-file-permohonan").attr(
+                    "onclick",
+                    "downloadatuh('" +
+                      "public/" +
+                      data.file[f]["path"] +
+                      "/" +
+                      data.file[f]["filename"] +
+                      "')"
+                  );
+                  $("#hapus-permohonan").attr(
+                    "onclick",
+                    "actionfile('delete','" +
+                      data.file[f]["id"] +
+                      "','" +
+                      data.type +
+                      "','" +
+                      data.file[f]["path"] +
+                      "/" +
+                      data.file[f]["filename"] +
+                      "')"
+                  );
+
+                  $("#view-file-permohonan").css("display", "block");
+                  $("#form-permohonan-reupload").css("display", "none");
+
+                  if (oknya == 1) {
+                    $("#hapus-permohonan").css("display", "none");
+                  } else {
+                    $("#hapus-permohonan").show();
+                    if (oknya == 2) {
+                      var ell = ` <li>
+                                            <i class="">File Permohonan</i>
+                                          </li>`;
+                      $("#harus-upload").append(ell);
+                    }
+                  }
+                  break;
+                case "doc_izin_lingkungan":
+                  $("#nama-file-izin-lingkungan").html(
+                    data.file[f]["filename"]
+                  );
+                  $("#nama-file-izin-lingkungan").attr(
+                    "onclick",
+                    "downloadatuh('" +
+                      "public/" +
+                      data.file[f]["path"] +
+                      "/" +
+                      data.file[f]["filename"] +
+                      "')"
+                  );
+                  $("#hapus-izin-lingkungan").attr(
+                    "onclick",
+                    "actionfile('delete','" +
+                      data.file[f]["id"] +
+                      "','" +
+                      data.type +
+                      "','" +
+                      data.file[f]["path"] +
+                      "/" +
+                      data.file[f]["filename"] +
+                      "')"
+                  );
+
+                  $("#view-file-izin-lingkungan").css("display", "block");
+                  $("#form-izin-lingkungan-reupload").css("display", "none");
+
+                  if (oknya == 1) {
+                    $("#hapus-izin-lingkungan").css("display", "none");
+                  } else {
+                    $("#hapus-izin-lingkungan").show();
+                    if (oknya == 2) {
+                      var ell = ` <li>
+                                            <i class="">File Izin Lingkungan</i>
+                                          </li>`;
+                      $("#harus-upload").append(ell);
+                    }
+                  }
+                  break;
+                case "doc_nib":
+                  $("#nama-file-nib").html(data.file[f]["filename"]);
+                  $("#nama-file-nib").attr(
+                    "onclick",
+                    "downloadatuh('" +
+                      "public/" +
+                      data.file[f]["path"] +
+                      "/" +
+                      data.file[f]["filename"] +
+                      "')"
+                  );
+                  $("#hapus-nib").attr(
+                    "onclick",
+                    "actionfile('delete','" +
+                      data.file[f]["id"] +
+                      "','" +
+                      data.type +
+                      "','" +
+                      data.file[f]["path"] +
+                      "/" +
+                      data.file[f]["filename"] +
+                      "')"
+                  );
+
+                  $("#view-file-nib").css("display", "block");
+                  $("#form-nib-reupload").css("display", "none");
+
+                  if (oknya == 1) {
+                    $("#hapus-nib").css("display", "none");
+                  } else {
+                    $("#hapus-nib").show();
+                    if (oknya == 2) {
+                      var ell = ` <li>
+                                            <i class="">File NIB</i>
+                                          </li>`;
+                      $("#harus-upload").append(ell);
+                    }
+                  }
+
+                  break;
+                case "doc_penapisan_mandiri":
+                  $("#nama-file-penapisan-mandiri").html(
+                    data.file[f]["filename"]
+                  );
+                  $("#nama-file-penapisan_mandiri").attr(
+                    "onclick",
+                    "downloadatuh('" +
+                      "public/" +
+                      data.file[f]["path"] +
+                      "/" +
+                      data.file[f]["filename"] +
+                      "')"
+                  );
+                  $("#hapus-penapisan-mandiri").attr(
+                    "onclick",
+                    "actionfile('delete','" +
+                      data.file[f]["id"] +
+                      "','" +
+                      data.type +
+                      "','" +
+                      data.file[f]["path"] +
+                      "/" +
+                      data.file[f]["filename"] +
+                      "')"
+                  );
+
+                  $("#view-file-penapisan-mandiri").css("display", "block");
+                  $("#form-penapisan-mandiri-reupload").css("display", "none");
+
+                  if (oknya == 1) {
+                    $("#hapus-penapisan-mandiri").css("display", "none");
+                  } else {
+                    $("#hapus-penapisan-mandiri").show();
+                    if (oknya == 2) {
+                      var ell = ` <li><i class="">File Hasil Penapisan Mandiri</i></li>`;
+                      $("#harus-upload").append(ell);
+                    }
+                  }
+                  break;
+                default:
+                  break;
+              }
+            }
+          }
+      }
+    });
+  }
   
   $("#deletedataini").on("click", function () {
     action(
@@ -736,6 +1008,8 @@ function loadpermohonan(param) {
           $("#view_4").val(data["penanggung_jawab"]).prop("disabled", true);
           $("#view_5").val(data["jabatan"]).prop("disabled", true);
           $("#view_9").val(data["no_kbli"]).prop("disabled", true);
+          
+          $("#editdataini").show();
 
           $("#ini-paramnya").val(data["param"]);
           var harap = [];
@@ -999,8 +1273,11 @@ function loadpermohonan(param) {
                                 </button>`;
                         }
                       }
+                      el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="popupvalidasi(${row.id}, '1', ${row.param}, ${row.kategori})">
+                          <i class="bx bx-list-ul font-size-16"></i>
+                        </button>`;
                       el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="detailper(${row.id})">
-                              <i class="bx bx-list-ul font-size-16"></i>
+                              <i class="bx bx-show font-size-16"></i>
                             </button>`;
                       if (row.status == 1) {
                         el +=
@@ -1048,6 +1325,7 @@ function loadpermohonan(param) {
           $("#cekunggahan").css("display", "none");
           $("#cekunggahan").hide();
           $("#deletedataini").hide();
+          $("#editdataini").hide();
         } else {
           var tb = $("#all-permohonan").DataTable();
           tb.clear().draw();
@@ -1295,7 +1573,7 @@ function detailper(id) {
         $("#categoryFilter").change(function (e) {
           dt.draw();
         });
-        dt.draw();
+        dt.draw(); 
 
       } else {
         $("#categoryFiltertext").hide();
@@ -2901,6 +3179,7 @@ function popupvalidasi(id, type, param, kategori) {
     success: function (result) {
       var code = result.code;
       var data = result.data;
+      var jenis = data.jenis;
       var isok = 0;
       var el = "";
       for (const key in data) {
@@ -2969,6 +3248,10 @@ function popupvalidasi(id, type, param, kategori) {
         } </a></span></div></div>`;
       }
       if (isok == 0) {
+        $("#kategori").hide();
+        $("#jenis").hide();
+        $("#simpanaja").hide();
+      }else if(jenis != "doc_permohonan"){
         $("#kategori").hide();
         $("#jenis").hide();
         $("#simpanaja").hide();
