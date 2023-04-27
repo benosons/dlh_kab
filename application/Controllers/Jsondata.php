@@ -383,6 +383,7 @@ class Jsondata extends \CodeIgniter\Controller
 							array_push($valuep['file'], $valueff);
 						}
 						array_push($value->permohonan, $valuep);
+						$value->kategori = $valuep['kategori'] ;
 					}
 				}
 				$fulldata = $company;
@@ -406,6 +407,8 @@ class Jsondata extends \CodeIgniter\Controller
 							array_push($valuep['file'], $valueff);
 						}
 						array_push($value->permohonan, $valuep);
+						$value->kategori = $valuep['kategori'] ;
+
 					}
 					// foreach ($dataprogram as $key => $value) {
 					// 	$value->file = (object) $datafilenya;
@@ -448,12 +451,12 @@ class Jsondata extends \CodeIgniter\Controller
 			$model		= new \App\Models\ProgramModel();
 			$modelparam	= new \App\Models\ParamModel();
 			$modelfiles	= new \App\Models\TargetModel();
-
 			$fulldata	= [];
 			$st			= null;
 			$dataprogram = json_decode(json_encode($model->getpermohonan($param, $role, $userid, null)), true);
 			if ($dataprogram != null) {
 				foreach ($dataprogram as $keyp => $valuep) {
+					$this->loadstatus($valuep['id'], $valuep['type'], 'doc_kajian', null, $valuep['kategori']);
 					$valuep['file'] = [];
 					$datafilenya = json_decode(json_encode($modelfiles->getfilenya('param_file', $valuep['id'], $valuep['type'], null, $valuep['kategori'])), true);
 					foreach ($datafilenya as $keyff => $valueff) {
@@ -3242,15 +3245,16 @@ class Jsondata extends \CodeIgniter\Controller
 
 	}
 
-	public function loadstatus()
+	public function loadstatus($isid = null, $istype= null, $isjenis= null, $isuserid= null, $iskategori= null)
 	{
 		try
-		{
+		{		
+				
 				$request  = $this->request;
-				$id 	  = $request->getVar('id');
-				$type		 	  = $request->getVar('type');
-				$jenis		 	  = $request->getVar('jenis');
-				$kategori		 	  = $request->getVar('kategori');
+				$id 	  	= $isid ? $isid : $request->getVar('id');
+				$type		= $istype ? $istype : $request->getVar('type');
+				$jenis		= $isjenis ? $isjenis : $request->getVar('jenis');
+				$kategori	= $iskategori ? $iskategori : $request->getVar('kategori');
 				$role 		= $this->data['role'];
 				$userid		= $this->data['userid'];
 
@@ -3258,15 +3262,179 @@ class Jsondata extends \CodeIgniter\Controller
 					$modelparam = new \App\Models\ParamModel();
 					$modelfiles = new \App\Models\FilesModel();
 			
-						$fulldata = [];
-						$dataprogram = $model->getstatus($id, $type, $jenis, $userid, $kategori);
+					$fulldata = [];
+					$datapermohonan = $model->getpermohonanbyid($id, $type, $jenis, $userid, $kategori);
+					
+					foreach ($datapermohonan as $key => $value) {						
+						if($value->type == 1 || $value->type == 2){
+							if($role == 100 || $role == 10){
+								$data = $model->getstatus($id, $type, $jenis, $userid, $kategori);
+								if($value->type == 1){
+									if($value->param == 1){
+										$total_file = 0;
+										switch ($value->kategori) {
+											case '1':
+												$total_file = 11;
+												break;
+											case '2':
+												$total_file = 10;
+												break;
+											case '3':
+												$total_file = 10;
+												break;
+											case '4':
+												$total_file = 11;
+												break;
+											case '5':
+												$total_file = 9;
+												break;
 
+										}
+										if(count($data)){
+											$filterBy = 'doc_lampiran'; // or Finance etc.
+											$data = array_filter($data, function ($var) use ($filterBy) {
+												return ($var->jenis != $filterBy);
+											});
+										}
+										
+										if(count($data) == $total_file){
+											$stt = [];
+											foreach ($data as $key1 => $value1) {
+												if($value1->status == '0'){
+													array_push($stt, $value1->status);
+												}
+											}
+											
+											if(count($stt) >= $total_file){
+												$data = [
+													'updated_date'	=> $this->now,
+													'updated_by' 	=> $userid,
+													'status' 		=> 1,
+												];
+												$st = 1;
+												$res = $model->updatestatusmaster('data_permohonan', $value->id, $data);
 
-					if($dataprogram){
+											}else{
+												$data = [
+													'updated_date'	=> $this->now,
+													'updated_by' 	=> $userid,
+													'status' 		=> 0,
+												];
+												$st = 0;
+												$res = $model->updatestatusmaster('data_permohonan', $value->id, $data);
+												
+											}
+										}else{
+											$st = 0;
+										}
+									}else if($value->param == 2){
+										$total_file = 0;
+										switch ($value->kategori) {
+											case '1':
+												$total_file = 9;
+												break;
+											case '3':
+												$total_file = 9;
+												break;
+											case '4':
+												$total_file = 9;
+												break;
+											case '5':
+												$total_file = 8;
+												break;
+
+										}
+
+										if(count($data)){
+											$filterBy = 'doc_lampiran'; // or Finance etc.
+											$data = array_filter($data, function ($var) use ($filterBy) {
+												return ($var->jenis != $filterBy);
+											});
+											
+										}
+										if(count($data) == $total_file){
+											$stt = [];
+											foreach ($data as $key1 => $value1) {
+												
+												if($value1->status == '0'){
+													array_push($stt, $value1->status);
+												}
+											}
+											
+											if(count($stt) >= $total_file){
+												$data = [
+													'updated_date'	=> $this->now,
+													'updated_by' 	=> $userid,
+													'status' 		=> 1,
+												];
+												$st = 1;
+												$res = $model->updatestatusmaster('data_permohonan', $value->id, $data);
+
+											}else{
+												$data = [
+													'updated_date'	=> $this->now,
+													'updated_by' 	=> $userid,
+													'status' 		=> 0,
+												];
+												$st = 0;
+												$res = $model->updatestatusmaster('data_permohonan', $value->id, $data);
+												
+											}
+										}else{
+											$st = 0;
+										}
+									}else{
+										$st = 0;
+									}
+								}
+
+								if($value->type == 2){
+									
+									if(count($data) == 7){
+										$stt = [];
+										foreach ($data as $key1 => $value1) {
+											
+											if($value1->status == '0'){
+												array_push($stt, $value1->status);
+											}
+										}
+										
+										if(count($stt) >= 7){
+											$data = [
+												'updated_date'	=> $this->now,
+												'updated_by' 	=> $userid,
+												'status' 		=> 1,
+											];
+											$st = 1;
+											$res = $model->updatestatusmaster('data_permohonan', $value->id, $data);
+
+										}else{
+											$data = [
+												'updated_date'	=> $this->now,
+												'updated_by' 	=> $userid,
+												'status' 		=> 0,
+											];
+											$st = 0;
+											$res = $model->updatestatusmaster('data_permohonan', $value->id, $data);
+											
+										}
+									}else{
+										$st = 0;
+									}
+								}
+							}
+						}
+
+						if($role == 100 || $role == 10){
+							$value->status = $st;
+						}
+						array_push($fulldata, $value);
+					}
+					if($fulldata){
 						$response = [
 							'status'   => 'sukses',
 							'code'     => '1',
-							'data' 		 => $dataprogram
+							'data' 		 => $fulldata
 						];
 					}else{
 						$response = [

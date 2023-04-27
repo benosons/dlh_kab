@@ -1387,6 +1387,7 @@ function upload(formData) {
 function detailper(id) {
   $("#permohonan-all").hide();
   $("#detail").show();
+  window.id_perusahaan = id
   $.ajax({
     type: "post",
     dataType: "json",
@@ -2542,7 +2543,9 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
       },
       success: function (result) {
         let data = result.data;
-        location.reload();
+        // location.reload();
+        // $('#back-all-permohonan').click()
+        detailper(window.id_perusahaan)
       },
     });
   } else if (mode == "delete") {
@@ -2633,6 +2636,8 @@ function loadstatus(id, param, jenis, kategori) {
           }
         }
       }
+
+      detailper(window.window.id_perusahaan)
     },
   });
 }

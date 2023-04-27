@@ -434,10 +434,10 @@ class TargetModel extends Model{
 
       $builder = $this->db->table('param_file');
       if($type == '1'){
-        $query   = $builder->getWhere(['id_parent' => $id, 'type' => $type, 'jenis' => $jenis, 'create_by' => $userid, 'kategori' => $kategori]);
+        $query   = $builder->getWhere(['id_parent' => $id, 'type' => $type, 'jenis' => $jenis, 'kategori' => $kategori]);
         
       }else if($type == '2'){
-        $query   = $builder->getWhere(['id_parent' => $id, 'type' => $type, 'create_by' => $userid, 'kategori' => $kategori]);
+        $query   = $builder->getWhere(['id_parent' => $id, 'type' => $type, 'kategori' => $kategori]);
 
       }
       // echo $this->db->getLastQuery();die;
@@ -538,6 +538,13 @@ class TargetModel extends Model{
       $query->update($data);
       // echo $this->db->getLastQuery();die;
       return true;
+    }
+
+    public function getpermohonanbyid($id){
+
+      $builder = $this->db->table('data_permohonan');
+      $query   = $builder->getWhere(['id' => $id]);
+      return  $query->getResult();
     }
 
 
