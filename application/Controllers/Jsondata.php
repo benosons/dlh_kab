@@ -365,6 +365,7 @@ class Jsondata extends \CodeIgniter\Controller
 			$st			= null;
 			$fulldatapermohonan = [];
 			
+
 			if ($role == 100 || $role == 10) {
 				$company = $model->getperusahaan();
 				foreach ($company as $key => $value) {
@@ -375,7 +376,7 @@ class Jsondata extends \CodeIgniter\Controller
 					}
 					
 					$value->permohonan = [] ;
-					$dataprogram = json_decode(json_encode($model->getpermohonan($value->id, $role, $userid, null)), true);
+					$dataprogram = json_decode(json_encode($model->getpermohonan($value->id, $role, $userid, $type)), true);
 					foreach ($dataprogram as $keyp => $valuep) {
 						$valuep['file'] = [];
 						$datafilenya = json_decode(json_encode($modelfiles->getfilenya('param_file', $valuep['id'], $valuep['type'], null, $valuep['kategori'])), true);
@@ -447,13 +448,14 @@ class Jsondata extends \CodeIgniter\Controller
 			$param		= $request->getVar('param');
 			$role		= $this->data['role'];
 			$userid		= $this->data['userid'];
+			$type		= $request->getVar('type');
 
 			$model		= new \App\Models\ProgramModel();
 			$modelparam	= new \App\Models\ParamModel();
 			$modelfiles	= new \App\Models\TargetModel();
 			$fulldata	= [];
 			$st			= null;
-			$dataprogram = json_decode(json_encode($model->getpermohonan($param, $role, $userid, null)), true);
+			$dataprogram = json_decode(json_encode($model->getpermohonan($param, $role, $userid, $type)), true);
 			if ($dataprogram != null) {
 				foreach ($dataprogram as $keyp => $valuep) {
 					$this->loadstatus($valuep['id'], $valuep['type'], 'doc_kajian', null, $valuep['kategori']);

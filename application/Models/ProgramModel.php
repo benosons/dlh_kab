@@ -33,7 +33,7 @@ class ProgramModel extends Model{
             return  $query->getResult();
           } 
           $builder = $this->db->table('data_permohonan');
-          $query   = $builder->getWhere(['id_perusahaan' => $id]);
+          $query   = $builder->getWhere(['id_perusahaan' => $id, 'type' => $type]);
           return  $query->getResult();
     }
     

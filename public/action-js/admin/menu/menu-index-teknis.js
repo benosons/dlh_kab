@@ -845,6 +845,7 @@ function loadpermohonan(param) {
     url: "loadpermohonan",
     data: {
       param: param,
+      type: 1
     },
     success: function (result) {
       let code = result.code;
@@ -1220,42 +1221,6 @@ function loadpermohonan(param) {
               fixedColumns: true,
               aoColumnDefs: [
                 { width: 50, targets: 0 },
-                // {
-                //   render: function (data, type, row) {
-                //     if (type == "display") {
-                //       if (!row.kategori) {
-                //         return "-";
-                //       }
-
-                //       let iskat = "";
-                //       let kategori = [
-                //         "",
-                //         "Pembuangan air limbah ke badan air permukaan",
-                //         "Pembuangan air limbah ke formasi tertentu",
-                //         "Pemanfaatan air limbah untuk aplikasi ke tanah",
-                //         "Pemanfaatan air limbah ke formasi tertentu",
-                //         "Pembuangan emisi",
-                //       ];
-
-                //       return kategori[row.kategori];
-                //     }
-                //     return data;
-                //   },
-                //   aTargets: [4],
-                // },
-                // {
-                //   render: function (data, type, row) {
-                //     if (type == "display") {
-                //       if (!row.param) {
-                //         return "-";
-                //       }
-                //       let par = ["", "Kajian Teknis", "Standar Teknis"];
-                //       return par[row.param];
-                //     }
-                //     return data;
-                //   },
-                //   aTargets: [5],
-                // },
                 {
                   render: function (data, type, row) {
                     if (type == "display") {
@@ -1276,9 +1241,12 @@ function loadpermohonan(param) {
                       el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="popupvalidasi(${row.id}, '1', ${row.param}, ${row.kategori})">
                           <i class="bx bx-list-ul font-size-16"></i>
                         </button>`;
-                      el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="detailper(${row.id})">
-                              <i class="bx bx-show font-size-16"></i>
-                            </button>`;
+                      var permohonan = row.permohonan;
+                      if (permohonan.length) {
+                        el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="detailper(${row.id})">
+                                <i class="bx bx-show font-size-16"></i>
+                              </button>`;
+                      }
                       if (row.status == 1) {
                         el +=
                           `<button type="button" title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view','${row.id}','${row.type}')"><i class="bx bx-check-square font-size-16"></i></button>`;
@@ -1394,6 +1362,7 @@ function detailper(id) {
     url: "loaddetailpermohonan",
     data: {
       param: id,
+      type: 1
     },
     success: function (result) {
       let code = result.code;
