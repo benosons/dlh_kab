@@ -401,6 +401,7 @@ function loadpermohonan(param) {
 
           let optd = "";
           $("#iskat").val(data.kategori);
+          $("#isType").val(data.type);
           $("#dokumen-unggahan").html(
             data.kategori == "1"
               ? "PERSYARATAN PERMOHONAN SURAT KELAYAKAN OPERASIONAL PEMBUANGAN DAN/ATAU PEMANFAATAN AIR LIMBAH"
@@ -433,10 +434,13 @@ function loadpermohonan(param) {
           $("#jenis_doc").trigger("chosen:updated");
 
           $("#idpermohonan").val(data.id);
-          $("#initype").val(data.type);
+          $("#initype").val(2);
           $("#initambah").hide();
           $("#ini-form-add").hide();
           $("#ini-form-view").show();
+          $("#file-nib-form").hide();
+          $("#izin-lingkungan-form").hide();
+          $("#penapisan-mandiri-form").hide();
 
           if (data.status == 1) {
             $("#verlapanganini").parent().parent().show();
@@ -716,6 +720,9 @@ function loadpermohonan(param) {
               });
             },
           });
+
+          console.log(data);
+          $("#initype").val(data.type);
 
           // var categoryIndex = 0;
           // $("#all-permohonan th").each(function (i) {
