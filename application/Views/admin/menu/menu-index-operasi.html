@@ -27,27 +27,13 @@
           <div class="card-body">
             
             {% if role == 0 %}
-            <div class="row">
-              <div class="col-12">
-                <ul class="nav nav-tabs" id="nav-permohonan">
-                  <li class="nav-item">
-                    <button class="nav-link active" id="data_perusahaan_btn">Data Perusahaan</button>
-                  </li>
-                  <li class="nav-item">
-                    <button class="nav-link" id="data_permohonan_btn">Data Permohonan</button>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <div id="permohonan-slo-page" style="display: none;">
+            <div id="permohonan-slo-page">
               <div class="row">
                 <div class="col-12">
                   <div class="page-title-box d-sm-flex align-items-center justify-content-between" style="padding-top: 20px;">
                     <h4 class="mb-sm-0 font-size-18">
                       Permohonan Surat Kelayakan Operasi (SLO)
                     </h4>
-              
                     <div class="page-title-right">
                       <ol class="breadcrumb m-0">
                         <li class="breadcrumb-item">
@@ -66,7 +52,7 @@
                   <div class="widget-box widget-color-orange">
                     <div class="widget-header">
                       <div class="widget-toolbar no-border">
-                        <button id="initambah" class="btn btn-xs btn-inverse bigger" data-toggle="modal" data-target="#modal_program">
+                        <button id="initambah" class="btn btn-xs btn-info bigger">
                           <i class="ace-icon fa fa-plus"></i>
                           Tambah Permohonan
                         </button>
@@ -96,10 +82,6 @@
                   </div>
                 </div>
               </div>
-                    
-            </div>
-            <div id="profile-perusahaan-page">
-              {% include "admin/menu/menu-profile-perusahaan.html" %}
             </div>
             {% else %}
             <div class="row">
@@ -159,40 +141,23 @@
             
 
             <!-- Modal -->
-            <div
-              id="modal_program"
-              class="modal fade"
-              role="dialog"
-              data-backdrop="static"
-              data-keyboard="false"
-            >
+            <div id="modal_program" class="modal fade" role="dialog" data-backdrop="static"data-keyboard="false">
               <div class="modal-dialog modal-lg">
                 <!-- Modal content-->
                 <div class="modal-content">
                   <div class="modal-header bg-success">
-                    <button
-                      type="button"
-                      class="close"
-                      data-dismiss="modal"
-                      id="close_modal_program"
-                    >
-                      &times;
-                    </button>
                     <h4 class="modal-title">
                       Permohonan Surat Kelayakan Operasi (SLO)
                     </h4>
                   </div>
                   <div class="modal-body">
                     <form class="form-horizontal" role="form">
+                      <input type="hidden" id="ideditpermohonan" />
                       <!-- #section:elements.form -->
-                      <div class="form-group">
-                        <label
-                          class="col-sm-3 control-label no-padding-right"
-                          for="kode_program"
-                        >
+                      <!-- <div class="form-group">
+                        <label class="col-sm-12 control-label no-padding-right" for="kode_program">
                           Nama Badan Usaha/ Kegiatan
                         </label>
-
                         <div class="col-sm-9">
                           <input
                             type="text"
@@ -273,131 +238,51 @@
                             class="form-control"
                           />
                         </div>
-                      </div>
+                      </div> -->
 
                       <div class="form-group">
-                        <label
-                          class="col-sm-3 control-label no-padding-right"
-                          for="nama_program"
-                        >
+                        <label class="col-sm-12 control-label no-padding-right" for="nama_program">
                           Alamat Kantor dan Lokasi Usaha/ Kegiatan
                         </label>
-
-                        <div class="col-sm-9">
-                          <input
-                            type="text"
-                            id="input_6"
-                            placeholder=""
-                            class="form-control"
-                          />
+                        <div class="col-sm-12">
+                          <input type="text" id="input_6" placeholder="" class="form-control" name="form-input"/>
                         </div>
                       </div>
 
                       <div class="form-group">
-                        <label
-                          class="col-sm-3 control-label no-padding-right"
-                          for="nama_program"
-                        >
+                        <label class="col-sm-6 control-label no-padding-right"for="nama_program">
                           No. Telepon
                         </label>
-
-                        <div class="col-sm-9">
-                          <input
-                            type="text"
-                            id="input_7"
-                            placeholder=""
-                            class="form-control"
-                          />
+                        <div class="col-sm-12">
+                          <input type="text" id="input_7" placeholder=""class="form-control" onkeypress="return hanyaAngka(event)" maxlength="13" name="form-input"/>
                         </div>
                       </div>
 
                       <div class="form-group">
-                        <label
-                          class="col-sm-3 control-label no-padding-right"
-                          for="nama_program"
-                        >
+                        <label class="col-sm-6 control-label no-padding-right" for="nama_program">
                           Email
                         </label>
-
-                        <div class="col-sm-9">
-                          <input
-                            type="text"
-                            id="input_8"
-                            placeholder=""
-                            class="form-control"
-                          />
+                        <div class="col-sm-12">
+                          <input type="text" id="input_8" placeholder="" class="form-control" name="form-input"/>
                         </div>
                       </div>
 
-                      <!-- <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Perizinan Berusaha </label>
-          
-                        <div class="col-xs-9">
-                          <input type="file" name="id-input-file-3" id="doc_izin_usaha" />
-          
+                      <div class="form-group" id="form-upload-permohonan">
+                        <label class="col-sm-6 control-label no-padding-right" for="doc_permohonan">Permohonan <code>*</code></label>
+            
+                        <div class="col-sm-12">
+                          <input type="file" name="id-input-file-5" id="doc_permohonan" accept=".pdf" />
+                          <code>File .PDF - Max 5 mb</code>
                         </div>
                       </div>
-          
-                      <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Persetujuan Lingkungan </label>
-          
-                        <div class="col-xs-9">
-                          <input type="file" name="id-input-file-3" id="doc_persetujauan_lingkungan" />
-          
-                        </div>
-                      </div>
-          
-                      <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Persetujuan Teknis </label>
-          
-                        <div class="col-xs-9">
-                          <input type="file" name="id-input-file-3" id="doc_persetujuan_teknis" />
-          
-                        </div>
-                      </div>
-          
-                      <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Hasil pemantauan Air Limbah </label>
-          
-                        <div class="col-xs-9">
-                          <input type="file" name="id-input-file-3" id="doc_hasil_pemantauan" />
-          
-                        </div>
-                      </div>
-          
-                      <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Dokumen kontrol jaminan </label>
-          
-                        <div class="col-xs-9">
-                          <input type="file" name="id-input-file-3" id="doc_kontrol_jaminan" />
-          
-                        </div>
-                      </div>
-          
-                      <div class="form-group">
-                        <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Sertifikat registrasi </label>
-          
-                        <div class="col-xs-9">
-                          <input type="file" name="id-input-file-3" id="doc_sertifikat_registrasi" />
-          
-                        </div>
-                      </div> -->
                     </form>
                   </div>
+
                   <div class="modal-footer">
-                    <button
-                      type="button"
-                      class="btn btn-xs btn-danger"
-                      data-dismiss="modal"
-                      id="close_modal_program"
-                    >
+                    <button type="button" class="btn btn-xs btn-danger" data-dismiss="modal" id="close_modal_program">
                       <i class="ace-icon fa fa-close"></i>close
                     </button>
-                    <button
-                      type="button"
-                      id="mohon_save"
-                      class="btn btn-xs btn-success"
-                    >
+                    <button type="button" id="mohon_save" class="btn btn-xs btn-success">
                       <i class="bx bx-check"></i> Simpan
                     </button>
                   </div>
@@ -723,6 +608,7 @@
                 </div>
               </div>
             </div>
+            {% include "admin/menu/modal-edit-perusahaan.html" %}
           </div>
         </div>
         <!-- <script src="{{baseURL}}/assets/action-js/admin/datapengaduan.js"></script> -->

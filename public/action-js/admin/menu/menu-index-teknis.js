@@ -1288,7 +1288,7 @@ function loadpermohonan(param) {
         }
       } else {
         if ($("#isRole").val() == 0) {
-          $('#data_permohonan_btn').hide()
+          $('#data_permohonan_btn').hide();
           $("#initambah").show();
           $("#cekunggahan").css("display", "none");
           $("#cekunggahan").hide();
