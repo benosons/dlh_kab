@@ -851,8 +851,7 @@ function loadpermohonan(param) {
       let code = result.code;
       if (code != "0") {
         if ($("#isRole").val() == 0) {
-          let data = result.data
-          
+          let data = result.data;
           $("#idpermohonan").val(data.id);
           $("#initype").val(data.type);
           $("#inikategori").val(data.kategori);
@@ -1370,6 +1369,7 @@ function detailper(id) {
         $("#categoryFiltertext").show();
         $("#categoryFilter").show();
         let data = result.data;
+
         // Table detail permohonan
         var dt = $("#permohonan-detail").DataTable({
           destroy: true,

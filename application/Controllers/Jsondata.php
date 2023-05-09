@@ -455,18 +455,19 @@ class Jsondata extends \CodeIgniter\Controller
 			$modelfiles	= new \App\Models\TargetModel();
 			$fulldata	= [];
 			$st			= null;
-			$dataprogram = json_decode(json_encode($model->getpermohonan($param, $role, $userid, $type)), true);
-			
-			if ($dataprogram != null) {
+
+			$dataprogram = $model->getpermohonan($param, $role, $userid, $type);
+			if (!empty($dataprogram)) {
 				foreach ($dataprogram as $keyp => $valuep) {
-					$this->loadstatus($valuep['id'], $valuep['type'], 'doc_kajian', null, $valuep['kategori']);
-					$valuep['file'] = [];
-					$datafilenya = json_decode(json_encode($modelfiles->getfilenya('param_file', $valuep['id'], $valuep['type'], null, $valuep['kategori'])), true);
+//					$this->loadstatus($valuep['id'], $valuep['type'], 'doc_kajian', null, $valuep['kategori']);
+					$valuep->file = [];
+					$datafilenya = json_decode(json_encode($modelfiles->getfilenya('param_file', $valuep->id, $valuep->type, null, $valuep->kategori)), true);
 					foreach ($datafilenya as $keyff => $valueff) {
-						array_push($valuep['file'], $valueff);
+						array_push($valuep->file, $valueff);
 					}
 					array_push($fulldata, $valuep);
 				}
+				// print_r($fulldata);die;
 			}
 			
 			if($fulldata){
