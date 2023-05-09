@@ -167,46 +167,41 @@ $(document).ready(function () {
 
   $("#submit_doc").on("click", function () {
     var formData = new FormData();
-    formData.append("id", $("#ini-ID").val());
-    formData.append("param", "param_file");
-    formData.append("type", "2");
+    formData.append('id', $('#ini-ID').val());
+    formData.append('param', 'param_file');
+    formData.append('type', '2');
 
-    switch ($("#jenis_doc").val()) {
-      case "doc_permohonan_slo":
-        formData.append("file[doc_permohonan_slo]", $("#doc_").files);
-
-        break;
-      case "doc_izin_usaha":
-        formData.append("file[doc_izin_usaha]", $("#doc_").files);
-
-        break;
-      case "doc_persetujauan_lingkungan":
-        formData.append(
-          "file[doc_persetujauan_lingkungan]",
-          $("#doc_").files
-        );
-
-        break;
-      case "doc_persetujuan_teknis":
-        formData.append("file[doc_persetujuan_teknis]", $("#doc_").files);
-
-        break;
-      case "doc_hasil_pemantauan":
-        formData.append("file[doc_hasil_pemantauan]", $("#doc_").files);
-
-        break;
-      case "doc_kontrol_jaminan":
-        formData.append("file[doc_kontrol_jaminan]", $("#doc_").files);
-
-        break;
-      case "doc_sertifikat_registrasi":
-        formData.append(
-          "file[doc_sertifikat_registrasi]",
-          $("#doc_").files
-        );
-
-        break;
+    switch ($('#jenis_doc').val()) {
+      case 'doc_permohonan_slo':
+        formData.append("file[doc_permohonan_slo]", $('#doc_')[0].files[0]);
+        
+          break;
+      case 'doc_izin_usaha':
+        formData.append("file[doc_izin_usaha]", $('#doc_')[0].files[0]);
+        
+          break;
+      case 'doc_persetujauan_lingkungan':
+        formData.append("file[doc_persetujauan_lingkungan]", $('#doc_')[0].files[0]);
+        
+          break;
+      case 'doc_persetujuan_teknis':
+        formData.append("file[doc_persetujuan_teknis]", $('#doc_')[0].files[0]);
+        
+          break;
+      case 'doc_hasil_pemantauan':
+        formData.append("file[doc_hasil_pemantauan]", $('#doc_')[0].files[0]);
+        
+          break;
+      case 'doc_kontrol_jaminan':
+        formData.append("file[doc_kontrol_jaminan]", $('#doc_')[0].files[0]);
+        
+          break;
+      case 'doc_sertifikat_registrasi':
+        formData.append("file[doc_sertifikat_registrasi]", $('#doc_')[0].files[0]);
+        
+          break;
     }
+
 
     upload(formData);
   });
@@ -954,7 +949,7 @@ function upload(formData) {
     data: formData,
     success: function (result) {
       dialog.modal("hide");
-      location.reload();
+      // location.reload();
     },
   });
 }
