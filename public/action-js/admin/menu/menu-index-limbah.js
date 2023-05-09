@@ -519,7 +519,7 @@ $(document).ready(function () {
     var formData = new FormData();
     formData.append("id", $("#ini-ID").val());
     formData.append("param", "param_file");
-    formData.append("type", "1");
+    formData.append("type", "3");
     formData.append("kategori", $("#inikategori").val());
 
     formData.append("file[doc_lampiran]", $("#doc_lampiran-2")[0].files[0]);
