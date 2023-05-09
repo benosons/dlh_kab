@@ -22,7 +22,7 @@ $(document).ready(function () {
   $("#nav-menu li").removeClass();
   // $('#nav-menu li#menu-data').addClass('open');
   $("#nav-menu li#menu-teknis").addClass("active");
-  $("#mohon_save").prop("disabled", true);
+  // $("#mohon_save").prop("disabled", true);
   $('[name="id-input-file-3"]')
     .ace_file_input({
       no_file: "tidak ada file ...",
@@ -114,7 +114,7 @@ $(document).ready(function () {
       //onchange:''
       //
       before_remove: function () {
-        $("#mohon_save").prop("disabled", true);
+        // $("#mohon_save").prop("disabled", true);
         return true;
       },
     })
@@ -788,10 +788,10 @@ $(document).ready(function () {
         if(f_mohon){
           $("#mohon_save").prop("disabled", false);
         }else{
-          $("#mohon_save").prop("disabled", true);
+          // $("#mohon_save").prop("disabled", true);
         }
       } else {
-        $("#mohon_save").prop("disabled", true);
+        // $("#mohon_save").prop("disabled", true);
       }
     }else{
       $("#mohon_save").prop("disabled", false);
@@ -1596,7 +1596,8 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
       $("#ini-lampiran").show();
       $("#kajian-teknis").show();
       $("#standar-teknis").hide();
-      $("#modal_file").on("shown.bs.modal", function (e) {
+      $("#modal_file").on("shown.bs.modal", function (e) { 
+        $("#edit_group_kajian").attr("hidden", true);
         $("#kajian-teknis").addClass("active");
         $("#standar-teknis").removeClass("active");
 
@@ -1620,6 +1621,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
       $("#kajian-teknis").show();
       $("#standar-teknis").hide();
       $("#modal_file").on("shown.bs.modal", function (e) {
+        $("#edit_group_kajian").attr("hidden", true);
         $("#kajian-teknis").addClass("active");
         $("#standar-teknis").removeClass("active");
 
@@ -1644,6 +1646,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
       $("#kajian-teknis").show();
       $("#standar-teknis").hide();
       $("#modal_file").on("shown.bs.modal", function (e) {
+        $("#edit_group_kajian").attr("hidden", true);
         $("#kajian-teknis").addClass("active");
         $("#standar-teknis").removeClass("active");
 
@@ -1668,6 +1671,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
       $("#kajian-teknis").show();
       $("#standar-teknis").hide();
       $("#modal_file").on("shown.bs.modal", function (e) {
+        $("#edit_group_kajian").attr("hidden", true);
         $("#kajian-teknis").addClass("active");
         $("#standar-teknis").removeClass("active");
 
@@ -1691,6 +1695,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
       $("#kajian-teknis").show();
       $("#standar-teknis").hide();
       $("#modal_file").on("shown.bs.modal", function (e) {
+        $("#edit_group_kajian").attr("hidden", true);
         $("#kajian-teknis").addClass("active");
         $("#standar-teknis").removeClass("active");
 
@@ -1712,6 +1717,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
       $("#kajian-teknis").hide();
       $("#standar-teknis").show();
       $("#modal_file").on("shown.bs.modal", function (e) {
+        $("#edit_group_kajian").attr("hidden", true);
         $("#kajian-teknis").removeClass("active");
         $("#standar-teknis").addClass("active");
 
@@ -1735,6 +1741,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
       $("#kajian-teknis").hide();
       $("#standar-teknis").show();
       $("#modal_file").on("shown.bs.modal", function (e) {
+        $("#edit_group_kajian").attr("hidden", true);
         $("#kajian-teknis").removeClass("active");
         $("#standar-teknis").addClass("active");
 
@@ -1758,6 +1765,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
       $("#kajian-teknis").hide();
       $("#standar-teknis").show();
       $("#modal_file").on("shown.bs.modal", function (e) {
+        $("#edit_group_kajian").attr("hidden", true);
         $("#kajian-teknis").removeClass("active");
         $("#standar-teknis").addClass("active");
 
@@ -1780,6 +1788,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
       $("#kajian-teknis").hide();
       $("#standar-teknis").show();
       $("#modal_file").on("shown.bs.modal", function (e) {
+        $("#edit_group_kajian").attr("hidden", true);
         $("#kajian-teknis").removeClass("active");
         $("#standar-teknis").addClass("active");
 

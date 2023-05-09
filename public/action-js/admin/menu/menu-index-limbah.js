@@ -22,7 +22,7 @@ $(document).ready(function () {
   $("#nav-menu li").removeClass();
   // $('#nav-menu li#menu-data').addClass('open');
   $("#nav-menu li#menu-teknis").addClass("active");
-  $("#mohon_save").prop("disabled", true);
+  // $("#mohon_save").prop("disabled", true);
   $('[name="id-input-file-3"]')
     .ace_file_input({
       no_file: "tidak ada file ...",
@@ -114,7 +114,7 @@ $(document).ready(function () {
       //onchange:''
       //
       before_remove: function () {
-        $("#mohon_save").prop("disabled", true);
+        // $("#mohon_save").prop("disabled", true);
         return true;
       },
     })
@@ -519,7 +519,7 @@ $(document).ready(function () {
     var formData = new FormData();
     formData.append("id", $("#ini-ID").val());
     formData.append("param", "param_file");
-    formData.append("type", "1");
+    formData.append("type", "3");
     formData.append("kategori", $("#inikategori").val());
 
     formData.append("file[doc_lampiran]", $("#doc_lampiran-2")[0].files[0]);
@@ -788,10 +788,10 @@ $(document).ready(function () {
         if(f_mohon){
           $("#mohon_save").prop("disabled", false);
         }else{
-          $("#mohon_save").prop("disabled", true);
+          // $("#mohon_save").prop("disabled", true);
         }
       } else {
-        $("#mohon_save").prop("disabled", true);
+        // $("#mohon_save").prop("disabled", true);
       }
     }else{
       $("#mohon_save").prop("disabled", false);
@@ -833,7 +833,7 @@ $(document).ready(function () {
     $('#ideditpermohonan').val('')
     $('#doc_permohonan').val('')
     $('#form-upload-permohonan').show()
-    $("#mohon_save").prop('disabled', true);
+    // $("#mohon_save").prop('disabled', true);
   })
 
 });
@@ -2340,7 +2340,7 @@ function reupload(type, id_parent) {
 
   var formData = new FormData();
   formData.append("param", "data_file");
-  formData.append("type", "1");
+  formData.append("type", "3");
   formData.append("id_parent", (id_parent ? id_parent : $("#idpermohonan").val()));
 
   if (type == "izin-lingkungan") {
