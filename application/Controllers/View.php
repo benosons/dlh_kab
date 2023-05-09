@@ -197,6 +197,17 @@ class View extends \CodeIgniter\Controller
 		}
 	}
 
+	public function profile()
+	{
+		if ($this->logged) {
+			helper('form');
+			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/menu/profile.js';
+			return \Twig::instance()->display('admin/menu/profile.html', $this->data);
+		} else {
+			return redirect('home');
+		}
+	}
+
 	public function teknis()
 	{
 		if ($this->logged) {
@@ -214,6 +225,17 @@ class View extends \CodeIgniter\Controller
 			helper('form');
 			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/menu/menu-index-operasi.js';
 			return \Twig::instance()->display('admin/menu/menu-index-operasi.html', $this->data);
+		} else {
+			return redirect('home');
+		}
+	}
+
+	public function limbah()
+	{
+		if ($this->logged) {
+			helper('form');
+			$this->data['script'] = $this->data['baseURL'] . '/action-js/admin/menu/menu-index-limbah.js';
+			return \Twig::instance()->display('admin/menu/menu-index-limbah.html', $this->data);
 		} else {
 			return redirect('home');
 		}

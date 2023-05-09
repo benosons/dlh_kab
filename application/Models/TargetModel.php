@@ -390,6 +390,8 @@ class TargetModel extends Model{
 
             $builder->where(['id_parent' => $id, 'type' => $type]);
 
+          }else if($type == '3'){
+            $builder->where(['id_parent' => $id, 'type' => $type]);
           }
           
           $builder->where("jenis not in ('doc_permohonan', 'doc_izin_lingkungan', 'doc_nib')");
@@ -436,7 +438,7 @@ class TargetModel extends Model{
       if($type == '1'){
         $query   = $builder->getWhere(['id_parent' => $id, 'type' => $type, 'jenis' => $jenis, 'kategori' => $kategori]);
         
-      }else if($type == '2'){
+      }else if($type == '2' || $type == '3'){
         $query   = $builder->getWhere(['id_parent' => $id, 'type' => $type, 'kategori' => $kategori]);
 
       }

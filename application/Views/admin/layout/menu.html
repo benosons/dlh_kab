@@ -14,6 +14,14 @@
 						<span key="t-dashboards">Dashboard</span>
 					</a>
 				</li>
+				{% if role == 0 %}
+				<li>
+					<a href="profile" class="waves-effect">
+						<i class="bx bx-copy"></i>
+						<span key="t-menu">Profile Perusahaan</span>
+					</a>
+				</li>
+				{% endif %}
 
 				<li class="menu-title" key="t-menu">Permohonan</li>
 
@@ -28,6 +36,13 @@
 					<a href="operasi" class="waves-effect">
 						<i class="bx bx-file"></i>
 						<span key="t-menu">Surat Layak Operasi</span>
+					</a>
+				</li>
+				
+				<li>
+					<a href="limbah" class="waves-effect">
+						<i class="bx bx-file"></i>
+						<span key="t-menu">Limbah B3</span>
 					</a>
 				</li>
 

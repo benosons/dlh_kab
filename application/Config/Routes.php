@@ -94,8 +94,10 @@ $routes->add('dashboard', 'View::dashboard');
 $routes->add('login', 'View::login');
 $routes->add('register', 'View::register');
 $routes->add('users', 'View::users');
+$routes->add('profile', 'View::profile');
 $routes->add('teknis', 'View::teknis');
 $routes->add('operasi', 'View::operasi');
+$routes->add('limbah', 'View::limbah');
 $routes->add('puas', 'View::puas');
  
 $routes->add('auth', 'Auth::auth');

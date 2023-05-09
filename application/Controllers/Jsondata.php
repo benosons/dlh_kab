@@ -456,6 +456,7 @@ class Jsondata extends \CodeIgniter\Controller
 			$fulldata	= [];
 			$st			= null;
 			$dataprogram = json_decode(json_encode($model->getpermohonan($param, $role, $userid, $type)), true);
+			
 			if ($dataprogram != null) {
 				foreach ($dataprogram as $keyp => $valuep) {
 					$this->loadstatus($valuep['id'], $valuep['type'], 'doc_kajian', null, $valuep['kategori']);
@@ -3268,7 +3269,7 @@ class Jsondata extends \CodeIgniter\Controller
 					$datapermohonan = $model->getpermohonanbyid($id, $type, $jenis, $userid, $kategori);
 					
 					foreach ($datapermohonan as $key => $value) {						
-						if($value->type == 1 || $value->type == 2){
+						if($value->type == 1 || $value->type == 2 || $value->type == 3){
 							if($role == 100 || $role == 10){
 								$data = $model->getstatus($id, $type, $jenis, $userid, $kategori);
 								if($value->type == 1){
@@ -3424,6 +3425,41 @@ class Jsondata extends \CodeIgniter\Controller
 										$st = 0;
 									}
 								}
+
+								if($value->type == 3){
+									
+									if(count($data) == 4){
+										$stt = [];
+										foreach ($data as $key1 => $value1) {
+											
+											if($value1->status == '0'){
+												array_push($stt, $value1->status);
+											}
+										}
+										
+										if(count($stt) >= 7){
+											$data = [
+												'updated_date'	=> $this->now,
+												'updated_by' 	=> $userid,
+												'status' 		=> 1,
+											];
+											$st = 1;
+											$res = $model->updatestatusmaster('data_permohonan', $value->id, $data);
+
+										}else{
+											$data = [
+												'updated_date'	=> $this->now,
+												'updated_by' 	=> $userid,
+												'status' 		=> 0,
+											];
+											$st = 0;
+											$res = $model->updatestatusmaster('data_permohonan', $value->id, $data);
+											
+										}
+									}else{
+										$st = 0;
+									}
+								}
 							}
 						}
 
@@ -3432,6 +3468,7 @@ class Jsondata extends \CodeIgniter\Controller
 						}
 						array_push($fulldata, $value);
 					}
+					
 					if($fulldata){
 						$response = [
 							'status'   => 'sukses',
