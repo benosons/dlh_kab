@@ -524,7 +524,6 @@ function loadpermohonan(param) {
           let optd = "";
           $("#iskat").val(data.kategori);
           $("#isType").val(data.type);
-          console.log(data);
           $("#dokumen-unggahan").html(
             data.kategori == "1"
               ? "PERSYARATAN PERMOHONAN SURAT KELAYAKAN OPERASIONAL PEMBUANGAN DAN/ATAU PEMANFAATAN AIR LIMBAH"
@@ -958,7 +957,6 @@ function detailper(id) {
   $("#permohonan-all").hide();
   $("#detail").show();
   window.id_perusahaan = id
-  console.log(id);
   
   $.ajax({
     type: "post",
@@ -1291,7 +1289,6 @@ function action(mode, id, type, keterangan, param, kategori) {
                       <a class="btn btn-xs btn-warning" target="_blank" href="public/` +row.path +"/" +row.filename +`">
                         <i class="bx bxs-download font-size-16"></i>
                       </a>`;
-
                   if ($("#role").val() == 0) {
                     if (row.status == "1") {
                       el +=
@@ -1306,7 +1303,7 @@ function action(mode, id, type, keterangan, param, kategori) {
                         "/" +
                         row.filename +
                         `','` +
-                        row.jenis +
+                        row.kategori +
                         `')">
                           <i class="bx bx-edit font-size-16"></i>
                         </button>`;
@@ -1575,11 +1572,8 @@ function actionlapangan(mode, id, type, keterangan, param) {
                         "/" +
                         row.filename +
                         `','` +
-                        row.jenis +
-                        `')">
-                                  <i class="ace-icon fa fa-edit bigger-120"></i>
-                                </button></div>`;
-
+                        row.kategori +
+                        `')"><i class="ace-icon fa fa-edit bigger-120"></i></button></div>`;
                       el +=
                         `<div class="btn-group"><button class="btn btn-xs btn-danger" onclick="actionfile('delete','` +
                         row.id +
@@ -1737,12 +1731,13 @@ function updatestatusmaster(id, stat) {
   });
 }
 
-function revisi(id, type, jenis, path) {
+function revisi(id, type, jenis, path, kategori) {
   $("#edit_group").removeAttr("hidden");
   $("#jenis_edit").val(jenis);
   $("#id_edit").val(id);
   $("#path_edit").val(path);
   $("#type_edit").val(type);
+  $("#kategori_edit").val(kategori);
 }
 
 $("#submit_edit").on("click", function () {
@@ -1750,8 +1745,8 @@ $("#submit_edit").on("click", function () {
   formData.append("id", $("#id_edit").val());
   formData.append("path", $("#path_edit").val());
   formData.append("type", $("#type_edit").val());
-  formData.append("file[]", $("#edit_file").files);
-
+  formData.append("kategori", $("#kategori_edit").val());
+  formData.append("file[]", $("#edit_file")[0].files[0]);
   $.ajax({
     type: "post",
     processData: false,

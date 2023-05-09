@@ -1941,50 +1941,49 @@ class Jsondata extends \CodeIgniter\Controller
 
 	public function editfile(){
 		
-		$request  = $this->request;
+		$request 	= $this->request;
 		$id 	  	= $request->getVar('id');
 		$path 		= $request->getVar('path');
 		$type 		= $request->getVar('type');
-		$kategori 		= $request->getVar('kategori');
+		$kategori 	= $request->getVar('kategori');
 
 		$role 		= $this->data['role'];
 		$userid		= $this->data['userid'];
 		
-		$model 	  = new \App\Models\ProgramModel();
-		$modelfile 	  = new \App\Models\TargetModel();
-
-		if(unlink('public/'.$path)){
+		$model 	  	= new \App\Models\ProgramModel();
+		$modelfile 	= new \App\Models\TargetModel();
+		
+		$old_file	= 'public/'.$path;
+		if (file_exists($old_file)) {
+			unlink($old_file);
+		}
+		if(!empty($_FILES)){
+			
+			$files	 	= $request->getFiles()['file'];
+			$path		= FCPATH.'public';
+			$tipe		= 'uploads/permohonan';
+			$date 		= date('Y/m/d');
+			$folder		= $path.'/'.$tipe.'/'.$date.'/'.$request->getVar('type').'/'.$userid;
+			
+			if (!is_dir($folder)) {
+				mkdir($folder, 0777, TRUE);
+			}
+			foreach ($files as $key => $value) {
 				
-				if(!empty($_FILES)){
-
-					$files	 	= $request->getFiles()['file'];
-					$path		= FCPATH.'public';
-					$tipe		= 'uploads/permohonan';
-					$date 		= date('Y/m/d');
-					$folder		= $path.'/'.$tipe.'/'.$date.'/'.$request->getVar('type').'/'.$userid;
-
-					if (!is_dir($folder)) {
-						mkdir($folder, 0777, TRUE);
-					}
+				$stat = $files[$key]->move($folder, $files[$key]->getName());
+				
+				$data_file = [
+						'filename'			=> $files[$key]->getName(),
+						'ext'				=> null,
+						'size'				=> $files[$key]->getSize(),
+						'path'				=> $tipe.'/'.$date.'/'.$request->getVar('type').'/'.$userid,
+						'updated_date'		=> $this->now,
+						'status'			=> null,
+					];
+					$modelfile->updateFile($id, $data_file, $kategori);
 					
-					foreach ($files as $key => $value) {
-						
-						$stat = $files[$key]->move($folder, $files[$key]->getName());
-						
-						$data_file = [
-							'filename'			=> $files[$key]->getName(),
-							'ext'				=> null,
-							'size'				=> $files[$key]->getSize(),
-							'path'				=> $tipe.'/'.$date.'/'.$request->getVar('type').'/'.$userid,
-							'updated_date'		=> $this->now,
-							'status'			=> null,
-						];
-						// print_r($data_file);die;
-						$modelfile->updateFile($id, $data_file, $kategori);
-
-					}
-
 				}
+				
 			}
 
 		$response = [
