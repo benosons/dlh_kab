@@ -1,5 +1,9 @@
 "use strict";
 console.log("You are running jQuery version: " + $.fn.jquery);
+// Kode Per Kota
+$("#kota_kabupaten").val('KABUPATEN BANDUNG');
+var kota = 32.04;
+$("#kode_kota").val(kota);
 $(document).ready(function () {
     $("#data_permohonan_btn").click(function(){
       $("#profile-perusahaan-page").hide();
@@ -22,7 +26,7 @@ $(document).ready(function () {
   $("#nav-menu li").removeClass();
   // $('#nav-menu li#menu-data').addClass('open');
   $("#nav-menu li#menu-teknis").addClass("active");
-  // $("#mohon_save").prop("disabled", true);
+  $("#mohon_save").prop("disabled", true);
   $('[name="id-input-file-3"]')
     .ace_file_input({
       no_file: "tidak ada file ...",
@@ -114,7 +118,7 @@ $(document).ready(function () {
       //onchange:''
       //
       before_remove: function () {
-        // $("#mohon_save").prop("disabled", true);
+        $("#mohon_save").prop("disabled", true);
         return true;
       },
     })
@@ -246,6 +250,7 @@ $(document).ready(function () {
   $("#data-file").DataTable();
 
   loadpermohonan("1");
+  getkecamatan(kota);
 
   $("#verlapanganini").on("click", function () {
     actionlapangan("view", $("#idpermohonan").val(), $("#initype").val());
@@ -438,50 +443,78 @@ $(document).ready(function () {
         },
       },
       callback: function (result) {
+        
         if (result) {
-          var formData = new FormData();
-          if($('#ideditpermohonan').val()){
-            formData.append("id_permohonan", $('#ideditpermohonan').val());
-          }
-          formData.append("param", "data_permohonan");
-          formData.append("type", "1");
-          formData.append("id_perusahaan", $('#idpermohonan').val());
-          let berapa = [];
-          for (let index = 1; index <= 9; index++) {
-            if ($("#input_" + index).val()) {
-              formData.append("input_" + index, $("#input_" + index).val());
-              $("#input_" + index)
-                .parent()
-                .parent()
-                .removeClass("has-error");
-              berapa.push(index);
-            } else {
-              $("#input_" + index)
-                .parent()
-                .parent()
-                .addClass("has-error");
+          var email   = document.getElementById("input_6").value;
+          var telepon = document.getElementById("input_7").value;
+          var alamat  = document.getElementById("input_8").value;
+          var regency = document.getElementById("kota_kabupaten").value;
+          var district = document.getElementById("select_kecamatan").value;
+          var village = document.getElementById("select_kelurahan").value;
+          if(email == "" && telepon == "" && alamat == "" && village == "" && regency == "" && district == ""){
+            var dialog = bootbox.dialog({
+              message:
+                '<p class="text-center mb-0">Mohon lengkapi data anda</p>',
+            });
+            function close() {
+              dialog.modal("hide");
             }
-          }
-          
-          formData.append(
-            "file[doc_permohonan]",
-            $("#doc_permohonan")[0].files[0]
-          );
-          // formData.append(
-          //   "file[doc_izin_lingkungan]",
-          //   $("#doc_izin_lingkungan")[0].files[0]
-          // );
-          // formData.append("file[doc_nib]", $("#doc_nib")[0].files[0]);
-          // formData.append(
-          //   "file[doc_penapisan_mandiri]",
-          //   $("#doc_penapisan_mandiri")[0].files[0]
-          // );
-          // formData.append("bab_kajian", $('#bab_kajian').val());
-          // formData.append("file[doc_standar]", $('#doc_standar')[0].files[0]);
-          // formData.append("bab_standar", $('#bab_standar').val());
+            setTimeout(close, 3000);
+          }else{
+            var formData = new FormData();
+            if($('#ideditpermohonan').val()){
+              formData.append("id_permohonan", $('#ideditpermohonan').val());
+            }
+            formData.append("param", "data_permohonan");
+            formData.append("type", "1");
+            formData.append("id_perusahaan", $('#idpermohonan').val());
+            let berapa = [];
+            for (let index = 6; index <= 8; index++) {
+              if ($("#input_" + index).val()) {
+                formData.append("input_" + index, $("#input_" + index).val());
+                $("#input_" + index)
+                  .parent()
+                  .parent()
+                  .removeClass("has-error");
+                berapa.push(index);
+              } else {
+                var dialog = bootbox.dialog({
+                  message:
+                    '<p class="text-center mb-0">Mohon lengkapi data anda</p>',
+                });
+                function close() {
+                  dialog.modal("hide");
+                }
+                setTimeout(close, 3000);
+              }
+            }
 
-          if (berapa.length == 3) {
-            save(formData);
+            formData.append("kotakab", $("#kode_kota").val());
+            formData.append("kecamatan", $("#select_kecamatan").val());
+            formData.append("kelurahan", $("#select_kelurahan").val());
+            formData.append("kategori", $("#select_kategori").val());
+            formData.append("jenis", $("#select_jenis").val());
+
+            formData.append(
+              "file[doc_permohonan]",
+              $("#doc_permohonan")[0].files[0]
+            );
+            // formData.append(
+            //   "file[doc_izin_lingkungan]",
+            //   $("#doc_izin_lingkungan")[0].files[0]
+            // );
+            // formData.append("file[doc_nib]", $("#doc_nib")[0].files[0]);
+            // formData.append(
+            //   "file[doc_penapisan_mandiri]",
+            //   $("#doc_penapisan_mandiri")[0].files[0]
+            // );
+            // formData.append("bab_kajian", $('#bab_kajian').val());
+            // formData.append("file[doc_standar]", $('#doc_standar')[0].files[0]);
+            // formData.append("bab_standar", $('#bab_standar').val());
+            
+            if (berapa.length == 3) {
+              save(formData);
+            }
           }
         }
       },
@@ -827,16 +860,86 @@ $(document).ready(function () {
   $("#initambah").on("click", function () {
     $('#modal_program').modal({backdrop: 'static', keyboard: false})
     $('#modal_program').modal('show')
-    for (let index = 6; index <= 8; index++){
+    for (let index = 1; index <= 3; index++){
       $(`#input_${index}`).val('')
     }
     $('#ideditpermohonan').val('')
     $('#doc_permohonan').val('')
     $('#form-upload-permohonan').show()
-    $("#mohon_save").prop('disabled', true);
+    $("#mohon_save").prop('disabled', false);
   })
-
 });
+
+function getkecamatan(kota) {
+  var jenis = "kecamatan";
+  $.ajax({
+    type: "post",
+    dataType: "json",
+    url: "get_data_wilayah",
+    data: {
+      param: kota,
+      jenis: jenis
+    },
+    success: function (result) {
+      let data = result.data;
+      
+      const container = document.getElementById('div_kecamatan');
+      const select = document.getElementById('select_kecamatan');
+      var kecamatan = [];
+      for (let i = 0; i < data.length; i++) {
+        var datas = data[i];
+        kecamatan.push(datas);
+      }
+      const options = kecamatan;
+      options.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.text = option.kemendagri_kecamatan_nama;
+        optionElement.value = option.kemendagri_kecamatan_kode;
+        select.add(optionElement);
+      });
+    }
+  });
+}
+
+function getKelurahanByKecamatan() {
+  const kecamatan    = document.getElementById('select_kecamatan');
+  const idkecamatan  = kecamatan.value;
+  
+  const kelurahan    = document.getElementById('select_kelurahan');
+  while (kelurahan.firstChild) {
+    kelurahan.removeChild(kelurahan.firstChild);
+  }
+
+  const jenis = "kelurahan";
+  $.ajax({
+    type: "post",
+    dataType: "json",
+    url: "get_data_wilayah",
+    data: {
+      param: idkecamatan,
+      jenis: jenis
+    },
+    success: function (result) {
+      let data = result.data;
+
+      const container = document.getElementById('div_kelurahan');
+      const select = document.getElementById('select_kelurahan');
+      var kelurahan = [];
+      for (let i = 0; i < data.length; i++) {
+        var datas = data[i];
+        kelurahan.push(datas);
+      }
+      const options = kelurahan;
+      options.forEach(option => {
+        const optionElement = document.createElement('option');
+        optionElement.text = option.kemendagri_kelurahan_nama;
+        optionElement.value = option.kemendagri_kelurahan_kode;
+        select.add(optionElement);
+      });
+    }
+  });
+
+}
 
 function loadpermohonan(param) {
   $.ajax({
@@ -892,13 +995,13 @@ function loadpermohonan(param) {
                         var namafile_permohonan = element.filename
                         var path_file = element.path
                         el += `<grp id="view-file-permohonan">
-                                  <button type="button" class="btn btn-sm btn-outline-secondary btn-round">
-                                    <i class="bx bx-file"></i>
-                                    <span class="bigger-110" id="nama-file-permohonan" onclick="downloadatuh('${'public/'+path_file}/${namafile_permohonan}')">${namafile_permohonan}</span>
+                        <button type="button" class="btn btn-sm btn-outline-secondary btn-round">
+                        <i class="bx bx-file"></i>
+                        <span class="bigger-110" id="nama-file-permohonan" onclick="downloadatuh('${'public/'+path_file}/${namafile_permohonan}')">${namafile_permohonan}</span>
                                   </button>
                                   <button class="btn btn-danger btn-sm btn-round" id="hapus-permohonan" type="button" onclick="actionfile('delete', '${idfile_permohonan}', '${type_permohonan}', '${path_file}/${namafile_permohonan}')"><i class="bx bx-trash"></i></button>
                                 </grp>
-                              `
+                                `
                         
                       });
                       el += `<div class="form-group" id="form-permohonan-reupload" style="display:${row.file.length ? 'none' : 'block'};">        
@@ -908,9 +1011,9 @@ function loadpermohonan(param) {
                                   </div>
                                 </div>`
 
-                      el += ''
-                      
-                      return el;
+                                el += ''
+                                
+                                return el;
                     }
                     return data;
                   },
@@ -925,15 +1028,15 @@ function loadpermohonan(param) {
                         oks = file[key]["ok"] == 1 ? oks + 1 : +0;
                       }
                       var el = '<div class="btn-group">';
-
+                      
                       if (row.param) {
                         if (oks == 1) {
                           el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="action('view',${row.id},'${row.type}', '', '', '${row.param}',${row.kategori})">
-                                  <i class="bx bx-file font-size-16"></i>
-                                </button>`;
+                          <i class="bx bx-file font-size-16"></i>
+                          </button>`;
                         }
                       }
-                      el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="editpermohonan(${row.id}, '${row.p6}', '${row.p7}', '${row.p8}')">
+                      el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="editpermohonan(${row.id}, '${row.p6}', '${row.p7}', '${row.p8}','${row.region.kemendagri_kota_nama}','${row.region.kemendagri_kecamatan_nama}','${row.region.kemendagri_kelurahan_nama}')">
                               <i class="bx bx-edit font-size-16"></i>
                             </button>`;
                       if (row.status == 1) {
@@ -3270,11 +3373,14 @@ function filepermohonan(isthis) {
     window.filepermohonan = isthis.files[0]
 }
 
-function editpermohonan(id, alamat, notelp, email) {
+function editpermohonan(id, alamat, notelp, email, kota, kecamatan, kelurahan) {
   $("#ideditpermohonan").val(id);
   $("#input_6").val(alamat);
   $("#input_7").val(notelp);
   $("#input_8").val(email);
+  $("#kota_kabupaten").val(kota);
+  $("#select_kecamatan").val(kecamatan);
+  $("#select_kelurahan").val(kelurahan);
   $("#form-upload-permohonan").hide();
   $("#mohon_save").prop('disabled', false);
   $("#modal_program").modal("show");

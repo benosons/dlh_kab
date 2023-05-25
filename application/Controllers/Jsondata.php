@@ -407,9 +407,14 @@ class Jsondata extends \CodeIgniter\Controller
 						foreach ($datafilenya as $keyff => $valueff) {
 							array_push($valuep['file'], $valueff);
 						}
+						$valuep['region'] = [];
+						$datareg = json_decode(json_encode($model->getdatawilayah($valuep['village_id'], 'editregion')), true);
+						foreach ($datareg as $keyr => $valuer) {
+							$valuep['region'] = $valuer;
+						}
+
 						array_push($value->permohonan, $valuep);
 						$value->kategori = $valuep['kategori'] ;
-
 					}
 					// foreach ($dataprogram as $key => $value) {
 					// 	$value->file = (object) $datafilenya;
@@ -1709,16 +1714,22 @@ class Jsondata extends \CodeIgniter\Controller
 		$data = [];
 		
 		if(!$request->getVar('id_permohonan')){
-			for ($i=1; $i <= 9 ; $i++) { 
+			for ($i=6; $i <= 8 ; $i++) { 
 				$data['p'.$i] = $request->getVar('input_'.$i);
 			}
 
+
+			$data['param']			= $request->getVar('jenis');
+			$data['kategori']		= $request->getVar('kategori');
+			$data['regency_id']		= $request->getVar('kotakab');
+			$data['district_id']	= $request->getVar('kecamatan');
+			$data['village_id']		= $request->getVar('kelurahan');
 			$data['created_by']	 	= $userid;
 			$data['created_date'] 	= $this->now;
 			$data['updated_date'] 	= $this->now;
 			$data['type'] 			= $request->getVar('type');
 			$data['id_perusahaan'] 	= $request->getVar('id_perusahaan');
-
+			// print_r($data);die;
 			$res = $model->saveParam($param, $data);
 			$id  = $model->insertID();
 
@@ -1763,9 +1774,14 @@ class Jsondata extends \CodeIgniter\Controller
 			for ($i=6; $i <= 8 ; $i++) { 
 				$data['p'.$i] = $request->getVar('input_'.$i);
 			}
-
-			$data['updated_date'] 		= $this->now;
-			$data['updated_by'] 		= $userid;
+			
+			$data['param']			= $request->getVar('jenis');
+			$data['kategori']		= $request->getVar('kategori');
+			$data['regency_id']		= $request->getVar('kotakab');
+			$data['district_id']	= $request->getVar('kecamatan');
+			$data['village_id']		= $request->getVar('kelurahan');
+			$data['updated_date'] 	= $this->now;
+			$data['updated_by'] 	= $userid;
 			
 			$res = $modelfile->updateper($request->getVar('id_permohonan'), $data);
 		}
@@ -3870,6 +3886,39 @@ class Jsondata extends \CodeIgniter\Controller
 			}
 		catch (\Exception $e)
 		{
+			die($e->getMessage());
+		}
+	}
+	
+	public function getdatawilayah()
+	{
+		try {
+			$request	= $this->request;
+			$id			= $request->getVar('param');
+			$jenis		= $request->getVar('jenis');
+
+			$modelparam = new \App\Models\ProgramModel();
+			$fulldata = [];
+			$dataprogram = $modelparam->getdatawilayah($id, $jenis);
+
+			if($dataprogram){
+				$response = [
+					'status'   => 'sukses',
+					'code'     => '1',
+					'data' 		 => $dataprogram
+				];
+			}else{
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+
+		header('Content-Type: application/json');
+		echo json_encode($response);
+		exit;
+		} catch (\Exception $e) {
 			die($e->getMessage());
 		}
 	}

@@ -67,13 +67,35 @@ class ProgramModel extends Model{
       
       public function saveParamComp($table = null, $data = null)
       {
-//            echo $this->db->getLastQuery();die;
             return $this->db->table($table)->insert($data);
       }
       
       public function saveParam($table = null, $data = null)
       {
+            // echo $this->db->getLastQuery();die;
         return  $this->db->table($table)->insert($data);
-    }
+      }
 
+      public function getdatawilayah($id = null, $jenis = null)
+      {
+            if ($jenis == 'kecamatan') {
+                  $sql = "SELECT kemendagri_kecamatan_nama, kemendagri_kecamatan_kode FROM 
+                  dlh_kab.data_wilayah WHERE kemendagri_kota_kode  = $id AND 
+                  kemendagri_kecamatan_kode IN (
+                        SELECT kemendagri_kecamatan_kode FROM dlh_kab.data_wilayah 
+                        GROUP BY kemendagri_kecamatan_kode HAVING COUNT(*) > 1
+                  ) GROUP BY kemendagri_kecamatan_kode";
+                  $result = $this->db->query($sql);
+                  $row = $result->getResult();
+                  return $row;
+            } else if($jenis == 'kelurahan') {
+                  $builder = $this->db->table('data_wilayah');
+                  $query   = $builder->getWhere(['kemendagri_kecamatan_kode' => $id]);
+                  return  $query->getResult();
+            }else{
+                  $builder = $this->db->table('data_wilayah');
+                  $query   = $builder->getWhere(['kemendagri_kelurahan_kode' => $id]);
+                  return  $query->getResult();
+            }
+      }
 }

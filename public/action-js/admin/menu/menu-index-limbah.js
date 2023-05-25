@@ -1189,6 +1189,7 @@ function loadpermohonan(param) {
 
           if (harap.length == 0) {
             $("#harap").hide();
+
           }
         } else {
           let data = result.data;
