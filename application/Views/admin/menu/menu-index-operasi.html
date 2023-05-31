@@ -241,11 +241,11 @@
                       </div> -->
 
                       <div class="form-group">
-                        <label class="col-sm-12 control-label no-padding-right" for="nama_program">
-                          Alamat Kantor dan Lokasi Usaha/ Kegiatan
+                        <label class="col-sm-6 control-label no-padding-right" for="nama_program">
+                          Email
                         </label>
                         <div class="col-sm-12">
-                          <input type="text" id="input_6" placeholder="" class="form-control" name="form-input"/>
+                          <input type="text" id="input_8" placeholder="" class="form-control" name="form-input"/>
                         </div>
                       </div>
 
@@ -259,11 +259,41 @@
                       </div>
 
                       <div class="form-group">
-                        <label class="col-sm-6 control-label no-padding-right" for="nama_program">
-                          Email
+                        <label class="col-sm-6 control-label no-padding-right" for="nama_program"> Kota / Kabupaten </label>
+
+                        <div class="col-sm-12">
+                          <input type="text" id="kota_kabupaten" placeholder="" class="form-control" name="form-input" readonly>
+                          <input type="hidden" id="kode_kota" />
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="col-sm-6 control-label no-padding-right" for="nama_program"> Kecamatan </label>
+
+                        <div class="col-sm-12" id="div_kecamatan">
+                          <select class="chosen-select form-control" id="select_kecamatan" data-placeholder="Pilih Kecamatan ..." onchange="getKelurahanByKecamatan()">
+                            
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="col-sm-6 control-label no-padding-right" for="nama_program"> Kelurahan </label>
+
+                        <div class="col-sm-12" id="div_kelurahan">
+                          <select class="chosen-select form-control" id="select_kelurahan" data-placeholder="Pilih Kelurahan ...">
+                            
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label class="col-sm-12 control-label no-padding-right" for="nama_program">
+                          Alamat
                         </label>
                         <div class="col-sm-12">
-                          <input type="text" id="input_8" placeholder="" class="form-control" name="form-input"/>
+                          <textarea class="form-control" name="form-input" id="input_6" cols="30" rows="3"></textarea>
+                          <!-- <input type="text" id="input_6" placeholder="" class="form-control" name="form-input"/> -->
                         </div>
                       </div>
 
@@ -271,7 +301,7 @@
                         <label class="col-sm-6 control-label no-padding-right" for="doc_permohonan">Permohonan <code>*</code></label>
             
                         <div class="col-sm-12">
-                          <input type="file" name="id-input-file-5" id="doc_permohonan" accept=".pdf" />
+                          <input type="file" class="form-control" name="id-input-file-5" id="doc_permohonan" accept=".pdf" />
                           <code>File .PDF - Max 5 mb</code>
                         </div>
                       </div>

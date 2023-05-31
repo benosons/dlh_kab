@@ -922,8 +922,8 @@ function getKelurahanByKecamatan() {
     success: function (result) {
       let data = result.data;
 
-      const container = document.getElementById('div_kelurahan');
-      const select = document.getElementById('select_kelurahan');
+      const container   = document.getElementById('div_kelurahan');
+      const select      = document.getElementById('select_kelurahan');
       var kelurahan = [];
       for (let i = 0; i < data.length; i++) {
         var datas = data[i];
@@ -972,12 +972,12 @@ function loadpermohonan(param) {
               pageLength: 10,
               aaData: data.permohonan,
               aoColumns: [
-                { mDataProp: "id", width: "10%" },
-                { mDataProp: "p6" },
-                { mDataProp: "p7" },
-                { mDataProp: "p8" },
-                { mDataProp: "id" },
-                { mDataProp: "id" },
+                { mDataProp: "id", width: "1%" },
+                { mDataProp: "p6", width: "4%" },
+                { mDataProp: "p7", width: "1%" },
+                { mDataProp: "p8", width: "1%" },
+                { mDataProp: "id", width: "5%" },
+                { mDataProp: "id", width: "3%" },
               ],
               order: [[0, "ASC"]],
               fixedColumns: true,
@@ -998,22 +998,30 @@ function loadpermohonan(param) {
                         <button type="button" class="btn btn-sm btn-outline-secondary btn-round">
                         <i class="bx bx-file"></i>
                         <span class="bigger-110" id="nama-file-permohonan" onclick="downloadatuh('${'public/'+path_file}/${namafile_permohonan}')">${namafile_permohonan}</span>
-                                  </button>
-                                  <button class="btn btn-danger btn-sm btn-round" id="hapus-permohonan" type="button" onclick="actionfile('delete', '${idfile_permohonan}', '${type_permohonan}', '${path_file}/${namafile_permohonan}')"><i class="bx bx-trash"></i></button>
-                                </grp>
-                                `
-                        
+                        </button>`
+                        // Menunggu Verifikasi status = 0
+                        // Sudah Verifikasi status = 1
+                        // Gagal Verifikasi status = 2
+                        // Ditolak status = 3
+                        if (row.status == 0) {
+                          el += `<button class="btn btn-warning btn-sm btn-round" id="menunggu-verifikasi" type="button" disabled><i class="bx bx-error"></i></button>`
+                        }else if(row.status == 1){
+
+                        }else if(row.status == 3){
+                          el += `<button class="btn btn-danger btn-sm btn-round" id="hapus-permohonan" type="button" onclick="actionfile('delete', '${idfile_permohonan}', '${type_permohonan}', '${path_file}/${namafile_permohonan}')"><i class="bx bx-trash"></i></button>`
+                        }else{
+                          el += `<button class="btn btn-success btn-sm btn-round" id="verfikasian" type="button" disabled><i class='bx bxs-check-square'></i></button>`
+                        }
+                        `</grp>`
                       });
                       el += `<div class="form-group" id="form-permohonan-reupload" style="display:${row.file.length ? 'none' : 'block'};">        
-                                  <div class="col-sm-11">
-                                    <input type="file" name="id-input-file-5" id="doc_permohonan_reupload" accept=".pdf" onchange="filepermohonan(this)" />
-                                    <button class="btn btn-success btn-sm btn-round" id="upload-permohonan" onclick="reupload('permohonan', ${idfile_permohonan})" type="button"><i class="bx bx-check-double"></i></button>
-                                  </div>
-                                </div>`
-
-                                el += ''
-                                
-                                return el;
+                              <div class="col-sm-11">
+                                <input type="file" name="id-input-file-5" id="doc_permohonan_reupload" accept=".pdf" onchange="filepermohonan(this)" />
+                                <button class="btn btn-success btn-sm btn-round" id="upload-permohonan" onclick="reupload('permohonan', ${idfile_permohonan})" type="button"><i class="bx bx-check-double"></i></button>
+                              </div>
+                            </div>`
+                       el += ''
+                       return el;
                     }
                     return data;
                   },
@@ -1036,7 +1044,7 @@ function loadpermohonan(param) {
                           </button>`;
                         }
                       }
-                      el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="editpermohonan(${row.id}, '${row.p6}', '${row.p7}', '${row.p8}','${row.region.kemendagri_kota_nama}','${row.region.kemendagri_kecamatan_nama}','${row.region.kemendagri_kelurahan_nama}')">
+                      el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="editpermohonan(${row.id})">
                               <i class="bx bx-edit font-size-16"></i>
                             </button>`;
                       if (row.status == 1) {
@@ -1079,6 +1087,7 @@ function loadpermohonan(param) {
             
           }
 
+          $("#hapus-permohonan").hide();
           $("#ini-form-add").hide();
           $("#ini-form-view").show();
           if (!data["param"]) {
@@ -3373,15 +3382,31 @@ function filepermohonan(isthis) {
     window.filepermohonan = isthis.files[0]
 }
 
-function editpermohonan(id, alamat, notelp, email, kota, kecamatan, kelurahan) {
-  $("#ideditpermohonan").val(id);
-  $("#input_6").val(alamat);
-  $("#input_7").val(notelp);
-  $("#input_8").val(email);
-  $("#kota_kabupaten").val(kota);
-  $("#select_kecamatan").val(kecamatan);
-  $("#select_kelurahan").val(kelurahan);
-  $("#form-upload-permohonan").hide();
-  $("#mohon_save").prop('disabled', false);
-  $("#modal_program").modal("show");
+function editpermohonan(id) {
+  $.ajax({
+    type: "post",
+    dataType: "json",
+    url: "loaddetailpermohonan",
+    data: {
+      param: id,
+      type: 1,
+      edit: 'true'
+    },
+    success: function (result) {
+      var data = result.data;
+
+      $("#ideditpermohonan").val(data.id);
+      $("#input_6").val(data.p6);
+      $("#input_7").val(data.p7);
+      $("#input_8").val(data.p8);
+      $("#kota_kabupaten").val(data.regency_name);
+      $("#select_kecamatan").val(data.district_id).trigger('change');
+      $("#select_kelurahan").val(data.village_id).trigger('change');
+      $("#select_kategori").val(data.kategori).trigger('change');
+      $("#select_jenis").val(data.param).trigger('change');
+      $("#form-upload-permohonan").hide();
+      $("#mohon_save").prop('disabled', false);
+      $("#modal_program").modal("show");
+    },
+  });
 }

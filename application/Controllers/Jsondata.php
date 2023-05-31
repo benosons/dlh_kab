@@ -390,7 +390,6 @@ class Jsondata extends \CodeIgniter\Controller
 				$fulldata = $company;
 
 			} else {
-				
 				$company = $model->getperusahaan('0', $userid);
 				foreach ($company as $key => $value) {
 					$datafilenya = json_decode( json_encode($modelfiles->getfilecomp('param_file', $value->id)), true);
@@ -454,6 +453,7 @@ class Jsondata extends \CodeIgniter\Controller
 			$role		= $this->data['role'];
 			$userid		= $this->data['userid'];
 			$type		= $request->getVar('type');
+			$edit		= $request->getVar('edit');
 
 			$model		= new \App\Models\ProgramModel();
 			$modelparam	= new \App\Models\ParamModel();
@@ -461,18 +461,22 @@ class Jsondata extends \CodeIgniter\Controller
 			$fulldata	= [];
 			$st			= null;
 
-			$dataprogram = $model->getpermohonan($param, $role, $userid, $type);
-			if (!empty($dataprogram)) {
-				foreach ($dataprogram as $keyp => $valuep) {
-//					$this->loadstatus($valuep['id'], $valuep['type'], 'doc_kajian', null, $valuep['kategori']);
-					$valuep->file = [];
-					$datafilenya = json_decode(json_encode($modelfiles->getfilenya('param_file', $valuep->id, $valuep->type, null, $valuep->kategori)), true);
-					foreach ($datafilenya as $keyff => $valueff) {
-						array_push($valuep->file, $valueff);
+			if ($role == 100 || $role == 10) {
+				$dataprogram = $model->getpermohonan($param, $role, $userid, $type, '');
+				if (!empty($dataprogram)) {
+					foreach ($dataprogram as $keyp => $valuep) {
+	//					$this->loadstatus($valuep['id'], $valuep['type'], 'doc_kajian', null, $valuep['kategori']);
+						$valuep->file = [];
+						$datafilenya = json_decode(json_encode($modelfiles->getfilenya('param_file', $valuep->id, $valuep->type, null, $valuep->kategori)), true);
+						foreach ($datafilenya as $keyff => $valueff) {
+							array_push($valuep->file, $valueff);
+						}
+						array_push($fulldata, $valuep);
 					}
-					array_push($fulldata, $valuep);
 				}
-				// print_r($fulldata);die;
+			} else {
+				$dataprogram = $model->getpermohonan($param, $role, $userid, $type, $edit);
+				$fulldata = $dataprogram[0];
 			}
 			
 			if($fulldata){
@@ -1713,20 +1717,31 @@ class Jsondata extends \CodeIgniter\Controller
 
 		$data = [];
 		
+		$idkel		= $request->getVar('kelurahan');
+		$dataprogram = $model->getdatawilayah($idkel, 'addpermohonan');
+		$stuff = $dataprogram[0];
+		
+		
 		if(!$request->getVar('id_permohonan')){
 			for ($i=6; $i <= 8 ; $i++) { 
 				$data['p'.$i] = $request->getVar('input_'.$i);
 			}
 
-
 			$data['param']			= $request->getVar('jenis');
 			$data['kategori']		= $request->getVar('kategori');
+			// Menunggu Verifikasi status = 0
+			// Sudah Verifikasi status = 1
+			// Gagal Verifikasi status = 2
+			// Ditolak status = 3
+			$data['status']			= '0';
 			$data['regency_id']		= $request->getVar('kotakab');
+			$data['regency_name']	= $stuff->kemendagri_kota_nama;
 			$data['district_id']	= $request->getVar('kecamatan');
+			$data['district_name']	= $stuff->kemendagri_kecamatan_nama;
 			$data['village_id']		= $request->getVar('kelurahan');
+			$data['village_name']	= $stuff->kemendagri_kelurahan_nama;
 			$data['created_by']	 	= $userid;
 			$data['created_date'] 	= $this->now;
-			$data['updated_date'] 	= $this->now;
 			$data['type'] 			= $request->getVar('type');
 			$data['id_perusahaan'] 	= $request->getVar('id_perusahaan');
 			// print_r($data);die;
@@ -1778,8 +1793,11 @@ class Jsondata extends \CodeIgniter\Controller
 			$data['param']			= $request->getVar('jenis');
 			$data['kategori']		= $request->getVar('kategori');
 			$data['regency_id']		= $request->getVar('kotakab');
+			$data['regency_name']	= $stuff->kemendagri_kota_nama;
 			$data['district_id']	= $request->getVar('kecamatan');
+			$data['district_name']	= $stuff->kemendagri_kecamatan_nama;
 			$data['village_id']		= $request->getVar('kelurahan');
+			$data['village_name']	= $stuff->kemendagri_kelurahan_nama;
 			$data['updated_date'] 	= $this->now;
 			$data['updated_by'] 	= $userid;
 			
@@ -3898,14 +3916,13 @@ class Jsondata extends \CodeIgniter\Controller
 			$jenis		= $request->getVar('jenis');
 
 			$modelparam = new \App\Models\ProgramModel();
-			$fulldata = [];
 			$dataprogram = $modelparam->getdatawilayah($id, $jenis);
-
+			
 			if($dataprogram){
 				$response = [
 					'status'   => 'sukses',
 					'code'     => '1',
-					'data' 		 => $dataprogram
+					'data' 	   => $dataprogram
 				];
 			}else{
 				$response = [
