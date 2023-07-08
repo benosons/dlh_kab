@@ -22,12 +22,11 @@
 
     <div class="row">
       <div class="col-xs-12">
-        <div class="card">
+        {% include "admin/menu/detail-index-teknis.html" %}
+        <div class="card" id="card-page-teknis">
           <div class="card-body">
-
             {%if role == 0 %}
             <div id = "permohonan-teknis-page">
-
               <div class="row">
                 <div class="col-12">
                   <div class="page-title-box d-sm-flex align-items-center justify-content-between" style="padding-top: 20px;">
@@ -65,20 +64,22 @@
                         <input type="hidden" id="idpermohonan">
                         <input type="hidden" id="inikategori">
                         <input type="hidden" id="initype">
-                        <div class="table-responsive">
+                        {% include "admin/menu/table-permohonan.html" %}
+                        <!-- <div class="table-responsive">
                           <table id="permohonan-table" class="table table-striped table-bordered" style="width: 100%;">
                             <thead>
                               <tr>
                                 <th>No</th>
                                 <th>Alamat Kantor</th>
                                 <th>No.Telp</th>
-                                <th>Email</th>
                                 <th>File</th>
+                                <th>Expired Date</th>
+                                <th>Status</th>
                                 <th>Action</th>
                               </tr>
                             </thead>
                           </table>
-                        </div>
+                        </div> -->
                         <!-- <form class="form-horizontal" role="form" id="ini-form-view" style="display: none;">
                           <div class="form-group">
                             <label class="col-sm-3 control-label no-padding-right" for="kode_program"> Nama Badan Usaha/ Kegiatan </label>
@@ -469,7 +470,8 @@
             </div>
  
             {% else %}
-            <div class="row">
+            <div id="permohonan-teknis-admin">
+              <div class="row">
               <div class="col-12">
                 <div class="page-title-box d-sm-flex align-items-center justify-content-between" style="padding-top: 20px;">
                   <h4 class="mb-sm-0 font-size-18">
@@ -486,8 +488,8 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <div class="row">
+              </div>
+              <div class="row">
               <div class="col-xs-12 widget-container-col">
                 <div class="widget-box widget-color-orange">
                   <div class="widget-header">
@@ -497,34 +499,14 @@
                   </div>
                   <div class="widget-body">
                     <div class="widget-main">
-                      <div id="permohonan-all">
-                        <div class="table-responsive">
-                          <table
-                            id="all-permohonan"
-                            class="table table-striped table-bordered nowrap"
-                          >
-                            <thead>
-                              <tr>
-                                <th>No</th>
-                                <th>Badan Usaha/Kegiatan</th>
-                                <th>Bidang Usaha/Kegiatan</th>
-                                <th>NIB</th>
-                                <th>No KBLI</th>
-                                <th>Penanggung Jawab</th>
-                                <th>Jabatan</th>
-                                <th>Action</th>
-                              </tr>
-                            </thead>
-                          </table>
-                        </div>
-                      </div>
+                      {% include "admin/menu/table-permohonan.html" %}
                       {% include "admin/menu/permohonan-teknis.html" %}
                     </div>
                   </div>
                 </div>
               </div>
+              </div>
             </div>
-
             {% endif %}
 
             <!-- Modal -->
@@ -544,8 +526,7 @@
                         <div class="col-sm-9">
                           <input type="text" id="input_1" placeholder="" class="form-control">
                         </div>
-                      </div> -->
-<!-- 
+                      </div>
                       <div class="form-group">
                         <label class="col-sm-3 control-label no-padding-right" for="nama_program"> Bidang Usaha/ Kegiatan </label>
 
@@ -598,8 +579,8 @@
                         <label class="col-sm-6 control-label no-padding-right" for="nama_program"> Kota / Kabupaten </label>
 
                         <div class="col-sm-12">
-                          <input type="text" id="kota_kabupaten" placeholder="" class="form-control" name="form-input" readonly>
-                          <input type="hidden" id="kode_kota" />
+                          <input type="text" id="kota_kabupaten_tambah" placeholder="" class="form-control" name="form-input" readonly>
+                          <input type="hidden" id="kode_kota_tambah" />
                         </div>
                       </div>
 
@@ -607,7 +588,7 @@
                         <label class="col-sm-6 control-label no-padding-right" for="nama_program"> Kecamatan </label>
 
                         <div class="col-sm-12" id="div_kecamatan">
-                          <select class="chosen-select form-control" id="select_kecamatan" data-placeholder="Pilih Kecamatan ..." onchange="getKelurahanByKecamatan()">
+                          <select class="chosen-select form-control" id="select_kecamatan_tambah" data-placeholder="Pilih Kecamatan ..." onchange="getKelurahanByKecamatan()">
                             
                           </select>
                         </div>
@@ -617,7 +598,7 @@
                         <label class="col-sm-6 control-label no-padding-right" for="nama_program"> Kelurahan </label>
 
                         <div class="col-sm-12" id="div_kelurahan">
-                          <select class="chosen-select form-control" id="select_kelurahan" data-placeholder="Pilih Kelurahan ...">
+                          <select class="chosen-select form-control" id="select_kelurahan_tambah" data-placeholder="Pilih Kelurahan ...">
                             
                           </select>
                         </div>

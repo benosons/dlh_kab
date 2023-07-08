@@ -27,7 +27,10 @@ class ProgramModel extends Model{
 
           if($role == '0' && $edit == ''){ 
             $builder = $this->db->table('data_permohonan');
-            $query   = $builder->getWhere(['created_by' => $userid, 'type' => $type, 'id_perusahaan' => $id]);
+            $builder->select('*');
+            $builder->where(['created_by' => $userid, 'type' => $type, 'id_perusahaan' => $id]);
+            $builder->orderBy('expired_date', 'DESC');
+            $query  = $builder->get();
             return  $query->getResult();
           }else if($edit == 'true'){
             $builder = $this->db->table('data_permohonan');
@@ -38,6 +41,12 @@ class ProgramModel extends Model{
           $query   = $builder->getWhere(['id_perusahaan' => $id, 'type' => $type]);
           return  $query->getResult();
     }
+
+    public function detailpermo($id = null, $role = null, $userid = null, $type = null, $edit = null){
+            $builder = $this->db->table('data_permohonan');
+            $query   = $builder->getWhere(['id' => $id, 'type' => $type]);
+            return  $query->getResult();
+    }
     
     public function getperusahaan($role=null, $userid=null)
     { 
@@ -46,11 +55,10 @@ class ProgramModel extends Model{
             $query = $builder->getwhere(['created_by' => $userid]);
             return  $query->getResult();
       }
-
       $builder = $this->db->table('data_perusahaan');
       $query = $builder->get();
-//      echo $this->db->getLastQuery();die;
       return  $query->getResult();
+      //      echo $this->db->getLastQuery();die;
     }
 
     public function countpermohonan($role=null,$userid=null,$type=null)

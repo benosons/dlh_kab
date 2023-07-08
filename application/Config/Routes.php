@@ -106,6 +106,7 @@ $routes->add('logout', 'Auth::logout');
 
 $routes->post('loadusers', 'Jsondata::loadusers');
 $routes->post('loadall', 'Jsondata::loadall');
+$routes->post('loadperusahaan', 'Jsondata::loadperusahaan');
 $routes->post('loadpermohonan', 'Jsondata::loadpermohonan');
 $routes->post('loaddetailpermohonan', 'Jsondata::loaddetailpermohonan');
 $routes->post('dashload', 'Jsondata::dashload');

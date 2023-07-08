@@ -1,9 +1,10 @@
 "use strict";
 console.log("You are running jQuery version: " + $.fn.jquery);
 // Kode Per Kota
-$("#kota_kabupaten").val('KABUPATEN BANDUNG');
+$("#kota_kabupaten").val('KABUPATEN BANDUNG').prop('disabled', true);
 var kota = 32.04;
 $("#kode_kota").val(kota);
+var role = $('#isRole').val();
 $(document).ready(function () {
   $("#data_permohonan_btn").click(function(){
     $("#profile-perusahaan-page").hide();
@@ -18,9 +19,16 @@ $(document).ready(function () {
     $("#data_perusahaan_btn").addClass("nav-link active");
   });
 
-  $("#back-all-permohonan").click(function(){
+  $("#back-all-permohonan-admin").click(function(){
     $("#permohonan-all").show();
     $("#detail").hide();
+  });
+  $("#back-all-permohonan").click(function(){
+      location.reload();
+    $("#permohonan-teknis-page").show();
+    $("#editdataini").show();
+    $("#form-detail").hide();
+    $("#mohon_save").hide();
   });
 
   window.stt = [];
@@ -256,9 +264,20 @@ $(document).ready(function () {
   });
 
   $("#editdataini").on("click", function () {
-    $('#modal_edit_perusahaan').modal('show');
+    $("#input_6").prop("disabled", false);
+    $("#input_7").prop("disabled", false);
+    $("#input_8").prop("disabled", false);
+    $("#kota_kabupaten").prop("disabled", true);
+    $("#select_kecamatan").prop("disabled", false);
+    // $("#select_kelurahan").val().trigger('change');
+    $("#select_kelurahan").prop("disabled", false);
+    $("#select_kategori").prop("disabled", false);
+    $("#select_jenis").prop("disabled", false);
+    $("#form-upload-permohonan").hide();
+    $("#mohon_save").prop('disabled', false).show();
+    $("#editdataini").hide();
     editperusahaan(1);
-  });
+});
 
   function editperusahaan(param) {
     $.ajax({
@@ -403,15 +422,31 @@ $(document).ready(function () {
   });
 
   $("#initambah").on("click", function () {
-    $('#modal_program').modal({backdrop: 'static', keyboard: false})
-    $('#modal_program').modal('show')
-    for (let index = 6; index <= 8; index++){
-      $(`#input_${index}`).val('')
-    }
-    $('#ideditpermohonan').val('')
-    $('#doc_permohonan').val('')
-    $('#form-upload-permohonan').show()
-    $("#mohon_save").prop('disabled', true);
+    $("#form-detail").show();
+    $("#ideditpermohonan").val('');
+    $("#input_6").val('');
+    $("#input_7").val('');
+    $("#input_8").val('');
+    $("#kota_kabupaten").prop('disable', true);
+    // $("#select_kecamatan").val('');
+    // $("#select_kelurahan").val('');
+    $("#select_kategori").val('');
+    $("#select_jenis").val('');
+    $("#doc_permohonan").val('');
+    $("#form-upload-permohonan").show();
+    $("#editdataini").hide();
+    $("#permohonan-teknis-page").hide();
+    $("#permohonan-teknis-admin").hide();
+    $("#mohon_save").prop('disabled', false).show();
+    // $('#modal_program').modal({backdrop: 'static', keyboard: false})
+    // $('#modal_program').modal('show')
+    // for (let index = 1; index <= 3; index++){
+    //   $(`#input_${index}`).val('')
+    // }
+    // $('#ideditpermohonan').val('')
+    // $('#doc_permohonan').val('')
+    // $('#form-upload-permohonan').show()
+    // $("#mohon_save").prop('disabled', false);
   });
 });
 
@@ -428,7 +463,6 @@ function getkecamatan(kota) {
     success: function (result) {
       let data = result.data;
       
-      const container = document.getElementById('div_kecamatan');
       const select = document.getElementById('select_kecamatan');
       var kecamatan = [];
       for (let i = 0; i < data.length; i++) {
@@ -498,13 +532,27 @@ function loadpermohonan(param) {
     success: function (result) {
       let code = result.code;
       if (code != "0") {
+        var da = result.data;
+        var dat = da.permohonan;
+        var results = [];
+        for(var d in dat){
+          var da = dat[d].type;
+          results.push(da);
+        }
+        if(da == 2){
+          $("#div_kategori").hide();
+          $("#kategori_slo").show();
+        }
         if ($("#isRole").val() == 0) {
           let data = result.data;
 
           $("#idpermohonan").val(data.id);
           $("#initype").val(data.type);
           $("#initambah").show();
+          $("#inikategori").val(data.kategori);
           if(typeof data.permohonan != 'undefined'){
+            var expired = data.permohonan.expired_date;
+
             var dt = $("#permohonan-table").DataTable({
               destroy: true,
               paging: true,
@@ -517,17 +565,46 @@ function loadpermohonan(param) {
               pageLength: 10,
               aaData: data.permohonan,
               aoColumns: [
-                { mDataProp: "id", width: "10%" },
-                { mDataProp: "p6" },
-                { mDataProp: "p7" },
-                { mDataProp: "p8" },
-                { mDataProp: "id" },
-                { mDataProp: "id" },
+                { mDataProp: "id", width: "1%" },
+                { mDataProp: "p6", width: "3%" },
+                { mDataProp: "p7", width: "1%" },
+                { mDataProp: "id", width: "3%" },
+                { mDataProp: "expired_date", width: "2%" },
+                { mDataProp: "id", width: "1%" },
+                { mDataProp: "id", width: "2%" },
               ],
               order: [[0, "ASC"]],
               fixedColumns: true,
               aoColumnDefs: [
                 { width: 50, targets: 0 },
+                {
+                  render: function (data, type, row) {
+                    if(type == "display"){
+                      var el = ''
+                      // Menunggu Verifikasi status = 0
+                      // Sudah Verifikasi status = 1
+                      // Gagal Verifikasi status = 2
+                      // Ditolak status = 3
+                      if (row.status == 0) {
+                        el +=
+                          '<span class="label label-danger arrowed">Menunggu Verifikasi</span>';
+                      } else if (row.status == 1) {
+                        el +=
+                        '<span class="label label-danger arrowed">Verifikasi</span>';
+                      } else if (row.status == 2){
+                        el +=
+                        '<p class="text-danger">Gagal Verifikasi</p>';
+                        // <span class="label label-danger arrowed">Gagal Verifikasi</span>';
+                      } else{
+                        el +=
+                        '<span class="label label-danger arrowed">Verifikasi Ditolak</span>';
+                      }
+                      return el;
+                    }
+                    return data;
+                  },
+                  aTargets: [5],
+                },
                 {
                   render: function (data, type, row) {
                     if (type == "display") {
@@ -540,39 +617,25 @@ function loadpermohonan(param) {
                         var namafile_permohonan = element.filename
                         var path_file = element.path
                         el += `<grp id="view-file-permohonan">
-                                <button type="button" class="btn btn-sm btn-outline-secondary btn-round">
-                                  <i class="bx bx-file"></i>
-                                  <span class="bigger-110" id="nama-file-permohonan" onclick="downloadatuh('${'public/'+path_file}/${namafile_permohonan}')">${namafile_permohonan}</span>
-                                </button>`
-                                // Menunggu Verifikasi status = 0
-                                // Sudah Verifikasi status = 1
-                                // Gagal Verifikasi status = 2
-                                // Ditolak status = 3
-                                if (row.status == 0) {
-                                  el += `<button class="btn btn-warning btn-sm btn-round" id="menunggu-verifikasi" type="button" disabled><i class="bx bx-error"></i></button>`
-                                }else if(row.status == 1){
-
-                                }else if(row.status == 3){
-                                  el += `<button class="btn btn-danger btn-sm btn-round" id="hapus-permohonan" type="button" onclick="actionfile('delete', '${idfile_permohonan}', '${type_permohonan}', '${path_file}/${namafile_permohonan}')"><i class="bx bx-trash"></i></button>`
-                                }else{
-                                  el += `<button class="btn btn-success btn-sm btn-round" id="verfikasian" type="button" disabled><i class='bx bxs-check-square'></i></button>`
-                                }
-                              `</grp>`
+                        <button type="button" class="btn btn-sm btn-outline-secondary btn-round">
+                        <i class="bx bx-file"></i>
+                        <span class="bigger-110" id="nama-file-permohonan" onclick="downloadatuh('${'public/'+path_file}/${namafile_permohonan}')">${namafile_permohonan}</span>
+                        </button>
+                        </grp>`
+                        // <button class="btn btn-danger btn-sm btn-round" onclick="actionfile('delete', ${idfile_permohonan}, ${type_permohonan}, ${path_file}/${namafile_permohonan})" type="button"><i class="bx bx-trash"></i></button>
                       });
                       el += `<div class="form-group" id="form-permohonan-reupload" style="display:${row.file.length ? 'none' : 'block'};">        
-                                  <div class="col-sm-11">
-                                    <input type="file" name="id-input-file-5" id="doc_permohonan_reupload" accept=".pdf" onchange="filepermohonan(this)" />
-                                    <button class="btn btn-success btn-sm btn-round" id="upload-permohonan" onclick="reupload('permohonan', ${idfile_permohonan})" type="button"><i class="bx bx-check-double"></i></button>
-                                  </div>
-                                </div>`
-
-                      el += ''
-                      
-                      return el;
+                              <div class="col-sm-11">
+                                <input type="file" name="id-input-file-5" id="doc_permohonan_reupload" accept=".pdf" onchange="filepermohonan(this)" />
+                                <button class="btn btn-success btn-sm btn-round" id="upload-permohonan" onclick="reupload('permohonan', ${idfile_permohonan})" type="button"><i class="bx bx-check-double"></i></button>
+                              </div>
+                            </div>`
+                       el += ''
+                       return el;
                     }
                     return data;
                   },
-                  aTargets: [4],
+                  aTargets: [3],
                 },
                 {
                   render: function (data, type, row) {
@@ -583,21 +646,24 @@ function loadpermohonan(param) {
                         oks = file[key]["ok"] == 1 ? oks + 1 : +0;
                       }
                       var el = '<div class="btn-group">';
-
+                      
                       if (row.param) {
                         if (oks == 1) {
                           el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="action('view',${row.id},'${row.type}', '', '', '${row.param}',${row.kategori})">
-                                  <i class="bx bx-file font-size-16"></i>
-                                </button>`;
+                          <i class="bx bx-file font-size-16"></i>
+                          </button>`;
                         }
                       }
-                      el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="editpermohonan(${row.id}, '${row.p6}', '${row.p7}', '${row.p8}', '${row.region.kemendagri_kota_nama}', '${row.region.kemendagri_kecamatan_kode}', '${row.region.kemendagri_kelurahan_kode}')">
-                              <i class="bx bx-edit font-size-16"></i>
+                      el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="detailpermohonan(${row.id})">
+                              <i class="bx bx-detail font-size-16"></i>
                             </button>`;
+                      // el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="editpermohonan(${row.id})">
+                      //         <i class="bx bx-edit font-size-16"></i>
+                      //       </button>`;
                       if (row.status == 1) {
                         el +=
                           `<button type="button" title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view','${row.id}','${row.type}')"><i class="bx bx-check-square font-size-16"></i></button>`;
-                      } else {
+                      } else if(row.status == 0){
                         el +=
                           `<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>`;
                       }
@@ -606,7 +672,7 @@ function loadpermohonan(param) {
                     }
                     return data;
                   },
-                  aTargets: [5],
+                  aTargets: [6],
                 },
               ],
               fnRowCallback: function (
@@ -663,7 +729,7 @@ function loadpermohonan(param) {
                             <option value="doc_sertifikat_registrasi"> Sertifikat Registrasi Laboratorium Lingkungan </option>`;
               break;
           }
-
+          $("#hapus-permohonan").hide();
           $("#jenis_doc").html(optd);
           $("#jenis_doc").trigger("chosen:updated");
 
@@ -701,6 +767,7 @@ function loadpermohonan(param) {
           $("#view_4").val(data["penanggung_jawab"]).prop("disabled", true);
           $("#view_5").val(data["jabatan"]).prop("disabled", true);
           $("#view_9").val(data["no_kbli"]).prop("disabled", true);
+          $("#editdataini").show();
 
           var harap = [];
           for (var f in data["file"]) {
@@ -874,12 +941,12 @@ function loadpermohonan(param) {
               {
                 render: function (data, type, row) {
                   if (type == "display") {
-                    var typeper = data.type;
                     var file = row.file;
                     var oks = 0;
                     for (const key in file) {
                       oks = file[key]["ok"] == 1 ? oks + 1 : +0;
                     }
+
                     var el = '<div class="btn-group">';
                     if (row.param) {
                       if (oks == 1) {
@@ -891,19 +958,20 @@ function loadpermohonan(param) {
                     el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="popupvalidasi(${row.id}, '1', ${row.param}, ${row.kategori})">
                         <i class="bx bx-list-ul font-size-16"></i>
                       </button>`;
-                    var rows = row.permohonan;
-                    if (rows.length) {
-                        el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="detailper(${row.id})">
-                                <i class="bx bx-show font-size-16"></i>
-                              </button>`;
+                    var permohonan = row.permohonan;
+                    if (permohonan.length) {
+                      el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="detailper(${row.id})">
+                              <i class="bx bx-show font-size-16"></i>
+                            </button>`;
                     }
                     if (row.status == 1) {
                       el +=
                         `<button type="button" title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view','${row.id}','${row.type}')"><i class="bx bx-check-square font-size-16"></i></button>`;
                     } else {
                       el +=
-                        `<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>`;
+                        ``;
                     }
+                    // <button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>
                     el += "</div>";
                     return el;
                   }
@@ -1097,12 +1165,12 @@ function detailper(id) {
           pageLength: 10,
           aaData: data,
           aoColumns: [
-            { mDataProp: "id", width: "10%" },
-            { mDataProp: "p6" },
-            { mDataProp: "p7" },
-            { mDataProp: "kategori" },
-            { mDataProp: "param" },
-            { mDataProp: "id" },
+            { mDataProp: "id", width: "1%" },
+            { mDataProp: "p6", width: "1%" },
+            { mDataProp: "p7", width: "1%" },
+            { mDataProp: "expired_date", width: "2%" },
+            { mDataProp: "id", width: "2%"},
+            { mDataProp: "id", width: "2%" },
           ],
           order: [[0, "ASC"]],
           fixedColumns: true,
@@ -1110,32 +1178,26 @@ function detailper(id) {
             { width: 50, targets: 0 },
             {
               render: function (data, type, row) {
-                if (type == "display") {
-                  if (!row.kategori) {
-                    return "-";
+                if(type == "display"){
+                  var el = ''
+                  // Menunggu Verifikasi status = 0
+                  // Sudah Verifikasi status = 1
+                  // Gagal Verifikasi status = 2
+                  // Ditolak status = 3
+                  if (row.status == 0) {
+                    el +=
+                      '<span class="label label-danger arrowed">Menunggu Verifikasi</span>';
+                  } else if (row.status == 1) {
+                    el +=
+                    '<span class="label label-danger arrowed">Verifikasi</span>';
+                  } else if (row.status == 2){
+                    el +=
+                    '<span class="label label-danger arrowed">Gagal Verifikasi</span>';
+                  } else{
+                    el +=
+                    '<span class="label label-danger arrowed">Verifikasi Ditolak</span>';
                   }
-
-                  let iskat = "";
-                  let kategori = [
-                    "",
-                    "Air Limbah",
-                    "Udara",
-                  ];
-
-                  return kategori[row.kategori];
-                }
-                return data;
-              },
-              aTargets: [3],
-            },
-            {
-              render: function (data, type, row) {
-                if (type == "display") {
-                  if (!row.param) {
-                    return "-";
-                  }
-                  let par = ["", "Kajian Teknis", "Standar Teknis"];
-                  return par[row.param];
+                  return el;
                 }
                 return data;
               },
@@ -1151,21 +1213,26 @@ function detailper(id) {
                   }
                   var el = '<div class="btn-group">';
 
-                  if (row.param) {
+                  if (oks == 1) {
                       el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="action('view',${row.id},'${row.type}', '', '', '${row.param}',${row.kategori})">
                               <i class="bx bx-file font-size-16"></i>
                             </button>`;
                   }
-                  el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="popupvalidasi(${row.id}, '${row.type}', ${row.param}, ${row.kategori})">
-                          <i class="bx bx-list-ul font-size-16"></i>
-                        </button>`;
+                  if (moment().isSameOrAfter(moment(row.expired_date)) || row.status != 0) {
+                    el += '';
+                  }else{
+                    el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="popupvalidasi(${row.id}, '${row.type}', ${row.param}, ${row.kategori})">
+                    <i class="bx bx-list-ul font-size-16"></i>
+                  </button>`;
+                  }
                   if (row.status == 1) {
                     el +=
                       `<button type="button" title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view','${row.id}','${row.type}')"><i class="bx bx-check-square font-size-16"></i></button>`;
                   } else {
                     el +=
-                      `<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>`;
+                      ``;
                   }
+                  //<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>
                   el += "</div>";
                   return el;
                 }
@@ -2002,11 +2069,12 @@ function reupload(type, id_parent) {
   });
 }
 
-function okdong(id, ok) {
+function okdong(id, ok, idper) {
   var formData = new FormData();
   formData.append("param", "data_file");
   formData.append("id", id);
   formData.append("ok", ok);
+  formData.append("idper", idper);
 
   $.ajax({
     type: "post",
@@ -2208,9 +2276,83 @@ function editpermohonan(id, alamat, notelp, email) {
       $("#kota_kabupaten").val(data.regency_name);
       $("#select_kecamatan").val(data.district_id).trigger('change');
       $("#select_kelurahan").val(data.village_id).trigger('change');
+      $("#select_kategori").val(data.kategori).trigger('change').prop("disabled", true);
+      $("#select_jenis").val(data.param).trigger('change').prop("disabled", true);
       $("#form-upload-permohonan").hide();
       $("#mohon_save").prop('disabled', false);
-      $("#modal_program").modal("show");
+      // $("#modal_program").modal("show");
+      $("#permohonan-teknis-page").hide();
+      $("#permohonan-teknis-admin").hide();
+      $("#form-detail").show();
     },
+  });
+}
+
+function detailpermohonan(id) {
+  $.ajax({
+    type : "post",
+    dataType : "json",
+    url : "loaddetailpermohonan",
+    data : {
+      param : id,
+      type : 1,
+      edit : 'true'
+    },
+    success: function (result) {
+      var data = result.data[0];
+      $("#ideditpermohonan").val(data.id);
+      $("#input_6").val(data.p6).prop("disabled", true);
+      $("#input_7").val(data.p7).prop("disabled", true);
+      $("#input_8").val(data.p8).prop("disabled", true);
+      $("#kota_kabupaten").val(data.regency_name).prop("disabled", true);
+      $("#select_kecamatan").val(data.district_id).trigger('change').prop("disabled", true);
+      // $("#select_kelurahan").val().trigger('change');
+      $("#select_kelurahan").val(data.village_id).trigger('change').prop("disabled", true);
+      $("#select_kategori").val(data.kategori).trigger('change').prop("disabled", true);
+      $("#select_jenis").val(data.param).trigger('change').prop("disabled", true);
+      $("#form-upload-permohonan").hide();
+      $("#mohon_save").prop('disabled', true);
+      // $("#modal_program").modal("show");
+      $("#permohonan-teknis-page").hide();
+      $("#permohonan-teknis-admin").hide();
+      $("#permohonan-slo-page").hide();
+      $("#card-page-teknis").hide();
+      $("#div_kategori").hide();
+      $("#kategori_slo").show();
+      $("#form-detail").show();
+      if(data.status == 0){
+        $("#id_edit_btn").show();
+      }else if(data.status == 2){
+        $("#alert-expired").show();
+        $("#id_edit_btn").hide();
+      }else{
+        $("#id_edit_btn").hide();
+      }
+      var harap = [];
+      for (var f in data['file'] ) {
+
+        var jenisnya = data.file[f]['jenis'];
+        var oknya = data.file[f]['ok'];
+        $('#nama-file-permohonan').html(data.file[f]['filename']);
+        $('#nama-file-permohonan').attr('onclick', "downloadatuh('"+'public/'+data.file[f]['path']+'/'+data.file[f]['filename']+"')");
+        $('#hapus-permohonan').attr('onclick', "actionfile('delete','"+data.file[f]['id']+"','"+data.type+"','"+data.file[f]['path']+'/'+data.file[f]['filename']+"')");
+
+        $('#view-file-permohonan').css('display', 'block');
+        $('#form-permohonan-reupload').css('display', 'none');
+
+        if(oknya == 1){
+          $('#hapus-permohonan').css('display', 'none');
+        }else{
+          $('#hapus-permohonan').show();
+          if(oknya == 2){
+            var ell = ` <li>
+                          <i class="">File Permohonan</i>
+                        </li>`
+            $('#harus-upload').append(ell);
+            harap.push('permohonan');
+          }
+        }
+      }
+    }
   });
 }
