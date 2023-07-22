@@ -346,6 +346,59 @@ class Jsondata extends \CodeIgniter\Controller
 		}
 	}
 
+	public function loadperusahaan(){
+		try {
+			$session	= session();
+			$request	= $this->request;
+			$userid		= $this->data['userid'];
+			$role		= $this->data['role'];
+			$model		= new \App\Models\ProgramModel();
+			$modelfiles	= new \App\Models\TargetModel();
+			$fulldata	= [];
+
+			if ($role == 100 || $role == 10 ) {
+				$company = $model->getperusahaan($role);
+				foreach ($company as $key => $value) {
+					$datafilenya = json_decode( json_encode($modelfiles->getfilecomp('param_file', $value->id)), true);
+					$value->file = [];
+					foreach ($datafilenya as $keyf => $valuef) {
+						array_push($value->file, $valuef);
+					}
+				}
+				$fulldata = $company;
+			} else {
+				$company = $model->getperusahaan('0', $userid);
+				foreach ($company as $key => $value) {
+					$datafilenya = json_decode( json_encode($modelfiles->getfilecomp('param_file', $value->id)), true);
+					$value->file = [];
+					foreach ($datafilenya as $keyf => $valuef) {
+						array_push($value->file, $valuef);
+					}
+					$fulldata = $value;
+				}
+			}
+			if($fulldata){
+				$response = [
+					'status'   => 'sukses',
+					'code'     => '1',
+					'data' 		 => $fulldata
+				];
+			}else{
+				$response = [
+					'status'   => 'gagal',
+					'code'     => '0',
+					'data'     => 'tidak ada data',
+				];
+			}
+			header('Content-Type: application/json');
+			echo json_encode($response);
+			exit;
+			
+		} catch (\Exception $e) {
+			die($e->getMessage());
+		}
+	}
+
 	public function loadpermohonan(){
 		try{
 			$session = session();
@@ -364,7 +417,6 @@ class Jsondata extends \CodeIgniter\Controller
 			$fulldata	= [];
 			$st			= null;
 			$fulldatapermohonan = [];
-			
 
 			if ($role == 100 || $role == 10) {
 				$company = $model->getperusahaan();
@@ -399,6 +451,21 @@ class Jsondata extends \CodeIgniter\Controller
 						array_push($value->file, $valuef);
 					}
 
+					$expired_per = json_decode(json_encode($model->getpermohonan($value->id, $role, $userid, $param)), true);
+					foreach ($expired_per as $keyex => $valuex) {
+						$id = json_decode(json_encode($valuex['id']));
+						$expired = json_decode(json_encode($valuex['expired_date']));
+						if ($this->now >= $expired) {
+							// Menunggu Verifikasi status = 0
+							// Sudah Verifikasi status = 1
+							// Gagal Verifikasi status = 2
+							// Ditolak status = 3
+							$data = [
+								'status' 		=> '2',
+							];
+							$update_expired = json_decode(json_encode($modelfiles->updateparam($id, $data)));
+						}
+					}
 					$dataprogram = json_decode(json_encode($model->getpermohonan($value->id, $role, $userid, $param)), true);
 					foreach ($dataprogram as $keyp => $valuep) {
 						$valuep['file'] = [];
@@ -465,7 +532,7 @@ class Jsondata extends \CodeIgniter\Controller
 				$dataprogram = $model->getpermohonan($param, $role, $userid, $type, '');
 				if (!empty($dataprogram)) {
 					foreach ($dataprogram as $keyp => $valuep) {
-	//					$this->loadstatus($valuep['id'], $valuep['type'], 'doc_kajian', null, $valuep['kategori']);
+						//$this->loadstatus($valuep['id'], $valuep['type'], 'doc_kajian', null, $valuep['kategori']);
 						$valuep->file = [];
 						$datafilenya = json_decode(json_encode($modelfiles->getfilenya('param_file', $valuep->id, $valuep->type, null, $valuep->kategori)), true);
 						foreach ($datafilenya as $keyff => $valueff) {
@@ -476,9 +543,17 @@ class Jsondata extends \CodeIgniter\Controller
 				}
 			} else {
 				$dataprogram = $model->getpermohonan($param, $role, $userid, $type, $edit);
-				$fulldata = $dataprogram[0];
+				if (!empty($dataprogram)) {
+					foreach ($dataprogram as $keyp => $valuep) {
+						$valuep->file = [];
+						$datafilenya = json_decode(json_encode($modelfiles->getfilenya('param_file', $valuep->id, $valuep->type, null, $valuep->kategori)), true);
+						foreach ($datafilenya as $keyff => $valueff) {
+							array_push($valuep->file, $valueff);
+						}
+						array_push($fulldata, $valuep);
+					}
+				}
 			}
-			
 			if($fulldata){
 				$response = [
 					'status'   => 'sukses',
@@ -1642,10 +1717,7 @@ class Jsondata extends \CodeIgniter\Controller
 				
 				$save 	= $model->saveParamComp($param, $data);
 				$id  	= $model->insertID();
-				$ses_data = [
-					'id_perushaan'  => $id
-				];
-				$session->set($ses_data);
+
 				if(!empty($_FILES)){
 
 					$files	 	= $request->getFiles()['file'];
@@ -1719,12 +1791,12 @@ class Jsondata extends \CodeIgniter\Controller
 		$modelfile 	= new \App\Models\TargetModel();
 
 		$data = [];
-		$idkel		= $request->getVar('kelurahan');
-		$dataprogram = $model->getdatawilayah($idkel, 'addpermohonan');
-		$stuff = $dataprogram[0];
 		
-		
-		
+		$idkel			= $request->getVar('kelurahan');
+		$dataprogram 	= $model->getdatawilayah($idkel, 'addpermohonan');
+		$stuff 			= $dataprogram[0];
+		$tgl_expired	= date('Y-m-d H:i:s', strtotime('+4 days', strtotime($this->now)));
+
 		if(!$request->getVar('id_permohonan')){
 			for ($i=6; $i <= 8 ; $i++) { 
 				$data['p'.$i] = $request->getVar('input_'.$i);
@@ -1747,7 +1819,7 @@ class Jsondata extends \CodeIgniter\Controller
 			$data['created_date'] 	= $this->now;
 			$data['type'] 			= $request->getVar('type');
 			$data['id_perusahaan'] 	= $request->getVar('id_perusahaan');
-			print_r($data);die;
+			$data['expired_date']	= $tgl_expired;
 			$res = $model->saveParam($param, $data);
 			$id  = $model->insertID();
 
@@ -3763,26 +3835,39 @@ class Jsondata extends \CodeIgniter\Controller
 
 	public function okdong(){
 
-		$request  = $this->request;
-		$id 	  = $request->getVar('id');
-		$ok 	  = $request->getVar('ok');
+		$request  	= $this->request;
+		$id 	  	= $request->getVar('id');
+		$ok 	  	= $request->getVar('ok');
+		$idper 		= $request->getVar('idper');
 		$role 		= $this->data['role'];
 		$userid		= $this->data['userid'];
 		
-		$modelfile 	  = new \App\Models\TargetModel();
-
-		$data = [
-						'updated_date' 	=> $this->now,
-						'update_by' 	=> $userid,
-						'ok' 			=> $ok,
+		$modelfile 	= new \App\Models\TargetModel();
+		$data 		= [
+			'updated_date' 	=> $this->now,
+			'update_by' 	=> $userid,
+			'ok' 			=> $ok,
         ];
+		$res 		= $modelfile->updateok('param_file',$id, $data);
 
-		$res = $modelfile->updateok('param_file',$id, $data);
-
-		$response = [
-				'status'   => 'sukses',
-				'code'     => '0',
-				'data' 		 => 'terupdate'
+		if ($ok == 2) {
+			$data2 		= [
+				'status'		=>	'3',
+				'updated_date'	=>	$this->now,
+				'updated_by'	=>	$userid,
+			];
+		} else {
+			$data2 		= [
+				'status'		=>	'1',
+				'updated_date'	=>	$this->now,
+				'updated_by'	=>	$userid,
+			];
+		}
+		$resp		= $modelfile->updateok('data_permohonan',$idper, $data2);
+		$response 	= [
+			'status'   => 'sukses',
+			'code'     => '0',
+			'data' 		 => 'terupdate'
 		];
 		header('Content-Type: application/json');
 		echo json_encode($response);
@@ -3920,7 +4005,6 @@ class Jsondata extends \CodeIgniter\Controller
 
 			$modelparam = new \App\Models\ProgramModel();
 			$dataprogram = $modelparam->getdatawilayah($id, $jenis);
-			
 			if($dataprogram){
 				$response = [
 					'status'   => 'sukses',

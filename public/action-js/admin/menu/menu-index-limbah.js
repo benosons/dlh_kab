@@ -1,9 +1,10 @@
 "use strict";
 console.log("You are running jQuery version: " + $.fn.jquery);
 // Kode Per Kota
-$("#kota_kabupaten").val('KABUPATEN BANDUNG');
+$("#kota_kabupaten").val('KABUPATEN BANDUNG').prop('disabled', true);
 var kota = 32.04;
 $("#kode_kota").val(kota);
+var role = $('#isRole').val();
 $(document).ready(function () {
     $("#data_permohonan_btn").click(function(){
       $("#profile-perusahaan-page").hide();
@@ -18,15 +19,22 @@ $(document).ready(function () {
       $("#data_perusahaan_btn").addClass("nav-link active");
     });
 
-    $("#back-all-permohonan").click(function(){
+    $("#back-all-permohonan-admin").click(function(){
       $("#permohonan-all").show();
       $("#detail").hide();
+    });
+    $("#back-all-permohonan").click(function(){
+        location.reload();
+      $("#permohonan-teknis-page").show();
+      $("#editdataini").show();
+      $("#form-detail").hide();
+      $("#mohon_save").hide();
     });
 
   $("#nav-menu li").removeClass();
   // $('#nav-menu li#menu-data').addClass('open');
   $("#nav-menu li#menu-teknis").addClass("active");
-  // $("#mohon_save").prop("disabled", true);
+  $("#mohon_save").prop("disabled", true);
   $('[name="id-input-file-3"]')
     .ace_file_input({
       no_file: "tidak ada file ...",
@@ -118,7 +126,7 @@ $(document).ready(function () {
       //onchange:''
       //
       before_remove: function () {
-        // $("#mohon_save").prop("disabled", true);
+        $("#mohon_save").prop("disabled", true);
         return true;
       },
     })
@@ -249,8 +257,14 @@ $(document).ready(function () {
   $("#permohonan-table").DataTable();
   $("#data-file").DataTable();
 
-  loadpermohonan("3");
-  getkecamatan(kota);
+  // var role = $('#isRole').val();
+  // if (role == 100 || 10) {
+  //   loadpermohonan("1");
+  //   loadperusahaan();
+  // } else {
+    loadpermohonan("3");
+    getkecamatan(kota);    
+  // }
 
   $("#verlapanganini").on("click", function () {
     actionlapangan("view", $("#idpermohonan").val(), $("#initype").val());
@@ -294,6 +308,21 @@ $(document).ready(function () {
     });
 
   });
+
+  // function loadperusahaan() {
+  //   $.ajax({
+  //     type: "post",
+  //     dataType: "json",
+  //     url: "loadperusahaan",
+  //     data: {
+        
+  //     },
+  //     success: function (result) {
+  //       console.log(result.data);
+  //     }
+
+  //   });
+  // }
 
   function updateperusahaan(formDataPe){
     var dialog = bootbox.dialog({
@@ -443,6 +472,7 @@ $(document).ready(function () {
         },
       },
       callback: function (result) {
+        
         if (result) {
           var email   = document.getElementById("input_6").value;
           var telepon = document.getElementById("input_7").value;
@@ -468,7 +498,7 @@ $(document).ready(function () {
             formData.append("type", "3");
             formData.append("id_perusahaan", $('#idpermohonan').val());
             let berapa = [];
-            for (let index = 1; index <= 9; index++) {
+            for (let index = 6; index <= 8; index++) {
               if ($("#input_" + index).val()) {
                 formData.append("input_" + index, $("#input_" + index).val());
                 $("#input_" + index)
@@ -491,7 +521,9 @@ $(document).ready(function () {
             formData.append("kotakab", $("#kode_kota").val());
             formData.append("kecamatan", $("#select_kecamatan").val());
             formData.append("kelurahan", $("#select_kelurahan").val());
-            
+            formData.append("kategori", $("#select_kategori").val());
+            formData.append("jenis", $("#select_jenis").val());
+
             formData.append(
               "file[doc_permohonan]",
               $("#doc_permohonan")[0].files[0]
@@ -508,7 +540,7 @@ $(document).ready(function () {
             // formData.append("bab_kajian", $('#bab_kajian').val());
             // formData.append("file[doc_standar]", $('#doc_standar')[0].files[0]);
             // formData.append("bab_standar", $('#bab_standar').val());
-
+            
             if (berapa.length == 3) {
               save(formData);
             }
@@ -522,7 +554,7 @@ $(document).ready(function () {
     var formData = new FormData();
     formData.append("id", $("#ini-ID").val());
     formData.append("param", "param_file");
-    formData.append("type", "1");
+    formData.append("type", "3");
     formData.append("kategori", $("#inikategori").val());
 
     formData.append("file[doc_kajian]", $("#doc_kajian")[0].files[0]);
@@ -535,7 +567,7 @@ $(document).ready(function () {
     var formData = new FormData();
     formData.append("id", $("#ini-ID").val());
     formData.append("param", "param_file");
-    formData.append("type", "1");
+    formData.append("type", "3");
     formData.append("kategori", $("#inikategori").val());
 
     formData.append("file[doc_lampiran]", $("#doc_lampiran")[0].files[0]);
@@ -583,8 +615,47 @@ $(document).ready(function () {
     );
   });
 
+  $("#initambah").on("click", function () {
+    $("#form-detail").show();
+    $("#ideditpermohonan").val('');
+    $("#input_6").val('');
+    $("#input_7").val('');
+    $("#input_8").val('');
+    $("#kota_kabupaten").prop('disable', true);
+    // $("#select_kecamatan").val('');
+    // $("#select_kelurahan").val('');
+    $("#select_kategori").val('');
+    $("#select_jenis").val('');
+    $("#doc_permohonan").val('');
+    $("#form-upload-permohonan").show();
+    $("#editdataini").hide();
+    $("#permohonan-teknis-page").hide();
+    $("#permohonan-teknis-admin").hide();
+    $("#mohon_save").prop('disabled', false).show();
+    // $('#modal_program').modal({backdrop: 'static', keyboard: false})
+    // $('#modal_program').modal('show')
+    // for (let index = 1; index <= 3; index++){
+    //   $(`#input_${index}`).val('')
+    // }
+    // $('#ideditpermohonan').val('')
+    // $('#doc_permohonan').val('')
+    // $('#form-upload-permohonan').show()
+    // $("#mohon_save").prop('disabled', false);
+  });
+
   $("#editdataini").on("click", function () {
-      $('#modal_edit_perusahaan').modal('show');
+      $("#input_6").prop("disabled", false);
+      $("#input_7").prop("disabled", false);
+      $("#input_8").prop("disabled", false);
+      $("#kota_kabupaten").prop("disabled", true);
+      $("#select_kecamatan").prop("disabled", false);
+      // $("#select_kelurahan").val().trigger('change');
+      $("#select_kelurahan").prop("disabled", false);
+      $("#select_kategori").prop("disabled", false);
+      $("#select_jenis").prop("disabled", false);
+      $("#form-upload-permohonan").hide();
+      $("#mohon_save").prop('disabled', false).show();
+      $("#editdataini").hide();
       editperusahaan(1);
   });
 
@@ -600,7 +671,6 @@ $(document).ready(function () {
         let code = result.code;
           if (code != "0") {
             let data = result.data
-            $('#modal_edit_perusahaan').modal('show');
 
             $("#ideditperusahaan").val(data["id"]);
             $("#edit_1").val(data["nama_usaha"]).prop("disabled", false);
@@ -797,7 +867,7 @@ $(document).ready(function () {
     var formData = new FormData();
     formData.append("id", $("#ini-ID-lapangan").val());
     formData.append("param", "param_file_lapangan");
-    formData.append("type", "1");
+    formData.append("type", "3");
     formData.append("file[doc_izin_usaha]", $("#doc_lapangan")[0].files[0]);
     formData.append("keterangan", $("#keterangan_lapangan").val());
 
@@ -852,20 +922,6 @@ $(document).ready(function () {
       $("#simpanaja").attr("disabled", true);
     }
   });
-
-  
-  $("#initambah").on("click", function () {
-    $('#modal_program').modal({backdrop: 'static', keyboard: false})
-    $('#modal_program').modal('show')
-    for (let index = 6; index <= 8; index++){
-      $(`#input_${index}`).val('')
-    }
-    $('#ideditpermohonan').val('')
-    $('#doc_permohonan').val('')
-    $('#form-upload-permohonan').show()
-    // $("#mohon_save").prop('disabled', true);
-  })
-
 });
 
 function getkecamatan(kota) {
@@ -880,8 +936,7 @@ function getkecamatan(kota) {
     },
     success: function (result) {
       let data = result.data;
-      
-      const container = document.getElementById('div_kecamatan');
+
       const select = document.getElementById('select_kecamatan');
       var kecamatan = [];
       for (let i = 0; i < data.length; i++) {
@@ -895,10 +950,33 @@ function getkecamatan(kota) {
         optionElement.value = option.kemendagri_kecamatan_kode;
         select.add(optionElement);
       });
+
+      // var kecamatan_array = [];
+      // for (var kec in kecamatan) {
+      //   var nama_kec = kecamatan[kec]["kemendagri_kecamatan_nama"];
+      //   kecamatan_array.push(nama_kec);
+      // }
+
+      // $(".prompt").select2({
+      //   data: kecamatan_array,
+      //   minimumInputLength: 1,
+      //   width: '100%',
+      //   multiple: false,
+      //   placeholder: "Pilih Kecamatan",
+      //   templateResult:formatState
+      // });
+
+
+      // function formatState(kecamatan_array) {
+      //     var str = "";
+      //     str += "<p style='padding: 2px;'>"+ kecamatan_array+ "</p>";
+      //     var $state = $(str);
+      //     return $state;
+      //   }
     }
   });
 }
-
+  
 function getKelurahanByKecamatan() {
   const kecamatan    = document.getElementById('select_kecamatan');
   const idkecamatan  = kecamatan.value;
@@ -946,19 +1024,34 @@ function loadpermohonan(param) {
     url: "loadpermohonan",
     data: {
       param: param,
-      type: 1
+      type: 3
     },
     success: function (result) {
       let code = result.code;
       if (code != "0") {
+        var da = result.data;
+        var dat = da.permohonan;
+        var results = [];
+        for(var d in dat){
+          var da = dat[d].type;
+          results.push(da);
+        }
+        if(da == 2){
+          $("#div_kategori").hide();
+          $("#kategori_slo").show();
+        }else{
+          $("#div_kategori").show();
+          $("#kategori_slo").hide();
+        }
         if ($("#isRole").val() == 0) {
-          let data = result.data
-          
+          let data = result.data;
           $("#idpermohonan").val(data.id);
           $("#initype").val(data.type);
           $("#inikategori").val(data.kategori);
           $("#initambah").show();
           if(typeof data.permohonan != 'undefined'){
+            var expired = data.permohonan.expired_date;
+
             var dt = $("#permohonan-table").DataTable({
               destroy: true,
               paging: true,
@@ -971,17 +1064,46 @@ function loadpermohonan(param) {
               pageLength: 10,
               aaData: data.permohonan,
               aoColumns: [
-                { mDataProp: "id", width: "10%" },
-                { mDataProp: "p6" },
-                { mDataProp: "p7" },
-                { mDataProp: "p8" },
-                { mDataProp: "id" },
-                { mDataProp: "id" },
+                { mDataProp: "id", width: "1%" },
+                { mDataProp: "p6", width: "1%" },
+                { mDataProp: "p7", width: "1%" },
+                { mDataProp: "id", width: "5%" },
+                { mDataProp: "expired_date", width: "2%" },
+                { mDataProp: "id", width: "1%" },
+                { mDataProp: "id", width: "2%" },
               ],
               order: [[0, "ASC"]],
               fixedColumns: true,
               aoColumnDefs: [
                 { width: 50, targets: 0 },
+                {
+                  render: function (data, type, row) {
+                    if(type == "display"){
+                      var el = ''
+                      // Menunggu Verifikasi status = 0
+                      // Sudah Verifikasi status = 1
+                      // Gagal Verifikasi status = 2
+                      // Ditolak status = 3
+                      if (row.status == 0) {
+                        el +=
+                          '<span class="label label-danger arrowed">Menunggu Verifikasi</span>';
+                      } else if (row.status == 1) {
+                        el +=
+                        '<span class="label label-danger arrowed">Verifikasi</span>';
+                      } else if (row.status == 2){
+                        el +=
+                        '<p class="text-danger">Gagal Verifikasi</p>';
+                        // <span class="label label-danger arrowed">Gagal Verifikasi</span>';
+                      } else{
+                        el +=
+                        '<span class="label label-danger arrowed">Verifikasi Ditolak</span>';
+                      }
+                      return el;
+                    }
+                    return data;
+                  },
+                  aTargets: [5],
+                },
                 {
                   render: function (data, type, row) {
                     if (type == "display") {
@@ -994,40 +1116,25 @@ function loadpermohonan(param) {
                         var namafile_permohonan = element.filename
                         var path_file = element.path
                         el += `<grp id="view-file-permohonan">
-                                <button type="button" class="btn btn-sm btn-outline-secondary btn-round">
-                                  <i class="bx bx-file"></i>
-                                  <span class="bigger-110" id="nama-file-permohonan" onclick="downloadatuh('${'public/'+path_file}/${namafile_permohonan}')">${namafile_permohonan}</span>
-                                </button>`
-                                // Menunggu Verifikasi status = 0
-                                // Sudah Verifikasi status = 1
-                                // Gagal Verifikasi status = 2
-                                // Ditolak status = 3
-                                if (row.status == 0) {
-                                  el += `<button class="btn btn-warning btn-sm btn-round" id="menunggu-verifikasi" type="button" disabled><i class="bx bx-error"></i></button>`
-                                }else if(row.status == 1){
-
-                                }else if(row.status == 3){
-                                  el += `<button class="btn btn-danger btn-sm btn-round" id="hapus-permohonan" type="button" onclick="actionfile('delete', '${idfile_permohonan}', '${type_permohonan}', '${path_file}/${namafile_permohonan}')"><i class="bx bx-trash"></i></button>`
-                                }else{
-                                  el += `<button class="btn btn-success btn-sm btn-round" id="verfikasian" type="button" disabled><i class='bx bxs-check-square'></i></button>`
-                                }
-                                `</grp>`
-                        
+                        <button type="button" class="btn btn-sm btn-outline-secondary btn-round">
+                        <i class="bx bx-file"></i>
+                        <span class="bigger-110" id="nama-file-permohonan" onclick="downloadatuh('${'public/'+path_file}/${namafile_permohonan}')">${namafile_permohonan}</span>
+                        </button>
+                        </grp>`
+                        // <button class="btn btn-danger btn-sm btn-round" onclick="actionfile('delete', ${idfile_permohonan}, ${type_permohonan}, ${path_file}/${namafile_permohonan})" type="button"><i class="bx bx-trash"></i></button>
                       });
                       el += `<div class="form-group" id="form-permohonan-reupload" style="display:${row.file.length ? 'none' : 'block'};">        
-                                  <div class="col-sm-11">
-                                    <input type="file" name="id-input-file-5" id="doc_permohonan_reupload" accept=".pdf" onchange="filepermohonan(this)" />
-                                    <button class="btn btn-success btn-sm btn-round" id="upload-permohonan" onclick="reupload('permohonan', ${idfile_permohonan})" type="button"><i class="bx bx-check-double"></i></button>
-                                  </div>
-                                </div>`
-
-                      el += ''
-                      
-                      return el;
+                              <div class="col-sm-11">
+                                <input type="file" name="id-input-file-5" id="doc_permohonan_reupload" accept=".pdf" onchange="filepermohonan(this)" />
+                                <button class="btn btn-success btn-sm btn-round" id="upload-permohonan" onclick="reupload('permohonan', ${idfile_permohonan})" type="button"><i class="bx bx-check-double"></i></button>
+                              </div>
+                            </div>`
+                       el += ''
+                       return el;
                     }
                     return data;
                   },
-                  aTargets: [4],
+                  aTargets: [3],
                 },
                 {
                   render: function (data, type, row) {
@@ -1038,19 +1145,24 @@ function loadpermohonan(param) {
                         oks = file[key]["ok"] == 1 ? oks + 1 : +0;
                       }
                       var el = '<div class="btn-group">';
-
+                      
+                      if (row.param) {
                         if (oks == 1) {
                           el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="action('view',${row.id},'${row.type}', '', '', '${row.param}',${row.kategori})">
-                                  <i class="bx bx-file font-size-16"></i>
-                                </button>`;
+                          <i class="bx bx-file font-size-16"></i>
+                          </button>`;
                         }
-                      el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="editpermohonan(${row.id})">
-                              <i class="bx bx-edit font-size-16"></i>
+                      }
+                      el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="detailpermohonan(${row.id})">
+                              <i class="bx bx-detail font-size-16"></i>
                             </button>`;
+                      // el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="editpermohonan(${row.id})">
+                      //         <i class="bx bx-edit font-size-16"></i>
+                      //       </button>`;
                       if (row.status == 1) {
                         el +=
                           `<button type="button" title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view','${row.id}','${row.type}')"><i class="bx bx-check-square font-size-16"></i></button>`;
-                      } else {
+                      } else if(row.status == 0){
                         el +=
                           `<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>`;
                       }
@@ -1059,7 +1171,7 @@ function loadpermohonan(param) {
                     }
                     return data;
                   },
-                  aTargets: [5],
+                  aTargets: [6],
                 },
               ],
               fnRowCallback: function (
@@ -1086,7 +1198,7 @@ function loadpermohonan(param) {
             });
             
           }
-
+          $("#hapus-permohonan").hide();
           $("#ini-form-add").hide();
           $("#ini-form-view").show();
           if (!data["param"]) {
@@ -1112,7 +1224,6 @@ function loadpermohonan(param) {
           }
 
           $("#deletedataini").show();
-          // console.log(result.data[0]);
           $("#view_1").val(data["nama_usaha"]).prop("disabled", true);
           $("#view_2").val(data["bidang_usaha"]).prop("disabled", true);
           $("#view_3").val(data["nib"]).prop("disabled", true);
@@ -1124,188 +1235,241 @@ function loadpermohonan(param) {
 
           $("#ini-paramnya").val(data["param"]);
           var harap = [];
-          for (var f in data["file"]) {
-            var jenisnya = data.file[f]["jenis"];
-            var oknya = data.file[f]["ok"];
-
-            switch (jenisnya) {
-              case "doc_permohonans":
-                $("#nama-file-permohonan").html(data.file[f]["filename"]);
-                $("#nama-file-permohonan").attr(
-                  "onclick",
-                  "downloadatuh('" +
-                    "public/" +
-                    data.file[f]["path"] +
-                    "/" +
-                    data.file[f]["filename"] +
-                    "')"
-                );
-                $("#hapus-permohonan").attr(
-                  "onclick",
-                  "actionfile('delete','" +
-                    data.file[f]["id"] +
+          for(var p in data["permohonan"]){
+            var jenis_permohonan = data.permohonan[p];
+            for(var fileee in jenis_permohonan["file"]){
+              var filejenis = jenis_permohonan.file[fileee]["jenis"];
+              var okee = jenis_permohonan.file[fileee]["ok"];
+              switch (filejenis) {
+                case "doc_permohonan":
+                  $("#nama-file-permohonan").html(jenis_permohonan.file[fileee]["filename"]);
+                  $("#nama-file-permohonan").attr(
+                    "onclick",
+                    "downloadatuh('" +
+                      "public/" +
+                      jenis_permohonan.file[fileee]["path"] +
+                      "/" +
+                      jenis_permohonan.file[fileee]["filename"] +
+                      "')"
+                  );
+                  $("#hapus-permohonan").attr(
+                    "onclick",
+                    "actionfile('delete','" +
+                    jenis_permohonan.file[fileee]["id"] +
                     "','" +
-                    data.type +
+                    jenis_permohonan.file[fileee]["type"] +
                     "','" +
-                    data.file[f]["path"] +
+                    jenis_permohonan.file[fileee]["path"] +
                     "/" +
-                    data.file[f]["filename"] +
+                    jenis_permohonan.file[fileee]["filename"] +
                     "')"
-                );
+                  );
+  
+                  $("#view-file-permohonan").css("display", "block");
+                  $("#form-permohonan-reupload").css("display", "none");
 
-                $("#view-file-permohonan").css("display", "block");
-                $("#form-permohonan-reupload").css("display", "none");
-
-                if (oknya == 1) {
-                  $("#hapus-permohonan").css("display", "none");
-                } else {
-                  $("#hapus-permohonan").show();
-                  if (oknya == 2) {
-                    var ell = ` <li>
-                                          <i class="">File Permohonan</i>
-                                        </li>`;
-                    $("#harus-upload").append(ell);
-                    harap.push("permohonan");
+                  if (okee == 1) {
+                    $("#hapus-permohonan").css("display", "none");
+                  } else {
+                    $("#hapus-permohonan").show();
+                    if (okee == 2) {
+                      var ell = ` 
+                        <li>
+                          <i class="">File Permohonan</i>
+                        </li>`;
+                      $("#harus-upload").append(ell);
+                      harap.push("permohonan");
+                    }
                   }
-                }
-                break;
-              case "doc_izin_lingkungan":
-                $("#nama-file-izin-lingkungan").html(
-                  data.file[f]["filename"]
-                );
-                $("#nama-file-izin-lingkungan").attr(
-                  "onclick",
-                  "downloadatuh('" +
-                    "public/" +
-                    data.file[f]["path"] +
-                    "/" +
-                    data.file[f]["filename"] +
-                    "')"
-                );
-                $("#hapus-izin-lingkungan").attr(
-                  "onclick",
-                  "actionfile('delete','" +
-                    data.file[f]["id"] +
-                    "','" +
-                    data.type +
-                    "','" +
-                    data.file[f]["path"] +
-                    "/" +
-                    data.file[f]["filename"] +
-                    "')"
-                );
-
-                $("#view-file-izin-lingkungan").css("display", "block");
-                $("#form-izin-lingkungan-reupload").css("display", "none");
-
-                if (oknya == 1) {
-                  $("#hapus-izin-lingkungan").css("display", "none");
-                } else {
-                  $("#hapus-izin-lingkungan").show();
-                  if (oknya == 2) {
-                    var ell = ` <li>
-                                          <i class="">File Izin Lingkungan</i>
-                                        </li>`;
-                    $("#harus-upload").append(ell);
-                    harap.push("izin");
-                  }
-                }
-                break;
-              case "doc_nib":
-                $("#nama-file-nib").html(data.file[f]["filename"]);
-                $("#nama-file-nib").attr(
-                  "onclick",
-                  "downloadatuh('" +
-                    "public/" +
-                    data.file[f]["path"] +
-                    "/" +
-                    data.file[f]["filename"] +
-                    "')"
-                );
-                $("#hapus-nib").attr(
-                  "onclick",
-                  "actionfile('delete','" +
-                    data.file[f]["id"] +
-                    "','" +
-                    data.type +
-                    "','" +
-                    data.file[f]["path"] +
-                    "/" +
-                    data.file[f]["filename"] +
-                    "')"
-                );
-
-                $("#view-file-nib").css("display", "block");
-                $("#form-nib-reupload").css("display", "none");
-
-                if (oknya == 1) {
-                  $("#hapus-nib").css("display", "none");
-                } else {
-                  $("#hapus-nib").show();
-                  if (oknya == 2) {
-                    var ell = ` <li>
-                                          <i class="">File NIB</i>
-                                        </li>`;
-                    $("#harus-upload").append(ell);
-                    harap.push("nib");
-                  }
-                }
-
-                break;
-              case "doc_penapisan_mandiri":
-                $("#nama-file-penapisan-mandiri").html(
-                  data.file[f]["filename"]
-                );
-                $("#nama-file-penapisan_mandiri").attr(
-                  "onclick",
-                  "downloadatuh('" +
-                    "public/" +
-                    data.file[f]["path"] +
-                    "/" +
-                    data.file[f]["filename"] +
-                    "')"
-                );
-                $("#hapus-penapisan-mandiri").attr(
-                  "onclick",
-                  "actionfile('delete','" +
-                    data.file[f]["id"] +
-                    "','" +
-                    data.type +
-                    "','" +
-                    data.file[f]["path"] +
-                    "/" +
-                    data.file[f]["filename"] +
-                    "')"
-                );
-
-                $("#view-file-penapisan-mandiri").css("display", "block");
-                $("#form-penapisan-mandiri-reupload").css("display", "none");
-
-                if (oknya == 1) {
-                  $("#hapus-penapisan-mandiri").css("display", "none");
-                } else {
-                  $("#hapus-penapisan-mandiri").show();
-                  if (oknya == 2) {
-                    var ell = ` <li><i class="">File Hasil Penapisan Mandiri</i></li>`;
-                    $("#harus-upload").append(ell);
-                    harap.push("mandiri");
-                  }
-                }
-
-                break;
-
-              default:
-                break;
+                  break;
+              
+                default:
+                  break;
+              }
             }
           }
+          // for (var f in data["file"]) {
+          //   var jenisnya = data.file[f]["jenis"];
+          //   var oknya = data.file[f]["ok"];
+          //   var datas = data.permohonan;
+          //   //$('#hapus-permohonan').attr('onclick', "actionfile('delete','"+element.id+"','"+element.type+"','"+element.path+'/'+element.filename+"')");
+
+          //   switch (jenisnya) {
+          //     case "doc_permohonans":
+          //       $("#nama-file-permohonan").html(data.file[f]["filename"]);
+          //       $("#nama-file-permohonan").attr(
+          //         "onclick",
+          //         "downloadatuh('" +
+          //           "public/" +
+          //           data.file[f]["path"] +
+          //           "/" +
+          //           data.file[f]["filename"] +
+          //           "')"
+          //       );
+          //       $("#hapus-permohonan").attr(
+          //         "onclick",
+          //         "actionfile('delete','" +
+          //           data.file[f]["id"] +
+          //           "','" +
+          //           data.type +
+          //           "','" +
+          //           data.file[f]["path"] +
+          //           "/" +
+          //           data.file[f]["filename"] +
+          //           "')"
+          //       );
+
+          //       $("#view-file-permohonan").css("display", "block");
+          //       $("#form-permohonan-reupload").css("display", "none");
+
+          //       if (oknya == 1) {
+          //         $("#hapus-permohonan").css("display", "none");
+          //       } else {
+          //         $("#hapus-permohonan").show();
+          //         if (oknya == 2) {
+          //           var ell = ` <li>
+          //                                 <i class="">File Permohonan</i>
+          //                               </li>`;
+          //           $("#harus-upload").append(ell);
+          //           harap.push("permohonan");
+          //         }
+          //       }
+          //       break;
+          //     case "doc_izin_lingkungan":
+          //       $("#nama-file-izin-lingkungan").html(
+          //         data.file[f]["filename"]
+          //       );
+          //       $("#nama-file-izin-lingkungan").attr(
+          //         "onclick",
+          //         "downloadatuh('" +
+          //           "public/" +
+          //           data.file[f]["path"] +
+          //           "/" +
+          //           data.file[f]["filename"] +
+          //           "')"
+          //       );
+          //       $("#hapus-izin-lingkungan").attr(
+          //         "onclick",
+          //         "actionfile('delete','" +
+          //           data.file[f]["id"] +
+          //           "','" +
+          //           data.type +
+          //           "','" +
+          //           data.file[f]["path"] +
+          //           "/" +
+          //           data.file[f]["filename"] +
+          //           "')"
+          //       );
+
+          //       $("#view-file-izin-lingkungan").css("display", "block");
+          //       $("#form-izin-lingkungan-reupload").css("display", "none");
+
+          //       if (oknya == 1) {
+          //         $("#hapus-izin-lingkungan").css("display", "none");
+          //       } else {
+          //         $("#hapus-izin-lingkungan").show();
+          //         if (oknya == 2) {
+          //           var ell = ` <li>
+          //                                 <i class="">File Izin Lingkungan</i>
+          //                               </li>`;
+          //           $("#harus-upload").append(ell);
+          //           harap.push("izin");
+          //         }
+          //       }
+          //       break;
+          //     case "doc_nib":
+          //       $("#nama-file-nib").html(data.file[f]["filename"]);
+          //       $("#nama-file-nib").attr(
+          //         "onclick",
+          //         "downloadatuh('" +
+          //           "public/" +
+          //           data.file[f]["path"] +
+          //           "/" +
+          //           data.file[f]["filename"] +
+          //           "')"
+          //       );
+          //       $("#hapus-nib").attr(
+          //         "onclick",
+          //         "actionfile('delete','" +
+          //           data.file[f]["id"] +
+          //           "','" +
+          //           data.type +
+          //           "','" +
+          //           data.file[f]["path"] +
+          //           "/" +
+          //           data.file[f]["filename"] +
+          //           "')"
+          //       );
+
+          //       $("#view-file-nib").css("display", "block");
+          //       $("#form-nib-reupload").css("display", "none");
+
+          //       if (oknya == 1) {
+          //         $("#hapus-nib").css("display", "none");
+          //       } else {
+          //         $("#hapus-nib").show();
+          //         if (oknya == 2) {
+          //           var ell = ` <li>
+          //                                 <i class="">File NIB</i>
+          //                               </li>`;
+          //           $("#harus-upload").append(ell);
+          //           harap.push("nib");
+          //         }
+          //       }
+
+          //       break;
+          //     case "doc_penapisan_mandiri":
+          //       $("#nama-file-penapisan-mandiri").html(
+          //         data.file[f]["filename"]
+          //       );
+          //       $("#nama-file-penapisan_mandiri").attr(
+          //         "onclick",
+          //         "downloadatuh('" +
+          //           "public/" +
+          //           data.file[f]["path"] +
+          //           "/" +
+          //           data.file[f]["filename"] +
+          //           "')"
+          //       );
+          //       $("#hapus-penapisan-mandiri").attr(
+          //         "onclick",
+          //         "actionfile('delete','" +
+          //           data.file[f]["id"] +
+          //           "','" +
+          //           data.type +
+          //           "','" +
+          //           data.file[f]["path"] +
+          //           "/" +
+          //           data.file[f]["filename"] +
+          //           "')"
+          //       );
+
+          //       $("#view-file-penapisan-mandiri").css("display", "block");
+          //       $("#form-penapisan-mandiri-reupload").css("display", "none");
+
+          //       if (oknya == 1) {
+          //         $("#hapus-penapisan-mandiri").css("display", "none");
+          //       } else {
+          //         $("#hapus-penapisan-mandiri").show();
+          //         if (oknya == 2) {
+          //           var ell = ` <li><i class="">File Hasil Penapisan Mandiri</i></li>`;
+          //           $("#harus-upload").append(ell);
+          //           harap.push("mandiri");
+          //         }
+          //       }
+
+          //       break;
+
+          //     default:
+          //       break;
+          //   }
+          // }
 
           if (harap.length == 0) {
             $("#harap").hide();
-
           }
         } else {
           let data = result.data;
-
             // Table perusahaan
             var dt = $("#all-permohonan").DataTable({
               destroy: true,
@@ -1354,7 +1518,7 @@ function loadpermohonan(param) {
                         </button>`;
                       var permohonan = row.permohonan;
                       if (permohonan.length) {
-                        el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="detailper(${row.id}, 3)">
+                        el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="detailper(${row.id})">
                                 <i class="bx bx-show font-size-16"></i>
                               </button>`;
                       }
@@ -1363,8 +1527,9 @@ function loadpermohonan(param) {
                           `<button type="button" title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view','${row.id}','${row.type}')"><i class="bx bx-check-square font-size-16"></i></button>`;
                       } else {
                         el +=
-                          `<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>`;
+                          ``;
                       }
+                      // <button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>
                       el += "</div>";
                       return el;
                     }
@@ -1399,7 +1564,7 @@ function loadpermohonan(param) {
         }
       } else {
         if ($("#isRole").val() == 0) {
-          $('#data_permohonan_btn').hide()
+          $('#data_permohonan_btn').hide();
           $("#initambah").show();
           $("#cekunggahan").css("display", "none");
           $("#cekunggahan").hide();
@@ -1463,7 +1628,7 @@ function upload(formData) {
   });
 }
 
-function detailper(id, param) {
+function detailper(id) {
   $("#permohonan-all").hide();
   $("#detail").show();
   window.id_perusahaan = id
@@ -1473,7 +1638,7 @@ function detailper(id, param) {
     url: "loaddetailpermohonan",
     data: {
       param: id,
-      type: param
+      type: 3
     },
     success: function (result) {
       let code = result.code;
@@ -1494,12 +1659,12 @@ function detailper(id, param) {
           pageLength: 10,
           aaData: data,
           aoColumns: [
-            { mDataProp: "id", width: "10%" },
-            { mDataProp: "p6" },
-            { mDataProp: "p7" },
-            { mDataProp: "kategori" },
-            { mDataProp: "param" },
-            { mDataProp: "id" },
+            { mDataProp: "id", width: "1%" },
+            { mDataProp: "p6", width: "1%" },
+            { mDataProp: "p7", width: "1%" },
+            { mDataProp: "expired_date", width: "2%" },
+            { mDataProp: "id", width: "2%"},
+            { mDataProp: "id", width: "2%" },
           ],
           order: [[0, "ASC"]],
           fixedColumns: true,
@@ -1541,37 +1706,65 @@ function detailper(id, param) {
             //   },
             //   aTargets: [4],
             // },
+            // {
+            //   render: function (data, type, row) {
+            //     if (type == "display") {
+            //       if (!row.kategori) {
+            //         return "-";
+            //       }
+
+            //       let iskat = "";
+            //       let kategori = [
+            //         "",
+            //         "Pembuangan air limbah ke badan air permukaan",
+            //         "Pembuangan air limbah ke formasi tertentu",
+            //         "Pemanfaatan air limbah untuk aplikasi ke tanah",
+            //         "Pemanfaatan air limbah ke formasi tertentu",
+            //         "Pembuangan emisi",
+            //       ];
+
+            //       return kategori[row.kategori];
+            //     }
+            //     return data;
+            //   },
+            //   aTargets: [3],
+            // },
+            // {
+            //   render: function (data, type, row) {
+            //     if (type == "display") {
+            //       if (!row.param) {
+            //         return "-";
+            //       }
+            //       let par = ["", "Kajian Teknis", "Standar Teknis"];
+            //       return par[row.param];
+            //     }
+            //     return data;
+            //   },
+            //   aTargets: [4],
+            // },
             {
               render: function (data, type, row) {
-                if (type == "display") {
-                  if (!row.kategori) {
-                    return "-";
+                if(type == "display"){
+                  var el = ''
+                  // Menunggu Verifikasi status = 0
+                  // Sudah Verifikasi status = 1
+                  // Gagal Verifikasi status = 2
+                  // Ditolak status = 3
+                  console.log(row.status);
+                  if (row.status == 0) {
+                    el +=
+                      '<span class="label label-danger arrowed">Menunggu Verifikasi</span>';
+                  } else if (row.status == 1) {
+                    el +=
+                    '<span class="label label-danger arrowed">Verifikasi</span>';
+                  } else if (row.status == 2){
+                    el +=
+                    '<span class="label label-danger arrowed">Gagal Verifikasi</span>';
+                  } else{
+                    el +=
+                    '<span class="label label-danger arrowed">Verifikasi Ditolak</span>';
                   }
-
-                  let iskat = "";
-                  let kategori = [
-                    "",
-                    "Pembuangan air limbah ke badan air permukaan",
-                    "Pembuangan air limbah ke formasi tertentu",
-                    "Pemanfaatan air limbah untuk aplikasi ke tanah",
-                    "Pemanfaatan air limbah ke formasi tertentu",
-                    "Pembuangan emisi",
-                  ];
-
-                  return kategori[row.kategori];
-                }
-                return data;
-              },
-              aTargets: [3],
-            },
-            {
-              render: function (data, type, row) {
-                if (type == "display") {
-                  if (!row.param) {
-                    return "-";
-                  }
-                  let par = ["", "Kajian Teknis", "Standar Teknis"];
-                  return par[row.param];
+                  return el;
                 }
                 return data;
               },
@@ -1586,21 +1779,26 @@ function detailper(id, param) {
                     oks = file[key]["ok"] == 1 ? oks + 1 : +0;
                   }
                   var el = '<div class="btn-group">';
-
+                  if (oks == 1) {
                       el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="action('view',${row.id},'${row.type}', '', '', '${row.param}',${row.kategori})">
                               <i class="bx bx-file font-size-16"></i>
                             </button>`;
-                  
-                  el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="popupvalidasi(${row.id}, '${row.type}', ${row.param}, ${row.kategori})">
-                          <i class="bx bx-list-ul font-size-16"></i>
-                        </button>`;
+                  }
+                  if (moment().isSameOrAfter(moment(row.expired_date)) || row.status != 0) {
+                    el += '';
+                  }else{
+                    el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="popupvalidasi(${row.id}, '${row.type}', ${row.param}, ${row.kategori})">
+                    <i class="bx bx-list-ul font-size-16"></i>
+                  </button>`;
+                  }
                   if (row.status == 1) {
                     el +=
                       `<button type="button" title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view','${row.id}','${row.type}')"><i class="bx bx-check-square font-size-16"></i></button>`;
                   } else {
                     el +=
-                      `<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>`;
+                      ``;
                   }
+                  //<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>
                   el += "</div>";
                   return el;
                 }
@@ -1689,31 +1887,623 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
 
     let opt = '<option value="0">Pilih Dokumen</option>';
 
-      opt += `<option value="1">BAB 1 - Pendahuluan</option>
-                <option value="2">BAB 2 - Deskripsi Kegiatan</option>
-                <option value="3">BAB 3 - Muatan Kajian</option>
-                <option value="4">BAB 4 - Penutup</option>
+    if (kategori == 1 && kode == 1) {
+      opt += `<option value="1">BAB 1 - Deskripsi Kegiatan</option>
+                <option value="2">BAB 2 - Rona Lingkungan Awal</option>
+                <option value="3">BAB 3 - Komponen Lingkungan Yang Terkena Dampa</option>
+                <option value="4">BAB 4 - Prakiraan Dampa</option>
+                <option value="5">BAB 5 - Rencana Pengelolaan Lingkungan</option>
+                <option value="6">BAB 6 - Rencana Pemantauan Lingkungan</option>
+                <option value="7">BAB 7 - Sistem Penanggulangan Keadaan Darura</option>
+                <option value="8">BAB 8 - Internalisasi Biaya Lingkungan</option>
+                <option value="9">BAB 9 - Periode Waktu Uji Coba</option>
+                <option value="10">BAB 10 - Struktur Organisasi Dan Standar Kompetensi Sumber Daya Manusia</option>
+                <option value="11">BAB 11 - Sistem Manajemen Lingkungan</option>
                 `;
+
+      $("#ini-lampiran").show();
+      $("#kajian-teknis").show();
+      $("#standar-teknis").hide();
+      $("#modal_file").on("shown.bs.modal", function (e) { 
+        $("#edit_group_kajian").attr("hidden", true);
+        $("#kajian-teknis").addClass("active");
+        $("#standar-teknis").removeClass("active");
+
+        $("#kajian").addClass("tab-pane active");
+        $("#standar").removeClass("active");
+      });
+    } else if (kategori == 2 && kode == 1) {
+      opt += `<option value="1">BAB 1 - Deskripsi Kegiatan</option>
+                  <option value="2">BAB 2 - Rona Lingkungan Awal</option>
+                  <option value="3">BAB 3 - Prakiraan Dampak</option>
+                  <option value="4">BAB 4 - Rencana Pengelolaan Lingkungan </option>
+                  <option value="5">BAB 5 - Rencana Pemantauan Lingkungan</option>
+                  <option value="6">BAB 6 - Sistem Penanggulangan Keadaan Darurat</option>
+                  <option value="7">BAB 7 - Internalisasi Biaya Lingkungan</option>
+                  <option value="8">BAB 8 - Periode Waktu Uji Coba</option>
+                  <option value="9">BAB 9 - Struktur Organisasi dan Standar Kompetensi Sumber Daya Manusia</option>
+                  <option value="10">BAB 10 - Sistem Manajemen Lingkungan</option>`;
+      // <option value="11">BAB LAMPIRAN</option>
+
+      $("#ini-lampiran").show();
+      $("#kajian-teknis").show();
+      $("#standar-teknis").hide();
+      $("#modal_file").on("shown.bs.modal", function (e) {
+        $("#edit_group_kajian").attr("hidden", true);
+        $("#kajian-teknis").addClass("active");
+        $("#standar-teknis").removeClass("active");
+
+        $("#kajian").addClass("tab-pane active");
+        $("#standar").removeClass("active");
+      });
+    } else if (kategori == 3 && kode == 1) {
+      opt += `<option value="1">Bab 1 - Deskripsi Kegiatan</option>
+                <option value="2">Bab 2 - Rona Lingkungan Awal</option>
+                <option value="3">Bab 3 - Prakiraan Dampak</option>
+                <option value="4">Bab 4 - Rencana Pengelolaan Lingkungan</option>
+                <option value="5">Bab 5 - Rencana Pemantauan Lingkungan</option>
+                <option value="6">Bab 6 - Sistem Penanggulangan Keadaan Darurat</option>
+                <option value="7">Bab 7 - Internalisasi Biaya Lingkungan</option>
+                <option value="8">Bab 8 - Periode Uji Coba</option>
+                <option value="9">Bab 9 - Standar Kompetensi Sumber Daya Manusia</option>
+                <option value="10">Bab 10 - Sistem Manajemen Lingkungan</option>
+                `;
+      // <option vavlue="9">BAB LAMPIRAN</option>
+
+      $("#ini-lampiran").show();
+      $("#kajian-teknis").show();
+      $("#standar-teknis").hide();
+      $("#modal_file").on("shown.bs.modal", function (e) {
+        $("#edit_group_kajian").attr("hidden", true);
+        $("#kajian-teknis").addClass("active");
+        $("#standar-teknis").removeClass("active");
+
+        $("#kajian").addClass("tab-pane active");
+        $("#standar").removeClass("active");
+      });
+    } else if (kategori == 4 && kode == 1) {
+      opt += `<option value="1">BAB 1 - Deskripsi Kegiatan</option>
+                <option value="2">BAB 2 - Rona Lingkungan Awal</option>
+                <option value="3">BAB 3 - Baku Mutu Air Limbah</option>
+                <option value="4">BAB 4 - Prakiraan Dampak</option>
+                <option value="5">BAB 5 - Rencana Pengelolaan Lingkungan</option>
+                <option value="6">BAB 6 - Rencana Pemantauan Lingkungan</option>
+                <option value="7">BAB 7 - Sistem Penanggulangan Keadaan Darurat</option>
+                <option value="8">BAB 8 - Internalisasi Biaya Lingkungan</option>
+                <option value="9">BAB 9 - Periode Waktu Uji Coba</option>
+                <option value="10">BAB 10 - Struktur Organisasi dan Standar Kompetensi Sumber Daya Manusia</option>
+                <option value="11">BAB 11 - Sistem Manajemen Lingkungan</option>`;
+      // <option value="12">BAB LAMPIRAN</option>
+
+      $("#ini-lampiran").show();
+      $("#kajian-teknis").show();
+      $("#standar-teknis").hide();
+      $("#modal_file").on("shown.bs.modal", function (e) {
+        $("#edit_group_kajian").attr("hidden", true);
+        $("#kajian-teknis").addClass("active");
+        $("#standar-teknis").removeClass("active");
+
+        $("#kajian").addClass("tab-pane active");
+        $("#standar").removeClass("active");
+      });
+    } else if (kategori == 5 && kode == 1) {
+      opt += `<option value="1">BAB 1 - Deskripsi Kegiatan</option>
+                <option value="2">BAB 2 - Rona Lingkungan Awal</option>
+                <option value="3">BAB 3 - Desain Sarana dan Prasarana Sistem Pengendalian Emisi</option>
+                <option value="4">BAB 4 - Prakiraan Dampak</option>
+                <option value="5">BAB 5 - Rencana Pemantauan Lingkungan</option>
+                <option value="6">BAB 6 - Internalisasi Biaya Lingkungan</option>
+                <option value="7">BAB 7 - Standar Kompetensi Sumber Daya Manusia</option>
+                <option value="8">BAB 8 - Sistem Manajemen Lingkungan</option>
+                <option value="9">BAB 9 - Periode Uji Coba Instalasi Pengendali Emisi</option>
+                `;
+      // <option value="8">BAB LAMPIRAN</option>
+
+      $("#ini-lampiran").show();
+      $("#kajian-teknis").show();
+      $("#standar-teknis").hide();
+      $("#modal_file").on("shown.bs.modal", function (e) {
+        $("#edit_group_kajian").attr("hidden", true);
+        $("#kajian-teknis").addClass("active");
+        $("#standar-teknis").removeClass("active");
+
+        $("#kajian").addClass("tab-pane active");
+        $("#standar").removeClass("active");
+      });
+    } else if (kategori == 1 && kode == 2) {
+      opt += ` <option value="1">BAB 1 - Deskripsi Kegiatan</option>
+                <option value="2">BAB 2 - Baku Mutu Air Limbah Nasional</option>
+                <option value="3">BAB 3 - Rencana Pengelolaan Lingkungan</option>
+                <option value="4">BAB 4 - Rencana Pemantauan Lingkungan</option>
+                <option value="5">BAB 5 - Sistem Penanggulangan Keadaan Darurat</option>
+                <option value="6">BAB 6 - Internalisasi Biaya Lingkungan</option>
+                <option value="7">BAB 7 - Periode Waktu Uji Coba</option>
+                <option value="8">BAB 8 - Struktur Organisasi Dan Standar Kompetensi Sumber Daya Manusia</option>
+                <option value="9">BAB 9 - Sistem Manajemen Lingkungan</option>`;
+
       $("#ini-lampiran-2").show();
       $("#kajian-teknis").hide();
       $("#standar-teknis").show();
       $("#modal_file").on("shown.bs.modal", function (e) {
+        $("#edit_group_kajian").attr("hidden", true);
         $("#kajian-teknis").removeClass("active");
         $("#standar-teknis").addClass("active");
 
         $("#kajian").removeClass("active");
         $("#standar").addClass("tab-pane active");
       });
+    } else if (kategori == 3 && kode == 2) {
+      opt += `<option value="1">BAB 1 - Deskripsi Kegiatan</option>
+                <option value="2">BAB 2 - Baku Mutu Air Limbah</option>
+                <option value="3">BAB 3 - Rencana Pengelolaan Lingkungan</option>
+                <option value="4">BAB 4 - Rencana Pemantauan Lingkungan</option>
+                <option value="5">BAB 5 - Sistem Penanggulangan Keadaan Darurat</option>
+                <option value="6">BAB 6 - Internalisasi Biaya Lingkungan</option>
+                <option value="7">BAB 7 - Periode Waktu Uji Coba</option>
+                <option value="8">BAB 8 - Struktur Organisasi dan Standar Kompetensi Sumber Daya Manusia</option>
+                <option value="9">BAB 9 - Sistem Manajemen Lingkungan</option>
+                `;
+      // <option value="9">BAB LAMPIRAN</option>
+
+      $("#ini-lampiran-2").show();
+      $("#kajian-teknis").hide();
+      $("#standar-teknis").show();
+      $("#modal_file").on("shown.bs.modal", function (e) {
+        $("#edit_group_kajian").attr("hidden", true);
+        $("#kajian-teknis").removeClass("active");
+        $("#standar-teknis").addClass("active");
+
+        $("#kajian").removeClass("active");
+        $("#standar").addClass("tab-pane active");
+      });
+    } else if (kategori == 4 && kode == 2) {
+      opt += `<option value="1">BAB 1 - Deskripsi Kegiatan</option>
+                <option value="2">BAB 2 - Baku Mutu Air Limbah</option>
+                <option value="3">BAB 3 - Rencana Pengelolaan Lingkungan</option>
+                <option value="4">BAB 4 - Rencana Pemantauan Lingkungan</option>
+                <option value="5">BAB 5 - Sistem Penanggulangan Keadaan Darurat</option>
+                <option value="6">BAB 6 - Internalisasi Biaya Lingkungan</option>
+                <option value="7">BAB 7 - Periode Waktu Uji Coba</option>
+                <option value="8">BAB 8 - Standar Kompetensi Sumber Daya Manusia</option>
+                <option value="9">BAB 9 - Sistem Manajemen Lingkungan</option>
+                `;
+      // <option value="9">BAB LAMPIRAN</option>
+
+      $("#ini-lampiran-2").show();
+      $("#kajian-teknis").hide();
+      $("#standar-teknis").show();
+      $("#modal_file").on("shown.bs.modal", function (e) {
+        $("#edit_group_kajian").attr("hidden", true);
+        $("#kajian-teknis").removeClass("active");
+        $("#standar-teknis").addClass("active");
+
+        $("#kajian").removeClass("active");
+        $("#standar").addClass("tab-pane active");
+      });
+    } else if (kategori == 5 && kode == 2) {
+      opt += `<option value="1">BAB 1 - Deskripsi Kegiatan</option>
+                <option value="2">BAB 2 - Rujukan Baku Mutu Emisi</option>
+                <option value="3">BAB 3 - Desain Sarana dan Prasarana Sistem Pengendalian Emisi</option>
+                <option value="4">BAB 4 - Rencana Pemantauan Lingkungan </option>
+                <option value="5">BAB 5 - Internalisasi Biaya Lingkungan</option>
+                <option value="6">BAB 6 - Standar Kompetensi Sumber Daya Manusia </option>
+                <option value="7">BAB 7 - Sistem Manajemen Lingkungan</option>
+                <option value="8">BAB 8 - Periode Uji Coba Instalasi Pengendali Emisi</option>
+                `;
+      // <option value="7">BAB LAMPIRAN</option>
+
+      $("#ini-lampiran-2").show();
+      $("#kajian-teknis").hide();
+      $("#standar-teknis").show();
+      $("#modal_file").on("shown.bs.modal", function (e) {
+        $("#edit_group_kajian").attr("hidden", true);
+        $("#kajian-teknis").removeClass("active");
+        $("#standar-teknis").addClass("active");
+
+        $("#kajian").removeClass("active");
+        $("#standar").addClass("tab-pane active");
+      });
+    }
 
     $("#bab_kajian").html(opt);
     $("#bab_kajian").trigger("chosen:updated");
     $("#bab_standar").html(opt);
     $("#bab_standar").trigger("chosen:updated");
 
+    // switch (kode) {
+    //   case '1':
+    //       $('#kajian-teknis').show();
+    //       $('#standar-teknis').hide();
+    //       $( "#modal_file" ).on('shown.bs.modal', function (e) {
+    //         $("#kajian-teknis").addClass('active');
+    //         $("#standar-teknis").removeClass('active');
+
+    //         $('#kajian').addClass('tab-pane active');
+    //         $('#standar').addClass('tab-pane');
+    //       });
+    //     break;
+    //   case '2':
+    //       $('#kajian-teknis').hide();
+    //       $('#standar-teknis').show();
+    //       $( "#modal_file" ).on('shown.bs.modal', function (e) {
+    //         $("#kajian-teknis").removeClass('active');
+    //         $("#standar-teknis").addClass('active');
+
+    //         $('#kajian').removeClass('active');
+    //         $('#standar').addClass('active');
+
+    //       });
+    //     break;
+    // }
+
     $("#modal_file").modal("show");
     $("#ini-ID").val(id);
-    
+    if (kode == "1") {
+      $.ajax({
+        type: "post",
+        dataType: "json",
+        url: "loadfile",
+        data: {
+          id: id,
+          type: 3,
+          jenis: "doc_kajian",
+          kategori: kategori,
+        },
+        success: function (result) {
+          loadstatus(id, 3, "doc_kajian", kategori);
 
+          let data = result.data;
+          let code = result.code;
+          if (code != "0") {
+            var dt = $("#data-file-kajian").DataTable({
+              destroy: true,
+              paging: true,
+              lengthChange: true,
+              searching: true,
+              ordering: true,
+              info: true,
+              autoWidth: false,
+              responsive: false,
+              pageLength: 10,
+              aaData: data,
+              aoColumns: [
+                { mDataProp: "id" },
+                { mDataProp: "bab" },
+                { mDataProp: "filename" },
+                // { 'mDataProp': 'size'},
+                { mDataProp: "status" },
+                { mDataProp: "created_date" },
+                { mDataProp: "updated_date" },
+                { mDataProp: "keterangan" },
+                { mDataProp: "id" },
+              ],
+              order: [[0, "ASC"]],
+              fixedColumns: true,
+              aoColumnDefs: [
+                { width: 50, targets: 0 },
+                // {
+                //     mRender: function ( data, type, row ) {
+
+                //       var el = bytesToSize(parseInt(data));
+
+                //         return el;
+                //     },
+                //     aTargets: [3]
+                // },
+                {
+                  mRender: function (data, type, row) {
+                    if (type == "display") {
+                      let des = [];
+                      if (row.jenis != "doc_lampiran") {
+                        $("#bab_kajian option").each(function () {
+                          des.push($(this).text());
+                        });
+                      } else {
+                        let p = "";
+                        if (row.param == 2) {
+                          p = "-2";
+                        }
+
+                        $(`#bab_lampiran${p} option[value="${row.bab}"]`).prop(
+                          "disabled",
+                          true
+                        );
+                        $("#bab_lampiran").trigger("chosen:updated");
+
+                        des = [
+                          "-",
+                          "LAMPIRAN I",
+                          "LAMPIRAN II",
+                          "LAMPIRAN III",
+                        ];
+                      }
+                      return des[row.bab];
+                    }
+
+                    return data;
+                  },
+                  aTargets: [1],
+                },
+                {
+                  mRender: function (data, type, row) {
+                    if ($("#role").val() == "10" || $("#role").val() == "100") {
+                      let rev = "";
+                      let done = "";
+                      if (data == "1") {
+                        rev = "selected";
+                      }
+
+                      if (data == "0") {
+                        done = "selected";
+                      }
+
+                      var el =
+                        `<select class="form-control" id="status_1_` +
+                        row.id +
+                        `" >
+                          <option value=""> - </option>
+                          <option ` +
+                        rev +
+                        ` value="1"> Revisi </option>
+                          <option ` +
+                        done +
+                        ` value="0"> Selesai </option>
+                        </select>`;
+                    } else {
+                      if (data == "1") {
+                        var el =
+                          '<span class="label label-danger arrowed">Revisi</span>';
+                      } else if (data == "0") {
+                        var el =
+                          '<span class="label label-primary arrowed">Selesai</span>';
+                      } else {
+                        var el = "-";
+                      }
+                    }
+
+                    if (row.jenis == "doc_lampiran") {
+                      return "-";
+                    }
+                    return el;
+                  },
+                  aTargets: [3],
+                },
+                {
+                  mRender: function (data, type, row) {
+                    var el =
+                      row.updated_date == row.created_date
+                        ? "-"
+                        : row.updated_date;
+                    return el;
+                  },
+                  aTargets: [5],
+                },
+                {
+                  mRender: function (data, type, row) {
+                    if ($("#role").val() == "10" || $("#role").val() == "100") {
+                      if (data == null) {
+                        data = "";
+                      }
+                      var el =
+                        `<textarea style="width:150px;" id="keterangan_1_` +
+                        row.id +
+                        `">` +
+                        data +
+                        `</textarea>`;
+                    } else {
+                      var el = data;
+                    }
+
+                    if (row.jenis == "doc_lampiran") {
+                      return "-";
+                    }
+
+                    return el;
+                  },
+                  aTargets: [6],
+                },
+                {
+                  mRender: function (data, type, row) {
+                    var el =
+                      `<div class="btn-group">
+                        <a class="btn btn-xs btn-warning" target="_blank" href="public/` +row.path +"/" +row.filename +`">
+                          <i class="bx bxs-download font-size-16"></i>
+                        </a>`;
+
+                    if ($("#role").val() == 0) {
+                      if (row.status == "1") {
+                        el +=
+                          `<button class="btn btn-xs btn-info" onclick="revisikajian('` +
+                            row.id +
+                            `','` +
+                            row.type +
+                            `','` +
+                            row.jenis +
+                            `','` +
+                            row.path +
+                            "/" +
+                            row.filename +
+                            `','` +
+                            row.bab +
+                            `', '${row.kategori}')">
+                            <i class="bx bx-edit font-size-16"></i>
+                          </button>`;
+
+                        el +=
+                          `<button class="btn btn-xs btn-danger" onclick="actionfile('delete','` +
+                            row.id +
+                            `','` +
+                            row.type +
+                            `', '` +
+                            row.path +
+                            "/" +
+                            row.filename +
+                            `')">
+                            <i class="bx bx-trash font-size-16"></i>
+                          </button>`;
+                      }
+                    } else {
+                      if (row.jenis == "doc_lampiran") {
+                        el += "";
+                      } else {
+                        el +=
+                          `<button class="btn btn-xs btn-success" onclick="action('update','` +
+                            row.id +
+                            `','` +
+                            row.type +
+                            `','','1')">
+                            <i class="bx bx-check-double"></i>
+                          </button>`;
+                      }
+                    }
+                    el += `<a href="#" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i class="bx bx-history font-size-16"></i>
+                          </a> 
+                          <div class="dropdown-menu" style="">
+                            <div class="card">
+                              <div class="card-body">
+                                <div class="">
+                                  <ul class="verti-timeline list-unstyled">
+                                    <li class="event-list">
+                                      <div class="event-timeline-dot">
+                                        <i class="bx bx-right-arrow-circle"></i>
+                                      </div>
+                                      <div class="d-flex">
+                                        <div class="flex-grow-1">
+                                          <div>
+                                            <h5 class="font-size-15"><a href="javascript: void(0);" class="text-dark">Pengajuan</a></h5>
+                                            <span class="text-primary">${row.created_date}</span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </li>`
+                                  for (let index = 0; index < row.history.length; index++) {
+                                    el +=  `
+                                    <li class="event-list">
+                                      <div class="event-timeline-dot">
+                                          <i class="bx bx-right-arrow-circle"></i>
+                                      </div>
+                                      <div class="d-flex">
+                                          <div class="flex-grow-1">
+                                              <div>
+                                                  <h5 class="font-size-15"><a href="javascript: void(0);" class="text-dark">
+                                                  ${row.history[index]["status"] == 1 ? '<span class="label label-warning label-sm">Revisi</span>' : '<span class="label label-success label-sm">Selesai</span>' }</a></h5>
+                                                  <span class="text-primary">${row.history[index]["createdate"]}</span>
+                                              </div>
+                                          </div>
+                                      </div>
+                                    </li>`
+                                  }
+                                  el +=  `</ul>
+                              </div>
+                          </div>
+                      </div>
+                  </div>`
+                    // el += `<button data-toggle="dropdown" class="btn btn-xs btn-secondary dropdown-toggle" aria-expanded="false">
+                    //           <i class="bx bx-history font-size-16"></i>
+                    //         </button>
+                    //         <ul class="dropdown-menu dropdown-info dropdown-menu-right" style="width:25rem">
+                    //         <div class="timeline-container">
+                    //           <div class="timeline-items">
+                    //             <div class="timeline-item clearfix">
+                    //               <div class="timeline-info">
+                    //                 <span class="label label-primary label-sm">Create</span>
+                    //               </div>
+                    //               <div class="widget-box transparent">
+                    //                 <div class="widget-body">
+                    //                   <div class="widget-main">
+                    //                     <i class="bx bx-history font-size-16"></i>
+                    //                     ${row.created_date}
+                    //                   </div>
+                    //                 </div>
+                    //               </div>
+                    //             </div>`;
+                    // for (let index = 0; index < row.history.length; index++) {
+                    //   el += `<div class="timeline-item clearfix">
+                    //           <div class="timeline-info">
+                    //             ${
+                    //               row.history[index]["status"] == 1
+                    //                 ? '<span class="label label-warning label-sm">Revisi</span>'
+                    //                 : '<span class="label label-success label-sm">Selesai</span>'
+                    //             }
+                    //           </div>
+                    //           <div class="widget-box transparent">
+                    //             <div class="widget-body">
+                    //               <div class="widget-main">
+                    //                   <i class="bx bx-history font-size-16"></i>
+                    //                   ${
+                    //                     row.history[index][
+                    //                       "createdate"
+                    //                     ]
+                    //                   }
+                    //               </div>
+                    //             </div>
+                    //           </div>
+                    //         </div>`;
+                    // }
+                    // el += `</div>
+                    //     </div>
+                    //   </ul>
+                    // </div>`;
+
+                    return el;
+                  },
+                  aTargets: [7],
+                },
+              ],
+              fnRowCallback: function (
+                nRow,
+                aData,
+                iDisplayIndex,
+                iDisplayIndexFull
+              ) {
+                var index = iDisplayIndexFull + 1;
+                $("td:eq(0)", nRow).html("#" + index);
+                return index;
+              },
+              fnDrawCallback: function () {
+                var table = $("#data-file-kajian").DataTable();
+                var trr = $("#data-file-kajian tbody tr");
+                for (let index = 0; index < trr.length; index++) {
+                  $(trr[index]).find("td:eq(1)").css("white-space", "normal");
+                  $(trr[index]).find("td:eq(2)").css("white-space", "normal");
+                }
+              },
+              fnInitComplete: function () {
+                var that = this;
+                var td;
+                var tr;
+                this.$("td").click(function () {
+                  td = this;
+                });
+                this.$("tr").click(function () {
+                  tr = this;
+                });
+              },
+            });
+
+            dt.column(4).visible(false);
+            dt.column(5).visible(false);
+          } else {
+            var table = $("#data-file-kajian").DataTable();
+            table.clear().draw();
+          }
+          // $('#create_date').html(data[0]['created_date']);
+          // for (let index = 0; index < data.length; index++) {
+          //   if(data[index]['jenis'] == 'doc_kajian'){
+          //       $('#file_name_kajian').html(data[index]['filename']);
+          //       $('#file_name_kajian').attr('href', 'public'+ '/'+ data[index]['path']+'/'+data[index]['filename']);
+          //       $('#file_size_kajian').html(bytesToSize(parseInt(data[index]['size'])));
+          //   }else if(data[index]['jenis'] == 'doc_standar'){
+          //     $('#file_name_standar').html(data[index]['filename']);
+          //     $('#file_name_standar').attr('href', 'public'+ '/'+ data[index]['path']+'/'+data[index]['filename']);
+          //     $('#file_size_standar').html(bytesToSize(parseInt(data[index]['size'])));
+          //   }
+
+          // }
+        },
+      });
+    } else if (kode == "2") {
       $.ajax({
         type: "post",
         dataType: "json",
@@ -1729,7 +2519,6 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
 
           let data = result.data;
           let code = result.code;
-
           if (code != "0") {
             var dt = $("#data-file-standar").DataTable({
               destroy: true,
@@ -1741,15 +2530,13 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
               autoWidth: false,
               responsive: false,
               pageLength: 10,
-              aaData: result.data,
+              aaData: data,
               aoColumns: [
                 { mDataProp: "id", width: "10%" },
                 { mDataProp: "bab" },
                 { mDataProp: "filename" },
-                // { 'mDataProp': 'size'},
                 { mDataProp: "status" },
                 { mDataProp: "created_date" },
-                // { 'mDataProp': 'updated_date'},
                 { mDataProp: "keterangan" },
                 { mDataProp: "id" },
               ],
@@ -1757,6 +2544,40 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
               fixedColumns: true,
               aoColumnDefs: [
                 { width: 50, targets: 0 },
+                {
+                  mRender: function (data, type, row) {
+                    if (type == "display") {
+                      let des = [];
+                      if (row.jenis != "doc_lampiran") {
+                        $("#bab_kajian option").each(function () {
+                          des.push($(this).text());
+                        });
+                      } else {
+                        let p = "";
+                        if (row.param == 2) {
+                          p = "-2";
+                        }
+
+                        $(`#bab_lampiran${p} option[value="${row.bab}"]`).prop(
+                          "disabled",
+                          true
+                        );
+                        $(`#bab_lampiran${p}`).trigger("chosen:updated");
+
+                        des = [
+                          "-",
+                          "LAMPIRAN I",
+                          "LAMPIRAN II",
+                          "LAMPIRAN III",
+                        ];
+                      }
+                      return des[row.bab];
+                    }
+
+                    return data;
+                  },
+                  aTargets: [1],
+                },
                 {
                   mRender: function (data, type, row) {
                     if ($("#role").val() == "10" || $("#role").val() == "100") {
@@ -1802,17 +2623,28 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                   mRender: function (data, type, row) {
                     let des = [
                       "Pilih Dokumen",
-                      "Pendahuluan ",
-                      "Deskripsi Kegiatan ",
-                      "Muatan Kajian ",
-                      "Penutup"
+                      "DESKRIPSI KEGIATAN",
+                      "BAKU MUTU AIR LIMBAH NASIONAL",
+                      "RENCANA PENGELOLAAN LINGKUNGAN",
+                      "RENCANA PEMANTAUAN LINGKUNGAN",
+                      "SISTEM PENANGGULANGAN KEADAAAN DARURAT",
+                      "INTERNALISASI BIAYA LINGKUNGAN",
+                      "PERIODE WAKTU UJI COBA",
+                      "STRUKTUR ORGANISASI DAN STANDAR KOMPETENSI SUMBER DAYA MANUSIA",
+                      "SISTEM MANAJEMEN LINGKUNGAN",
                     ];
-                    
 
                     return des[data];
                   },
                   aTargets: [1],
                 },
+                //   {
+                //     mRender: function ( data, type, row ) {
+                //           var el = row.updated_date == row.created_date ? '-' : row.updated_date;
+                //         return el;
+                //     },
+                //     aTargets: [ 5 ]
+                // },
                 {
                   mRender: function (data, type, row) {
                     if ($("#role").val() == "10" || $("#role").val() == "100") {
@@ -1837,9 +2669,9 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                   mRender: function (data, type, row) {
                     var el =
                       `<div class="btn-group">
-                        <button class="btn btn-sm btn-warning" target="_blank" href="public/${row.path}/${row.filename}">
+                        <a class="btn btn-sm btn-warning" target="_blank" href="public/${row.path}/${row.filename}">
                             <i class="bx bx-download font-size-16"></i>
-                        </button>`;
+                        </a>`;
 
                     if ($("#role").val() == 0) {
                       if (row.status == "1") {
@@ -1939,22 +2771,35 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
             var table = $("#data-file-standar").DataTable();
             table.clear().draw();
           }
+          // $('#create_date').html(data[0]['created_date']);
+          // for (let index = 0; index < data.length; index++) {
+          //   if(data[index]['jenis'] == 'doc_kajian'){
+          //       $('#file_name_kajian').html(data[index]['filename']);
+          //       $('#file_name_kajian').attr('href', 'public'+ '/'+ data[index]['path']+'/'+data[index]['filename']);
+          //       $('#file_size_kajian').html(bytesToSize(parseInt(data[index]['size'])));
+          //   }else if(data[index]['jenis'] == 'doc_standar'){
+          //     $('#file_name_standar').html(data[index]['filename']);
+          //     $('#file_name_standar').attr('href', 'public'+ '/'+ data[index]['path']+'/'+data[index]['filename']);
+          //     $('#file_size_standar').html(bytesToSize(parseInt(data[index]['size'])));
+          //   }
+
+          // }
         },
       });
-    // } else {
-    //   let kat = [
-    //     "",
-    //     "Pembuangan air limbah ke badan air permukaan",
-    //     "Pembuangan air limbah ke formasi tertentu",
-    //     "Pemanfaatan air limbah untuk aplikasi ke tanah",
-    //     "Pemanfaatan air limbah ke formasi tertentu",
-    //     "Pembuangan emisi",
-    //   ];
+    } else {
+      let kat = [
+        "",
+        "Pembuangan air limbah ke badan air permukaan",
+        "Pembuangan air limbah ke formasi tertentu",
+        "Pemanfaatan air limbah untuk aplikasi ke tanah",
+        "Pemanfaatan air limbah ke formasi tertentu",
+        "Pembuangan emisi",
+      ];
 
-    //   $("#dokumen-unggahan").html(
-    //     `<i class="ace-icon fa fa-file green "></i>&nbsp;Persyaratan Permohonan ${kat[kategori]}`
-    //   );
-    // }
+      $("#dokumen-unggahan").html(
+        `<i class="ace-icon fa fa-file green "></i>&nbsp;Persyaratan Permohonan ${kat[kategori]}`
+      );
+    }
   } else if (mode == "update") {
     let stat = $("#status_" + param + "_" + id).val();
     let keterangan = $("#keterangan_" + param + "_" + id).val();
@@ -1974,7 +2819,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
         let data = result.data;
         // location.reload();
         // $('#back-all-permohonan').click()
-        detailper(window.id_perusahaan, 3)
+        detailper(window.id_perusahaan)
       },
     });
   } else if (mode == "delete") {
@@ -2033,7 +2878,7 @@ function loadstatus(id, param, jenis, kategori) {
     success: function (result) {
       let data = result.data;
       let code = result.code;
-      
+
       if (code == "1") {
         if (jenis == "doc_kajian") {
           for (let i = 0; i < data.length; i++) {
@@ -2066,7 +2911,7 @@ function loadstatus(id, param, jenis, kategori) {
         }
       }
 
-      detailper(window.window.id_perusahaan, 3)
+      detailper(window.window.id_perusahaan)
     },
   });
 }
@@ -2493,7 +3338,7 @@ function reupload(type, id_parent) {
         $(document).ready(function () {
           dialog.modal("hide");
           if(id_parent){
-            loadpermohonan("1");
+            loadpermohonan("3");
           }else{
             location.reload();
           }
@@ -2503,11 +3348,12 @@ function reupload(type, id_parent) {
   });
 }
 
-function okdong(id, ok) {
+function okdong(id, ok, idper) {
   var formData = new FormData();
   formData.append("param", "data_file");
   formData.append("id", id);
   formData.append("ok", ok);
+  formData.append("idper", idper);
 
   $.ajax({
     type: "post",
@@ -2622,6 +3468,7 @@ function popupvalidasi(id, type, param, kategori) {
         var filename = data[key]["filename"];
         var jenis = data[key]["jenis"];
         var ok = data[key]["ok"];
+        var idper = data[key]["id_parent"];
         var checked = ok == 1 ? "checked" : "";
         var classe = !ok
           ? 'class="text-info"'
@@ -2640,7 +3487,7 @@ function popupvalidasi(id, type, param, kategori) {
         if (ok == 2) {
           el += `<div class="col-sm-2">
                   <div class="btn-group">
-                    <a type="button" class="btn btn-white btn-sm btn-success waves-effect waves-light" onclick="okdong(${id}, 1)">
+                    <a type="button" class="btn btn-white btn-sm btn-success waves-effect waves-light" onclick="okdong(${id}, 1, ${idper})">
                       <i class="bx bx-check font-size-16"></i>
                     </a>`;
           el += `
@@ -2657,7 +3504,7 @@ function popupvalidasi(id, type, param, kategori) {
                       <i class="bx bx-check font-size-16"></i>
                     </a>`;
           el += `
-                    <a type="button" class="btn btn-white btn-sm btn-danger waves-effect waves-light" onclick="okdong(${id}, 2)">
+                    <a type="button" class="btn btn-white btn-sm btn-danger waves-effect waves-light" onclick="okdong(${id}, 2, ${idper})">
                       <i class="bx bx-x font-size-16"></i>
                     </a>
                   </div>
@@ -2665,10 +3512,10 @@ function popupvalidasi(id, type, param, kategori) {
         } else {
           el += `<div class="col-sm-2">
                   <div class="btn-group">
-                    <a type="button" class="btn btn-white btn-sm btn-success waves-effect waves-light" onclick="okdong(${id}, 1)">
+                    <a type="button" class="btn btn-white btn-sm btn-success waves-effect waves-light" onclick="okdong(${id}, 1, ${idper})">
                       <i class="bx bx-check font-size-16"></i>
                     </a>
-                    <a type="button" class="btn btn-white btn-sm btn-danger waves-effect waves-light" onclick="okdong(${id}, 2)">
+                    <a type="button" class="btn btn-white btn-sm btn-danger waves-effect waves-light" onclick="okdong(${id}, 2, ${idper})">
                       <i class="bx bx-x font-size-16"></i>
                     </a>
                   </div>
@@ -2733,16 +3580,91 @@ function editpermohonan(id) {
     },
     success: function (result) {
       var data = result.data;
+
       $("#ideditpermohonan").val(data.id);
-      $("#input_6").val(data.p6);
-      $("#input_7").val(data.p7);
-      $("#input_8").val(data.p8);
-      $("#kota_kabupaten").val(data.regency_name);
-      $("#select_kecamatan").val(data.district_id).trigger('change');
-      $("#select_kelurahan").val(data.village_id).trigger('change');
+      $("#input_6").val(data.p6).prop("disabled", true);
+      $("#input_7").val(data.p7).prop("disabled", true);
+      $("#input_8").val(data.p8).prop("disabled", true);
+      $("#kota_kabupaten").val(data.regency_name).prop("disabled", true);
+      $("#select_kecamatan").val(data.district_id).trigger('change').prop("disabled", true);
+      // $("#select_kelurahan").val().trigger('change');
+      $("#select_kelurahan").val(data.village_id).trigger('change').prop("disabled", true);
+      $("#select_kategori").val(data.kategori).trigger('change').prop("disabled", true);
+      $("#select_jenis").val(data.param).trigger('change').prop("disabled", true);
       $("#form-upload-permohonan").hide();
       $("#mohon_save").prop('disabled', false);
-      $("#modal_program").modal("show");
+      // $("#modal_program").modal("show");
+      $("#permohonan-teknis-page").hide();
+      $("#permohonan-teknis-admin").hide();
+      $("#form-detail").show();
+    },
+  });
+}
+
+function detailpermohonan(id) {
+  $.ajax({
+    type : "post",
+    dataType : "json",
+    url : "loaddetailpermohonan",
+    data : {
+      param : id,
+      type : 3,
+      edit : 'true'
+    },
+    success: function (result) {
+      var data = result.data[0];
+      $("#ideditpermohonan").val(data.id);
+      $("#input_6").val(data.p6).prop("disabled", true);
+      $("#input_7").val(data.p7).prop("disabled", true);
+      $("#input_8").val(data.p8).prop("disabled", true);
+      $("#kota_kabupaten").val(data.regency_name).prop("disabled", true);
+      $("#select_kecamatan").val(data.district_id).trigger('change').prop("disabled", true);
+      // $("#select_kelurahan").val().trigger('change');
+      $("#select_kelurahan").val(data.village_id).trigger('change').prop("disabled", true);
+      $("#select_kategori").val(data.kategori).trigger('change').prop("disabled", true);
+      $("#select_jenis").val(data.param).trigger('change').prop("disabled", true);
+      $("#form-upload-permohonan").hide();
+      $("#mohon_save").prop('disabled', true);
+      // $("#modal_program").modal("show");
+      $("#permohonan-teknis-page").hide();
+      $("#permohonan-teknis-admin").hide();
+      $("#card-page-teknis").hide();
+      $("#div_kategori").show();
+      $("#kategori_slo").hide();
+      $("#form-detail").show();
+      if(data.status == 0){
+        $("#id_edit_btn").show();
+      }else if(data.status == 2){
+        $("#alert-expired").show();
+        $("#id_edit_btn").hide();
+      }else{
+        $("#id_edit_btn").hide();
+      }
+      var harap = [];
+      for (var f in data['file'] ) {
+
+        var jenisnya = data.file[f]['jenis'];
+        var oknya = data.file[f]['ok'];
+        $('#nama-file-permohonan').html(data.file[f]['filename']);
+        $('#nama-file-permohonan').attr('onclick', "downloadatuh('"+'public/'+data.file[f]['path']+'/'+data.file[f]['filename']+"')");
+        $('#hapus-permohonan').attr('onclick', "actionfile('delete','"+data.file[f]['id']+"','"+data.type+"','"+data.file[f]['path']+'/'+data.file[f]['filename']+"')");
+
+        $('#view-file-permohonan').css('display', 'block');
+        $('#form-permohonan-reupload').css('display', 'none');
+
+        if(oknya == 1){
+          $('#hapus-permohonan').css('display', 'none');
+        }else{
+          $('#hapus-permohonan').show();
+          if(oknya == 2){
+            var ell = ` <li>
+                          <i class="">File Permohonan</i>
+                        </li>`
+            $('#harus-upload').append(ell);
+            harap.push('permohonan');
+          }
+        }
+      }
     }
   });
 }
