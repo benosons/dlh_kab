@@ -81,12 +81,14 @@ class ProgramModel extends Model{
       public function getdatawilayah($id = null, $jenis = null)
       {
             if ($jenis == 'kecamatan') {
-                  $sql = "SELECT kemendagri_kecamatan_nama, kemendagri_kecamatan_kode FROM 
-                  dlh_kab.data_wilayah WHERE kemendagri_kota_kode  = $id AND 
-                  kemendagri_kecamatan_kode IN (
-                        SELECT kemendagri_kecamatan_kode FROM dlh_kab.data_wilayah 
-                        GROUP BY kemendagri_kecamatan_kode HAVING COUNT(*) > 1
-                  ) GROUP BY kemendagri_kecamatan_kode";
+                  $sql = "select kemendagri_kecamatan_kode, kemendagri_kecamatan_nama from data_wilayah where kemendagri_kota_kode = '$id' GROUP BY kemendagri_kecamatan_kode, kemendagri_kecamatan_nama ";
+                  // $sql = "SELECT kemendagri_kecamatan_nama, kemendagri_kecamatan_kode FROM 
+                  // dlh_kab.data_wilayah WHERE kemendagri_kota_kode  = $id AND 
+                  // kemendagri_kecamatan_kode IN (
+                  //       SELECT kemendagri_kecamatan_kode FROM data_wilayah 
+                  //       GROUP BY kemendagri_kecamatan_kode HAVING COUNT(*) > 1
+                  // ) GROUP BY kemendagri_kecamatan_kode";
+                  // print_r($sql);die;
                   $result = $this->db->query($sql);
                   $row = $result->getResult();
                   return $row;

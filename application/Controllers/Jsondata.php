@@ -1642,7 +1642,10 @@ class Jsondata extends \CodeIgniter\Controller
 				
 				$save 	= $model->saveParamComp($param, $data);
 				$id  	= $model->insertID();
-
+				$ses_data = [
+					'id_perushaan'  => $id
+				];
+				$session->set($ses_data);
 				if(!empty($_FILES)){
 
 					$files	 	= $request->getFiles()['file'];
@@ -1716,10 +1719,10 @@ class Jsondata extends \CodeIgniter\Controller
 		$modelfile 	= new \App\Models\TargetModel();
 
 		$data = [];
-		
 		$idkel		= $request->getVar('kelurahan');
 		$dataprogram = $model->getdatawilayah($idkel, 'addpermohonan');
 		$stuff = $dataprogram[0];
+		
 		
 		
 		if(!$request->getVar('id_permohonan')){
@@ -1744,7 +1747,7 @@ class Jsondata extends \CodeIgniter\Controller
 			$data['created_date'] 	= $this->now;
 			$data['type'] 			= $request->getVar('type');
 			$data['id_perusahaan'] 	= $request->getVar('id_perusahaan');
-			// print_r($data);die;
+			print_r($data);die;
 			$res = $model->saveParam($param, $data);
 			$id  = $model->insertID();
 

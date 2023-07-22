@@ -955,6 +955,7 @@ function loadpermohonan(param) {
       if (code != "0") {
         if ($("#isRole").val() == 0) {
           let data = result.data;
+          console.log(data);
           $("#idpermohonan").val(data.id);
           $("#initype").val(data.type);
           $("#inikategori").val(data.kategori);
