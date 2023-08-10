@@ -42,21 +42,27 @@ class Auth extends \CodeIgniter\Controller
 					$hash =  substr_replace($pass, "$2y$10", 0, 1);
 					$verify_pass = password_verify($password, $hash);
 					if($verify_pass){
-							$ses_data = [
-									'user_id'       => $dataemail->user_id,
-									'user_name'     => $dataemail->user_name,
-									'user_fullname' => $dataemail->user_fullname,
-									'user_email'    => $dataemail->user_email,
-									'logged_in'     => TRUE,
-									'user_role'     => $dataemail->user_role,
-							];
-							$session->set($ses_data);
+						$profile = 1;
+						if($dataemail->user_role == 0){
+							$profile = $model->getprofile($dataemail->user_id);
+						}
+						
+						$ses_data = [
+								'user_id'       => $dataemail->user_id,
+								'user_name'     => $dataemail->user_name,
+								'user_fullname' => $dataemail->user_fullname,
+								'user_email'    => $dataemail->user_email,
+								'logged_in'     => TRUE,
+								'user_role'     => $dataemail->user_role,
+								'perusahaan'	=> isset($profile)? isset($profile) : 0
+						];
+						$session->set($ses_data);
 
-							$userModel->updateIsLogin($dataemail->user_id, ['isLogin' => 1]);
-							return redirect('dashboard');
+						$userModel->updateIsLogin($dataemail->user_id, ['isLogin' => 1]);
+						return redirect('dashboard');
 					}else{
-							$session->setFlashdata('msg', 'Username atau password salah');
-							return redirect('login');
+						$session->setFlashdata('msg', 'Username atau password salah');
+						return redirect('login');
 					}
 			}else{
 					$session->setFlashdata('msg', 'User belum terdaftar');

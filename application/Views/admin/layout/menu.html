@@ -22,7 +22,7 @@
 					</a>
 				</li>
 				{% endif %}
-
+				{% if perusahaan == 1 %}
 				<li class="menu-title" key="t-menu">Permohonan</li>
 
 				<li>
@@ -45,7 +45,8 @@
 						<span key="t-menu">Limbah B3</span>
 					</a>
 				</li>
-
+				{% endif %}
+				{% if role != 0 %}
 				<li class="menu-title" key="t-apps">User</li>
 
 				<li>
@@ -54,7 +55,7 @@
 						<span key="t-chat">Manajemen User</span>
 					</a>
 				</li>
-
+				{% endif %}
 			</ul>
 		</div>
 		<!-- Sidebar -->

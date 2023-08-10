@@ -87,4 +87,13 @@ class UserModel extends Model{
 
       return true;
     }
+
+    public function getprofile($id = null)
+    {
+      $sql = "SELECT * FROM data_perusahaan where created_by = '$id'";
+      
+      $result = $this->db->query($sql);
+      $row = $result->getRow();
+      return $row;
+    }
 }

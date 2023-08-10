@@ -1712,12 +1712,15 @@ class Jsondata extends \CodeIgniter\Controller
 				$data['jabatan'] 			= $request->getVar('input_5');
 				$data['no_kbli'] 			= $request->getVar('input_9');
 				$data['created_by']	 		= $userid;
-				$data['created_date'] 		= $this->now;
-				$data['updated_date'] 		= $this->now;
-				
+				$data['created_at'] 		= $this->now;
+				$data['updated_at'] 		= $this->now;
 				$save 	= $model->saveParamComp($param, $data);
 				$id  	= $model->insertID();
 
+				$ses_data = [
+					'perusahaan'	=> 1
+				];
+				$this->session->set($ses_data);
 				if(!empty($_FILES)){
 
 					$files	 	= $request->getFiles()['file'];

@@ -3134,63 +3134,25 @@ function actionlapangan(mode, id, type, keterangan, param) {
               {
                 mRender: function (data, type, row) {
                   var el =
-                    `<div class="btn-group"><a class="btn btn-xs btn-warning" target="_blank" href="public/` +
-                    row.path +
-                    "/" +
-                    row.filename +
-                    `">
-                            <i class="ace-icon fa fa-download bigger-120"></i>
-                          </a></div>`;
+                    `<div class="btn-group">
+                            <a class="btn btn-sm btn-warning" target="_blank" href="public/${row.path}/${row.filename}">
+                            <i class="ace-icon fa fa-download bigger-120"></i></a>
+                      `;
 
                   if ($("#role").val() == "1" || $("#role").val() == "2") {
                     if (row.status == "1") {
-                      el +=
-                        `<div class="btn-group"><button class="btn btn-xs btn-info" onclick="revisi('` +
-                        row.id +
-                        `','` +
-                        row.type +
-                        `','` +
-                        row.jenis +
-                        `','` +
-                        row.path +
-                        "/" +
-                        row.filename +
-                        `','` +
-                        row.jenis +
-                        `')">
+                      el += `<button class="btn btn-sm btn-info" onclick="revisi('${row.id}','${row.type}','${row.jenis}','${row.path}/${row.filename}','${row.jenis}')">
                                   <i class="ace-icon fa fa-edit bigger-120"></i>
-                                </button></div>`;
+                                </button>`;
 
-                      el +=
-                        `<div class="btn-group"><button class="btn btn-xs btn-danger" onclick="actionfile('delete','` +
-                        row.id +
-                        `','` +
-                        row.type +
-                        `', '` +
-                        row.path +
-                        "/" +
-                        row.filename +
-                        `')">
-                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                          </button></div>`;
+                      el += `button class="btn btn-sm btn-danger" onclick="actionfile('delete','${row.id}','${row.type}', '${row.path}/${row.filename}')"><i class="ace-icon fa fa-trash-o bigger-120"></i></button>`;
                     }
                   } else {
                     // el += `<button class="btn btn-xs btn-success" onclick="action('update','`+row.id+`','`+row.type+`')">
                     //           <i class="ace-icon bx bx-check-square-o bigger-120"></i>
                     //         </button>`;
 
-                    el +=
-                      `<div class="btn-group"><button class="btn btn-xs btn-danger" onclick="actionfilelapang('delete','` +
-                      row.id +
-                      `','` +
-                      row.type +
-                      `', '` +
-                      row.path +
-                      "/" +
-                      row.filename +
-                      `')">
-                            <i class="ace-icon fa fa-trash-o bigger-120"></i>
-                          </button></div>`;
+                    el += `<button class="btn btn-sm btn-danger" onclick="actionfilelapang('delete','${row.id}','${row.type}', '${row.path}/${row.filename}')"><i class="ace-icon fa fa-trash bigger-120"></i></button></div>`;
                   }
 
                   return el;

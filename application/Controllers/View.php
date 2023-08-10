@@ -24,6 +24,7 @@ class View extends \CodeIgniter\Controller
 			'username' => $this->session->get('user_name'),
 			'role' => $this->session->get('user_role'),
 			'survey' => $this->session->get('survey'),
+			'perusahaan' => $this->session->get('perusahaan'),
 		);
 	}
 

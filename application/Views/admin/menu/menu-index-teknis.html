@@ -885,15 +885,15 @@
                 <!-- Modal content-->
                 <div class="modal-content">
                   <div class="modal-header bg-success">
-                    <button type="button" class="close" data-dismiss="modal" id="close_modal_file_lapangan">&times;</button>
                     <h4 class="modal-title">
                       <center><i class="ace-icon fa fa-file green "></i>
                         Dokumen BA & Pertek</center>
                         <input type="hidden" id="ini-ID-lapangan">
-                    </h4>
+                      </h4>
+                      <button type="button" class="btn-close" data-dismiss="modal" id="close_modal_file_lapangan"></button>
                   </div>
                   <div class="modal-body">
-                    {% if role == 0 %}
+                    {% if role != 0 %}
                       <table id="data-file-doc-lapangan" class="table table-striped table-bordered nowrap table-responsive">
                         <thead>
                             <tr>
