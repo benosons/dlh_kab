@@ -1847,6 +1847,8 @@ class Jsondata extends \CodeIgniter\Controller
 						'id_parent'			=> $id,
 						'type'				=> $request->getVar('type'),
 						'jenis'				=> $key,
+						'param'				=> $request->getVar('jenis'),
+						'kategori'			=> $request->getVar('kategori'),
 						'filename'			=> $files[$key]->getName(),
 						'ext'				=> null,
 						'size'				=> $files[$key]->getSize(),
@@ -1900,10 +1902,10 @@ class Jsondata extends \CodeIgniter\Controller
 
 	public function updatepermohonanparam(){
 
-		$request  = $this->request;
-		$id 	  = $request->getVar('id');
-		$param 	  = $request->getVar('param');
-		$kategori 	  = $request->getVar('kategori');
+		$request  	= $this->request;
+		$id 	  	= $request->getVar('id');
+		$param 	  	= $request->getVar('param');
+		$kategori	= $request->getVar('kategori');
 		$role 		= $this->data['role'];
 		$userid		= $this->data['userid'];
 
@@ -1914,10 +1916,18 @@ class Jsondata extends \CodeIgniter\Controller
 						'updated_by' 		=> $userid,
 						'param' 			=> $param,
 						'kategori' 			=> $kategori,
-        ];
-
+		];
+		$data_file = json_decode(json_encode($model->getfilecomp('param_file', $id)));
+		foreach ($data_file as $key => $value) {
+			$datafile = [
+				'updated_date' 		=> $this->now,
+				'update_by' 		=> $userid,
+				'param' 			=> $param,
+				'kategori' 			=> $kategori,
+];
+			$par = $model->updateParamFile($value->id, $datafile);
+		}
 		$res = $model->updateparam($id, $data);
-
 		$response = [
 				'status'   => 'sukses',
 				'code'     => '0',

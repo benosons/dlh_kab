@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 08, 2023 at 08:47 AM
+-- Generation Time: Aug 14, 2023 at 08:56 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -81,10 +81,12 @@ INSERT INTO `data_permohonan` (`id`, `p1`, `p2`, `p3`, `p4`, `p5`, `p6`, `p7`, `
 (204, NULL, NULL, NULL, NULL, NULL, 'alamat', '089321930000', 'percobaan10@gmail.com', NULL, '109', '109', '2023-05-30 13:37:45', '2023-05-30 15:18:16', 1, '2', 1, '4', 2, '32.04', 'KAB. BANDUNG', '32.04.25', 'CICALENGKA', '32.04.25.2009', 'TANJUNGWANGI', '2023-07-04 02:20:00'),
 (205, NULL, NULL, NULL, NULL, NULL, 'alamat', '08932193', 'percobaan4@gmail.com', NULL, '109', NULL, '2023-05-30 13:52:54', NULL, 1, '2', 2, '1', 2, '32.04', 'KAB. BANDUNG', '32.04.25', 'CICALENGKA', '32.04.25.2002', 'CICALENGKA WETAN', '2023-07-11 02:20:00'),
 (208, NULL, NULL, NULL, NULL, NULL, 'Alamat2', '09823913921', 'limbah@gmail.com', NULL, '109', '1', '2023-05-30 23:49:03', '2023-07-08 01:57:23', 3, '2', 0, '', 1, '32.04', 'KAB. BANDUNG', '32.04.10', 'MARGAASIH', '32.04.10.2001', 'MARGAASIH', NULL),
-(216, NULL, NULL, NULL, NULL, NULL, 'Jl. Cicukang', '0129102121921', 'percobaan100email@gmail.com', NULL, '109', '1', '2023-07-04 15:32:20', '2023-07-04 16:22:30', 1, '1', 1, '1', 2, '32.04', 'KAB. BANDUNG', '32.04.25', 'CICALENGKA', '32.04.25.2005', 'DAMPIT', '2023-07-08 15:32:20'),
+(216, NULL, NULL, NULL, NULL, NULL, 'Jl. Cicukang', '0129102121921', 'percobaan100email@gmail.com', NULL, '109', '1', '2023-07-04 15:32:20', '2023-07-04 16:22:30', 1, '2', 1, '1', 2, '32.04', 'KAB. BANDUNG', '32.04.25', 'CICALENGKA', '32.04.25.2005', 'DAMPIT', '2023-07-08 15:32:20'),
 (217, NULL, NULL, NULL, NULL, NULL, 'Jl. SLO', '0892193812319', 'limbah@gmail.com', NULL, '109', '1', '2023-07-08 01:44:33', '2023-07-08 01:57:03', 3, '1', 2, '1', 2, '32.04', 'KAB. BANDUNG', '32.04.29', 'CIPARAY', '32.04.29.2004', 'CIKONENG', '2023-07-12 01:44:33'),
 (218, NULL, NULL, NULL, NULL, NULL, 'Jl. Slo2', '0892193919321', 'slo2@gmail.com', NULL, '109', '1', '2023-07-08 02:00:14', '2023-07-08 02:08:31', 3, '2', 2, '2', 2, '32.04', 'KAB. BANDUNG', '32.04.29', 'CIPARAY', '32.04.29.2002', 'GUNUNGLEUTIK', '2023-07-12 02:00:14'),
-(219, NULL, NULL, NULL, NULL, NULL, 'Jl. SLO3', '089219291929', 'slo3@gmail.com', NULL, '109', '1', '2023-07-08 02:15:40', '2023-07-08 02:15:50', 3, '3', 1, '1', 2, '32.04', 'KAB. BANDUNG', '32.04.28', 'RANCAEKEK', '32.04.28.2001', 'RANCAEKEK WETAN', '2023-07-12 02:15:40');
+(219, NULL, NULL, NULL, NULL, NULL, 'Jl. SLO3', '089219291929', 'slo3@gmail.com', NULL, '109', '1', '2023-07-08 02:15:40', '2023-07-08 02:15:50', 3, '3', 1, '1', 2, '32.04', 'KAB. BANDUNG', '32.04.28', 'RANCAEKEK', '32.04.28.2001', 'RANCAEKEK WETAN', '2023-07-12 02:15:40'),
+(220, NULL, NULL, NULL, NULL, NULL, 'Jl. antasari', '0892912919239', 'nike_cabang1@dlh.com', NULL, '113', '1', '2023-08-13 14:30:53', '2023-08-13 15:31:06', 1, '1', 1, '1', 4, '32.04', 'KAB. BANDUNG', '32.04.28', 'RANCAEKEK', '32.04.28.2005', 'JELEGONG', '2023-08-17 14:30:53'),
+(222, NULL, NULL, NULL, NULL, NULL, 'Jl. Andir', '0982312391923', 'nike_cabang2@dlh.com', NULL, '113', '1', '2023-08-13 15:52:20', '2023-08-13 17:11:39', 1, '1', 2, '3', 4, '32.04', 'KAB. BANDUNG', '32.04.28', 'RANCAEKEK', '32.04.28.2002', 'RANCAEKEK KULON', '2023-08-17 15:52:20');
 
 -- --------------------------------------------------------
 
@@ -101,6 +103,7 @@ CREATE TABLE `data_perusahaan` (
   `nib` int(11) DEFAULT NULL,
   `jabatan` varchar(255) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp()
@@ -110,9 +113,10 @@ CREATE TABLE `data_perusahaan` (
 -- Dumping data for table `data_perusahaan`
 --
 
-INSERT INTO `data_perusahaan` (`id`, `nama_usaha`, `no_kbli`, `bidang_usaha`, `penanggung_jawab`, `nib`, `jabatan`, `created_by`, `updated_by`, `created_at`, `updated_at`) VALUES
-(1, 'First Usaha', 12345, 'Bidang Usaha First', 'Ahmad', 123456789, 'Direktur', 108, 0, '2023-04-06 14:17:00', '2023-04-06 14:17:00'),
-(2, 'Second', 12345, 'Second bidang', 'Uzi', 2147483647, 'Sekre', 109, 0, '2023-04-09 12:22:10', '2023-04-09 12:22:10');
+INSERT INTO `data_perusahaan` (`id`, `nama_usaha`, `no_kbli`, `bidang_usaha`, `penanggung_jawab`, `nib`, `jabatan`, `created_by`, `status`, `updated_by`, `created_at`, `updated_at`) VALUES
+(1, 'First Usaha', 12345, 'Bidang Usaha First', 'Ahmad', 123456789, 'Direktur', 108, NULL, 0, '2023-04-06 14:17:00', '2023-04-06 14:17:00'),
+(2, 'Second', 12345, 'Second bidang', 'Uzi', 2147483647, 'Sekre', 109, NULL, 0, '2023-04-09 12:22:10', '2023-04-09 12:22:10'),
+(4, 'Nike Ardiles', 12345, 'Sepatu', 'Ahmad Fauzi Sawandhani', 2147483647, 'Direktur Utama', 113, '0', NULL, '2023-08-10 23:12:45', '2023-08-10 23:12:45');
 
 -- --------------------------------------------------------
 
@@ -11305,7 +11309,16 @@ INSERT INTO `param_file` (`id`, `id_parent`, `type`, `jenis`, `filename`, `ext`,
 (66, '219', '3', 'doc_permohonan', 'contoh laporan .pdf', NULL, 1004223, 'uploads/permohonan/2023/07/08/3/109/doc_permohonan', '2023-07-08 02:15:40', '2023-07-08 02:15:50', '109', '', NULL, NULL, '1', '2', NULL, NULL),
 (67, '217', '3', 'doc_standar', 'Untitled_Artwork.pdf', NULL, 6986457, 'uploads/permohonan/2023/07/08/3/109', '2023-07-08 06:16:48', '2023-07-08 06:16:48', '109', '1', NULL, NULL, NULL, NULL, '1', ''),
 (68, '217', '3', 'doc_standar', 'Untitled_Artwork.pdf', NULL, 6986457, 'uploads/permohonan/2023/07/08/3/109', '2023-07-08 06:25:40', '2023-07-08 06:25:40', '109', '2', NULL, NULL, NULL, NULL, '1', ''),
-(69, '217', '3', 'doc_standar', 'Untitled_Artwork.pdf', NULL, 6986457, 'uploads/permohonan/2023/07/08/3/109', '2023-07-08 06:26:11', '2023-07-08 06:26:11', '109', '6', NULL, NULL, NULL, NULL, '1', '');
+(69, '217', '3', 'doc_standar', 'Untitled_Artwork.pdf', NULL, 6986457, 'uploads/permohonan/2023/07/08/3/109', '2023-07-08 06:26:11', '2023-07-08 06:26:11', '109', '6', NULL, NULL, NULL, NULL, '1', ''),
+(70, '3', '1', 'doc_izin_lingkungan', 'AAA - doc_izin_lingkungan.pdf', NULL, 4911, 'uploads/perusahaan/2023/08/10/1/112/doc_izin_lingkungan', '2023-08-10 15:05:04', '2023-08-10 15:05:04', '112', '', NULL, NULL, NULL, NULL, NULL, NULL),
+(71, '3', '1', 'doc_nib', 'AAA - doc_permohonan.pdf', NULL, 4911, 'uploads/perusahaan/2023/08/10/1/112/doc_nib', '2023-08-10 15:05:04', '2023-08-10 15:05:04', '112', '', NULL, NULL, NULL, NULL, NULL, NULL),
+(72, '3', '1', 'doc_penapisan_mandiri', 'AAA - doc_penapisan_mandiri.pdf', NULL, 4911, 'uploads/perusahaan/2023/08/10/1/112/doc_penapisan_mandiri', '2023-08-10 15:05:04', '2023-08-10 15:05:04', '112', '', NULL, NULL, NULL, NULL, NULL, NULL),
+(73, '4', '1', 'doc_izin_lingkungan', 'AAA - doc_izin_lingkungan.pdf', NULL, 4911, 'uploads/perusahaan/2023/08/10/1/113/doc_izin_lingkungan', '2023-08-10 16:12:45', '2023-08-10 16:12:45', '113', '', NULL, NULL, NULL, NULL, NULL, NULL),
+(74, '4', '1', 'doc_nib', 'AAA - doc_permohonan.pdf', NULL, 4911, 'uploads/perusahaan/2023/08/10/1/113/doc_nib', '2023-08-10 16:12:45', '2023-08-10 16:12:45', '113', '', NULL, NULL, NULL, NULL, NULL, NULL),
+(75, '4', '1', 'doc_penapisan_mandiri', 'AAA - doc_penapisan_mandiri.pdf', NULL, 4911, 'uploads/perusahaan/2023/08/10/1/113/doc_penapisan_mandiri', '2023-08-10 16:12:45', '2023-08-10 16:12:45', '113', '', NULL, NULL, NULL, NULL, NULL, NULL),
+(76, '220', '1', 'doc_permohonan', 'AAB - doc_permohonan.pdf', NULL, 4911, 'uploads/permohonan/2023/08/13/1/113/doc_permohonan', '2023-08-13 14:30:53', '2023-08-13 15:31:06', '113', '', NULL, NULL, '1', '1', NULL, NULL),
+(77, '221', '1', 'doc_permohonan', 'AAB - doc_permohonan.pdf', NULL, 4911, 'uploads/permohonan/2023/08/13/1/113/doc_permohonan', '2023-08-13 15:32:28', '2023-08-13 15:32:28', '113', '', NULL, NULL, NULL, NULL, NULL, NULL),
+(78, '222', '1', 'doc_permohonan', 'AAB - doc_permohonan.pdf', NULL, 4911, 'uploads/permohonan/2023/08/13/1/113/doc_permohonan', '2023-08-13 15:52:20', '2023-08-13 17:11:39', '113', '', NULL, NULL, '1', '1', '3', '2');
 
 -- --------------------------------------------------------
 
@@ -11357,12 +11370,13 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `user_name`, `user_email`, `user_password`, `user_created_at`, `user_role`, `user_fullname`, `user_status`, `isLogin`, `update_by`, `update_date`) VALUES
-(1, 'superadmin', 'super@admin.com', 'y$qfYYXc.GX7aadK9.LEAYdOBxill2gF4cnA5CXTu4SM4xqhIBoN4eW', '2020-11-07 19:10:27', 100, 'super admin', 1, 1, NULL, NULL),
+(1, 'superadmin', 'super@admin.com', 'y$qfYYXc.GX7aadK9.LEAYdOBxill2gF4cnA5CXTu4SM4xqhIBoN4eW', '2020-11-07 19:10:27', 100, 'super admin', 1, NULL, NULL, NULL),
 (2, 'admin', 'saya@admin.com', 'y$qfYYXc.GX7aadK9.LEAYdOBxill2gF4cnA5CXTu4SM4xqhIBoN4eW', '2020-11-07 19:10:27', 10, 'Admin', 1, 1, 34, '2022-09-06 08:53:19'),
 (108, 'jajang', 'jajang@dlh.com', 'y$Xy.PD5iHTlrAqWg6.t3ju.vreP3Rx2d.nPcNH60EepKwbV1x2R.02', '2023-04-06 04:00:44', 0, 'Usaha', 1, NULL, 1, '2023-04-06 04:02:41'),
-(109, 'jejen', 'jejen@dlh.com', 'y$/JD0I9e.mJAkPRTYwEq0wuFOkAL9nczAQmzyAr/KjmXnb6tvW7gn2', '2023-04-09 05:20:51', 0, 'jejen', 1, 1, 1, '2023-04-09 05:21:05'),
+(109, 'jejen', 'jejen@dlh.com', 'y$/JD0I9e.mJAkPRTYwEq0wuFOkAL9nczAQmzyAr/KjmXnb6tvW7gn2', '2023-04-09 05:20:51', 0, 'jejen', 1, NULL, 1, '2023-04-09 05:21:05'),
 (110, 'ujang', 'ujang@dlh.com', 'y$.lEAsqzJran1ux5EuhwG6uZddudAwjhYqvuGMyzR3Zyn3MaMJ6Czu', '2023-04-14 03:09:19', 0, 'Ujang', 1, NULL, 1, '2023-04-14 03:09:28'),
-(111, 'badanbadan', 'badan@gmail.com', 'y$ChtimU2nFeaz1bEtANLoOOJydV6vGpzlF23kcUmAlDhto0ZcazI6W', '2023-06-27 04:54:39', 0, 'Badan', 1, 1, 1, '2023-06-27 04:55:23');
+(111, 'badanbadan', 'badan@gmail.com', 'y$ChtimU2nFeaz1bEtANLoOOJydV6vGpzlF23kcUmAlDhto0ZcazI6W', '2023-06-27 04:54:39', 0, 'Badan', 1, 1, 1, '2023-06-27 04:55:23'),
+(113, 'nike', 'nike@gmail.com', 'y$Ely6mDPTUFgEklchjFUtlOMFmN7xyZxeftmP4F.X6vBKyMejJGCWS', '2023-08-10 15:44:05', 0, 'Nike', 1, 1, 1, '2023-08-10 15:53:26');
 
 -- --------------------------------------------------------
 
@@ -11459,13 +11473,13 @@ ALTER TABLE `data_kepuasan`
 -- AUTO_INCREMENT for table `data_permohonan`
 --
 ALTER TABLE `data_permohonan`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=220;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=223;
 
 --
 -- AUTO_INCREMENT for table `data_perusahaan`
 --
 ALTER TABLE `data_perusahaan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `data_program`
@@ -11483,7 +11497,7 @@ ALTER TABLE `log_history`
 -- AUTO_INCREMENT for table `param_file`
 --
 ALTER TABLE `param_file`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `param_file_lapangan`
@@ -11495,7 +11509,7 @@ ALTER TABLE `param_file_lapangan`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT for table `users_role`

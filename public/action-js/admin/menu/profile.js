@@ -1,23 +1,23 @@
 "use strict";
 console.log("You are running jQuery version: " + $.fn.jquery);
 $(document).ready(function () {
-    $("#data_permohonan_btn").click(function(){
-      $("#profile-perusahaan-page").hide();
-      $("#permohonan-teknis-page").show();
-      $("#data_perusahaan_btn").removeClass("active");
-      $("#data_permohonan_btn").addClass("nav-link active");
-    });
-    $("#data_perusahaan_btn").click(function(){
-      $("#profile-perusahaan-page").show();
-      $("#permohonan-teknis-page").hide();
-      $("#data_permohonan_btn").removeClass("active");
-      $("#data_perusahaan_btn").addClass("nav-link active");
-    });
+  $("#data_permohonan_btn").click(function () {
+    $("#profile-perusahaan-page").hide();
+    $("#permohonan-teknis-page").show();
+    $("#data_perusahaan_btn").removeClass("active");
+    $("#data_permohonan_btn").addClass("nav-link active");
+  });
+  $("#data_perusahaan_btn").click(function () {
+    $("#profile-perusahaan-page").show();
+    $("#permohonan-teknis-page").hide();
+    $("#data_permohonan_btn").removeClass("active");
+    $("#data_perusahaan_btn").addClass("nav-link active");
+  });
 
-    $("#back-all-permohonan").click(function(){
-      $("#permohonan-all").show();
-      $("#detail").hide();
-    });
+  $("#back-all-permohonan").click(function () {
+    $("#permohonan-all").show();
+    $("#detail").hide();
+  });
 
   $("#nav-menu li").removeClass();
   // $('#nav-menu li#menu-data').addClass('open');
@@ -67,8 +67,8 @@ $(document).ready(function () {
       no_file: "tidak ada file ...",
       btn_choose: "Pilih File",
       btn_change: "Ganti",
-      icon_remove: '',
-      no_icon: '',
+      icon_remove: "",
+      no_icon: "",
       droppable: false,
       onchange: null,
       thumbnail: false, //| true | large
@@ -175,8 +175,8 @@ $(document).ready(function () {
       no_file: "tidak ada file ...",
       btn_choose: "Pilih File",
       btn_change: "Ganti",
-      no_icon: '',
-      icon_remove: '',
+      no_icon: "",
+      icon_remove: "",
       droppable: false,
       onchange: null,
       thumbnail: false, //| true | large
@@ -251,7 +251,7 @@ $(document).ready(function () {
   $("#verlapanganini").on("click", function () {
     actionlapangan("view", $("#idpermohonan").val(), $("#initype").val());
   });
- 
+
   $("#save_edit_perusahaan").on("click", function () {
     bootbox.confirm({
       message: "Apakah data yg anda masukan sudah <b>sesuai</b> ?",
@@ -268,34 +268,33 @@ $(document).ready(function () {
       callback: function (result) {
         if (result) {
           var formDataPe = new FormData();
-          if($('#ideditperusahaan').val()){
-            formDataPe.append("id_perusahaan", $('#ideditperusahaan').val());
+          if ($("#ideditperusahaan").val()) {
+            formDataPe.append("id_perusahaan", $("#ideditperusahaan").val());
           }
           formDataPe.append("param", "data_perusahaan");
           formDataPe.append("type", "1");
           formDataPe.append("input_1", $("#edit_1").val());
-          
+
           formDataPe.append("input_2", $("#edit_2").val());
-          
+
           formDataPe.append("input_3", $("#edit_3").val());
-          
+
           formDataPe.append("input_9", $("#edit_9").val());
-          
+
           formDataPe.append("input_4", $("#edit_4").val());
-          
+
           formDataPe.append("input_5", $("#edit_5").val());
           updateperusahaan(formDataPe);
-        } 
-      }
+        }
+      },
     });
-
   });
 
-  function updateperusahaan(formDataPe){
+  function updateperusahaan(formDataPe) {
     var dialog = bootbox.dialog({
       message:
-      '<p class="text-center mb-0"><i class="fa fa-spin fa-spinner"></i> Mohon Tunggu ...</p>',
-    closeButton: false,
+        '<p class="text-center mb-0"><i class="fa fa-spin fa-spinner"></i> Mohon Tunggu ...</p>',
+      closeButton: false,
     });
 
     $.ajax({
@@ -321,7 +320,6 @@ $(document).ready(function () {
     });
   }
 
-
   $("#mohon_save_perusahaan").on("click", function () {
     bootbox.confirm({
       message: "Apakah data yg anda masukan sudah <b>sesuai</b> ?",
@@ -338,21 +336,21 @@ $(document).ready(function () {
       callback: function (result) {
         if (result) {
           var formDataP = new FormData();
-          if($('#ideditperusahaan').val()){
-            formData.append("id_perusahaan", $('#ideditperusahaan').val());
+          if ($("#ideditperusahaan").val()) {
+            formData.append("id_perusahaan", $("#ideditperusahaan").val());
           }
           formDataP.append("param", "data_perusahaan");
           formDataP.append("type", "1");
           formDataP.append("input_1", $("#input_1").val());
-          
+
           formDataP.append("input_2", $("#input_2").val());
-          
+
           formDataP.append("input_3", $("#input_3").val());
-          
+
           formDataP.append("input_9", $("#input_9").val());
-          
+
           formDataP.append("input_4", $("#input_4").val());
-          
+
           formDataP.append("input_5", $("#input_5").val());
           // for (let index = 1; index <= 9; index++) {
           //   if ($("#input_" + index).val()) {
@@ -375,10 +373,7 @@ $(document).ready(function () {
             $("#doc_izin_lingkungan")[0].files[0]
           );
 
-          formDataP.append(
-            "file[doc_nib]", 
-            $("#doc_nib")[0].files[0]
-          );
+          formDataP.append("file[doc_nib]", $("#doc_nib")[0].files[0]);
 
           formDataP.append(
             "file[doc_penapisan_mandiri]",
@@ -388,10 +383,9 @@ $(document).ready(function () {
           // formDataP.append("file[doc_standar]", $('#doc_standar')[0].files[0]);
           // formDataP.append("bab_standar", $('#bab_standar').val());
           saveperusahaan(formDataP);
-        } 
-      }
-    })
-
+        }
+      },
+    });
   });
 
   function saveperusahaan(formDataP) {
@@ -400,7 +394,7 @@ $(document).ready(function () {
         '<p class="text-center mb-0"><i class="fa fa-spin fa-spinner"></i> Mohon Tunggu ...</p>',
       closeButton: false,
     });
-  
+
     $.ajax({
       type: "post",
       processData: false,
@@ -425,7 +419,6 @@ $(document).ready(function () {
     });
   }
 
-
   $("#mohon_save").on("click", function () {
     bootbox.confirm({
       message: "Apakah data yg anda masukan sudah <b>sesuai</b> ?",
@@ -442,12 +435,12 @@ $(document).ready(function () {
       callback: function (result) {
         if (result) {
           var formData = new FormData();
-          if($('#ideditpermohonan').val()){
-            formData.append("id_permohonan", $('#ideditpermohonan').val());
+          if ($("#ideditpermohonan").val()) {
+            formData.append("id_permohonan", $("#ideditpermohonan").val());
           }
           formData.append("param", "data_permohonan");
           formData.append("type", "1");
-          formData.append("id_perusahaan", $('#idpermohonan').val());
+          formData.append("id_perusahaan", $("#idpermohonan").val());
           let berapa = [];
           for (let index = 1; index <= 9; index++) {
             if ($("#input_" + index).val()) {
@@ -464,7 +457,7 @@ $(document).ready(function () {
                 .addClass("has-error");
             }
           }
-          
+
           formData.append(
             "file[doc_permohonan]",
             $("#doc_permohonan")[0].files[0]
@@ -556,8 +549,8 @@ $(document).ready(function () {
   });
 
   $("#editdataini").on("click", function () {
-      $('#modal_edit_perusahaan').modal('show');
-      editperusahaan(1);
+    $("#modal_edit_perusahaan").modal("show");
+    editperusahaan(1);
   });
 
   function editperusahaan(param) {
@@ -570,191 +563,189 @@ $(document).ready(function () {
       },
       success: function (result) {
         let code = result.code;
-          if (code != "0") {
-            let data = result.data
-            $('#modal_edit_perusahaan').modal('show');
+        if (code != "0") {
+          let data = result.data;
+          $("#modal_edit_perusahaan").modal("show");
 
-            $("#ideditperusahaan").val(data["id"]);
-            $("#edit_1").val(data["nama_usaha"]).prop("disabled", false);
-            $("#edit_2").val(data["bidang_usaha"]).prop("disabled", false);
-            $("#edit_3").val(data["nib"]).prop("disabled", false);
-            $("#edit_4").val(data["penanggung_jawab"]).prop("disabled", false);
-            $("#edit_5").val(data["jabatan"]).prop("disabled", false);
-            $("#edit_9").val(data["no_kbli"]).prop("disabled", false);
-          
-            for (var f in data["file"]) {
-              var jenisnya = data.file[f]["jenis"];
-              var oknya = data.file[f]["ok"];
-              
-              switch (jenisnya) {
-                case "doc_permohonans":
-                  $("#nama-file-permohonan").html(data.file[f]["filename"]);
-                  $("#nama-file-permohonan").attr(
-                    "onclick",
-                    "downloadatuh('" +
-                      "public/" +
-                      data.file[f]["path"] +
-                      "/" +
-                      data.file[f]["filename"] +
-                      "')"
-                  );
-                  $("#hapus-permohonan").attr(
-                    "onclick",
-                    "actionfile('delete','" +
-                      data.file[f]["id"] +
-                      "','" +
-                      data.type +
-                      "','" +
-                      data.file[f]["path"] +
-                      "/" +
-                      data.file[f]["filename"] +
-                      "')"
-                  );
+          $("#ideditperusahaan").val(data["id"]);
+          $("#edit_1").val(data["nama_usaha"]).prop("disabled", false);
+          $("#edit_2").val(data["bidang_usaha"]).prop("disabled", false);
+          $("#edit_3").val(data["nib"]).prop("disabled", false);
+          $("#edit_4").val(data["penanggung_jawab"]).prop("disabled", false);
+          $("#edit_5").val(data["jabatan"]).prop("disabled", false);
+          $("#edit_9").val(data["no_kbli"]).prop("disabled", false);
 
-                  $("#view-file-permohonan").css("display", "block");
-                  $("#form-permohonan-reupload").css("display", "none");
+          for (var f in data["file"]) {
+            var jenisnya = data.file[f]["jenis"];
+            var oknya = data.file[f]["ok"];
 
-                  if (oknya == 1) {
-                    $("#hapus-permohonan").css("display", "none");
-                  } else {
-                    $("#hapus-permohonan").show();
-                    if (oknya == 2) {
-                      var ell = ` <li>
+            switch (jenisnya) {
+              case "doc_permohonans":
+                $("#nama-file-permohonan").html(data.file[f]["filename"]);
+                $("#nama-file-permohonan").attr(
+                  "onclick",
+                  "downloadatuh('" +
+                    "public/" +
+                    data.file[f]["path"] +
+                    "/" +
+                    data.file[f]["filename"] +
+                    "')"
+                );
+                $("#hapus-permohonan").attr(
+                  "onclick",
+                  "actionfile('delete','" +
+                    data.file[f]["id"] +
+                    "','" +
+                    data.type +
+                    "','" +
+                    data.file[f]["path"] +
+                    "/" +
+                    data.file[f]["filename"] +
+                    "')"
+                );
+
+                $("#view-file-permohonan").css("display", "block");
+                $("#form-permohonan-reupload").css("display", "none");
+
+                if (oknya == 1) {
+                  $("#hapus-permohonan").css("display", "none");
+                } else {
+                  $("#hapus-permohonan").show();
+                  if (oknya == 2) {
+                    var ell = ` <li>
                                             <i class="">File Permohonan</i>
                                           </li>`;
-                      $("#harus-upload").append(ell);
-                    }
+                    $("#harus-upload").append(ell);
                   }
-                  break;
-                case "doc_izin_lingkungan":
-                  $("#nama-file-izin-lingkungan").html(
-                    data.file[f]["filename"]
-                  );
-                  $("#nama-file-izin-lingkungan").attr(
-                    "onclick",
-                    "downloadatuh('" +
-                      "public/" +
-                      data.file[f]["path"] +
-                      "/" +
-                      data.file[f]["filename"] +
-                      "')"
-                  );
-                  $("#hapus-izin-lingkungan").attr(
-                    "onclick",
-                    "actionfile('delete','" +
-                      data.file[f]["id"] +
-                      "','" +
-                      data.type +
-                      "','" +
-                      data.file[f]["path"] +
-                      "/" +
-                      data.file[f]["filename"] +
-                      "')"
-                  );
+                }
+                break;
+              case "doc_izin_lingkungan":
+                $("#nama-file-izin-lingkungan").html(data.file[f]["filename"]);
+                $("#nama-file-izin-lingkungan").attr(
+                  "onclick",
+                  "downloadatuh('" +
+                    "public/" +
+                    data.file[f]["path"] +
+                    "/" +
+                    data.file[f]["filename"] +
+                    "')"
+                );
+                $("#hapus-izin-lingkungan").attr(
+                  "onclick",
+                  "actionfile('delete','" +
+                    data.file[f]["id"] +
+                    "','" +
+                    data.type +
+                    "','" +
+                    data.file[f]["path"] +
+                    "/" +
+                    data.file[f]["filename"] +
+                    "')"
+                );
 
-                  $("#view-file-izin-lingkungan").css("display", "block");
-                  $("#form-izin-lingkungan-reupload").css("display", "none");
+                $("#view-file-izin-lingkungan").css("display", "block");
+                $("#form-izin-lingkungan-reupload").css("display", "none");
 
-                  if (oknya == 1) {
-                    $("#hapus-izin-lingkungan").css("display", "none");
-                  } else {
-                    $("#hapus-izin-lingkungan").show();
-                    if (oknya == 2) {
-                      var ell = ` <li>
+                if (oknya == 1) {
+                  $("#hapus-izin-lingkungan").css("display", "none");
+                } else {
+                  $("#hapus-izin-lingkungan").show();
+                  if (oknya == 2) {
+                    var ell = ` <li>
                                             <i class="">File Izin Lingkungan</i>
                                           </li>`;
-                      $("#harus-upload").append(ell);
-                    }
+                    $("#harus-upload").append(ell);
                   }
-                  break;
-                case "doc_nib":
-                  $("#nama-file-nib").html(data.file[f]["filename"]);
-                  $("#nama-file-nib").attr(
-                    "onclick",
-                    "downloadatuh('" +
-                      "public/" +
-                      data.file[f]["path"] +
-                      "/" +
-                      data.file[f]["filename"] +
-                      "')"
-                  );
-                  $("#hapus-nib").attr(
-                    "onclick",
-                    "actionfile('delete','" +
-                      data.file[f]["id"] +
-                      "','" +
-                      data.type +
-                      "','" +
-                      data.file[f]["path"] +
-                      "/" +
-                      data.file[f]["filename"] +
-                      "')"
-                  );
+                }
+                break;
+              case "doc_nib":
+                $("#nama-file-nib").html(data.file[f]["filename"]);
+                $("#nama-file-nib").attr(
+                  "onclick",
+                  "downloadatuh('" +
+                    "public/" +
+                    data.file[f]["path"] +
+                    "/" +
+                    data.file[f]["filename"] +
+                    "')"
+                );
+                $("#hapus-nib").attr(
+                  "onclick",
+                  "actionfile('delete','" +
+                    data.file[f]["id"] +
+                    "','" +
+                    data.type +
+                    "','" +
+                    data.file[f]["path"] +
+                    "/" +
+                    data.file[f]["filename"] +
+                    "')"
+                );
 
-                  $("#view-file-nib").css("display", "block");
-                  $("#form-nib-reupload").css("display", "none");
+                $("#view-file-nib").css("display", "block");
+                $("#form-nib-reupload").css("display", "none");
 
-                  if (oknya == 1) {
-                    $("#hapus-nib").css("display", "none");
-                  } else {
-                    $("#hapus-nib").show();
-                    if (oknya == 2) {
-                      var ell = ` <li>
+                if (oknya == 1) {
+                  $("#hapus-nib").css("display", "none");
+                } else {
+                  $("#hapus-nib").show();
+                  if (oknya == 2) {
+                    var ell = ` <li>
                                             <i class="">File NIB</i>
                                           </li>`;
-                      $("#harus-upload").append(ell);
-                    }
+                    $("#harus-upload").append(ell);
                   }
+                }
 
-                  break;
-                case "doc_penapisan_mandiri":
-                  $("#nama-file-penapisan-mandiri").html(
-                    data.file[f]["filename"]
-                  );
-                  $("#nama-file-penapisan_mandiri").attr(
-                    "onclick",
-                    "downloadatuh('" +
-                      "public/" +
-                      data.file[f]["path"] +
-                      "/" +
-                      data.file[f]["filename"] +
-                      "')"
-                  );
-                  $("#hapus-penapisan-mandiri").attr(
-                    "onclick",
-                    "actionfile('delete','" +
-                      data.file[f]["id"] +
-                      "','" +
-                      data.type +
-                      "','" +
-                      data.file[f]["path"] +
-                      "/" +
-                      data.file[f]["filename"] +
-                      "')"
-                  );
+                break;
+              case "doc_penapisan_mandiri":
+                $("#nama-file-penapisan-mandiri").html(
+                  data.file[f]["filename"]
+                );
+                $("#nama-file-penapisan_mandiri").attr(
+                  "onclick",
+                  "downloadatuh('" +
+                    "public/" +
+                    data.file[f]["path"] +
+                    "/" +
+                    data.file[f]["filename"] +
+                    "')"
+                );
+                $("#hapus-penapisan-mandiri").attr(
+                  "onclick",
+                  "actionfile('delete','" +
+                    data.file[f]["id"] +
+                    "','" +
+                    data.type +
+                    "','" +
+                    data.file[f]["path"] +
+                    "/" +
+                    data.file[f]["filename"] +
+                    "')"
+                );
 
-                  $("#view-file-penapisan-mandiri").css("display", "block");
-                  $("#form-penapisan-mandiri-reupload").css("display", "none");
+                $("#view-file-penapisan-mandiri").css("display", "block");
+                $("#form-penapisan-mandiri-reupload").css("display", "none");
 
-                  if (oknya == 1) {
-                    $("#hapus-penapisan-mandiri").css("display", "none");
-                  } else {
-                    $("#hapus-penapisan-mandiri").show();
-                    if (oknya == 2) {
-                      var ell = ` <li><i class="">File Hasil Penapisan Mandiri</i></li>`;
-                      $("#harus-upload").append(ell);
-                    }
+                if (oknya == 1) {
+                  $("#hapus-penapisan-mandiri").css("display", "none");
+                } else {
+                  $("#hapus-penapisan-mandiri").show();
+                  if (oknya == 2) {
+                    var ell = ` <li><i class="">File Hasil Penapisan Mandiri</i></li>`;
+                    $("#harus-upload").append(ell);
                   }
-                  break;
-                default:
-                  break;
-              }
+                }
+                break;
+              default:
+                break;
             }
           }
-      }
+        }
+      },
     });
   }
-  
+
   $("#deletedataini").on("click", function () {
     action(
       "delete",
@@ -784,18 +775,18 @@ $(document).ready(function () {
         vl.push(valn);
       }
     }
-    if(!$('#ideditpermohonan').val()){
+    if (!$("#ideditpermohonan").val()) {
       if (vl.length == 3) {
-        var f_mohon = document.getElementById("doc_permohonan").files.length
-        if(f_mohon){
+        var f_mohon = document.getElementById("doc_permohonan").files.length;
+        if (f_mohon) {
           $("#mohon_save").prop("disabled", false);
-        }else{
+        } else {
           $("#mohon_save").prop("disabled", true);
         }
       } else {
         $("#mohon_save").prop("disabled", true);
       }
-    }else{
+    } else {
       $("#mohon_save").prop("disabled", false);
     }
   });
@@ -825,19 +816,17 @@ $(document).ready(function () {
     }
   });
 
-  
   $("#initambah").on("click", function () {
-    $('#modal_program').modal({backdrop: 'static', keyboard: false})
-    $('#modal_program').modal('show')
-    for (let index = 6; index <= 8; index++){
-      $(`#input_${index}`).val('')
+    $("#modal_program").modal({ backdrop: "static", keyboard: false });
+    $("#modal_program").modal("show");
+    for (let index = 6; index <= 8; index++) {
+      $(`#input_${index}`).val("");
     }
-    $('#ideditpermohonan').val('')
-    $('#doc_permohonan').val('')
-    $('#form-upload-permohonan').show()
-    $("#mohon_save").prop('disabled', true);
-  })
-
+    $("#ideditpermohonan").val("");
+    $("#doc_permohonan").val("");
+    $("#form-upload-permohonan").show();
+    $("#mohon_save").prop("disabled", true);
+  });
 });
 
 function loadperusahaan() {
@@ -871,8 +860,27 @@ function loadperusahaan() {
             switch (jenisnya) {
               case "doc_izin_lingkungan":
                 $("#nama-file-izin-lingkungan").html(data.file[f]["filename"]);
-                $("#nama-file-izin-lingkungan").attr("onclick","downloadatuh('" +"public/" +data.file[f]["path"] +"/" +data.file[f]["filename"] +"')");
-                $("#hapus-izin-lingkungan").attr("onclick","actionfile('delete','" +data.file[f]["id"] +"','" +data.type +"','" +data.file[f]["path"] +"/" +data.file[f]["filename"] +"')");
+                $("#nama-file-izin-lingkungan").attr(
+                  "onclick",
+                  "downloadatuh('" +
+                    "public/" +
+                    data.file[f]["path"] +
+                    "/" +
+                    data.file[f]["filename"] +
+                    "')"
+                );
+                $("#hapus-izin-lingkungan").attr(
+                  "onclick",
+                  "actionfile('delete','" +
+                    data.file[f]["id"] +
+                    "','" +
+                    data.type +
+                    "','" +
+                    data.file[f]["path"] +
+                    "/" +
+                    data.file[f]["filename"] +
+                    "')"
+                );
                 $("#view-file-izin-lingkungan").css("display", "block");
                 $("#form-izin-lingkungan-reupload").css("display", "none");
                 if (oknya == 1) {
@@ -888,8 +896,27 @@ function loadperusahaan() {
                 break;
               case "doc_nib":
                 $("#nama-file-nib").html(data.file[f]["filename"]);
-                $("#nama-file-nib").attr("onclick","downloadatuh('" +"public/" +data.file[f]["path"] +"/" +data.file[f]["filename"] +"')");
-                $("#hapus-nib").attr("onclick","actionfile('delete','" +data.file[f]["id"] +"','" +data.type +"','" +data.file[f]["path"] +"/" +data.file[f]["filename"] +"')");
+                $("#nama-file-nib").attr(
+                  "onclick",
+                  "downloadatuh('" +
+                    "public/" +
+                    data.file[f]["path"] +
+                    "/" +
+                    data.file[f]["filename"] +
+                    "')"
+                );
+                $("#hapus-nib").attr(
+                  "onclick",
+                  "actionfile('delete','" +
+                    data.file[f]["id"] +
+                    "','" +
+                    data.type +
+                    "','" +
+                    data.file[f]["path"] +
+                    "/" +
+                    data.file[f]["filename"] +
+                    "')"
+                );
                 $("#view-file-nib").css("display", "block");
                 $("#form-nib-reupload").css("display", "none");
                 if (oknya == 1) {
@@ -904,9 +931,30 @@ function loadperusahaan() {
                 }
                 break;
               case "doc_penapisan_mandiri":
-                $("#nama-file-penapisan-mandiri").html(data.file[f]["filename"]);
-                $("#nama-file-penapisan_mandiri").attr("onclick","downloadatuh('" +"public/" +data.file[f]["path"] +"/" +data.file[f]["filename"] +"')");
-                $("#hapus-penapisan-mandiri").attr("onclick","actionfile('delete','" +data.file[f]["id"] +"','" +data.type +"','" +data.file[f]["path"] +"/" +data.file[f]["filename"] +"')");
+                $("#nama-file-penapisan-mandiri").html(
+                  data.file[f]["filename"]
+                );
+                $("#nama-file-penapisan_mandiri").attr(
+                  "onclick",
+                  "downloadatuh('" +
+                    "public/" +
+                    data.file[f]["path"] +
+                    "/" +
+                    data.file[f]["filename"] +
+                    "')"
+                );
+                $("#hapus-penapisan-mandiri").attr(
+                  "onclick",
+                  "actionfile('delete','" +
+                    data.file[f]["id"] +
+                    "','" +
+                    data.type +
+                    "','" +
+                    data.file[f]["path"] +
+                    "/" +
+                    data.file[f]["filename"] +
+                    "')"
+                );
                 $("#view-file-penapisan-mandiri").css("display", "block");
                 $("#form-penapisan-mandiri-reupload").css("display", "none");
                 if (oknya == 1) {
@@ -929,9 +977,9 @@ function loadperusahaan() {
             $("#harap").hide();
           }
         }
-      }    
-    }
-  })
+      }
+    },
+  });
 }
 
 function loadpermohonan(param) {
@@ -941,19 +989,19 @@ function loadpermohonan(param) {
     url: "loadpermohonan",
     data: {
       param: param,
-      type: 1
+      type: 1,
     },
     success: function (result) {
       let code = result.code;
       if (code != "0") {
         if ($("#isRole").val() == 0) {
-          let data = result.data
-          
+          let data = result.data;
+
           $("#idpermohonan").val(data.id);
           $("#initype").val(data.type);
           $("#inikategori").val(data.kategori);
           $("#initambah").show();
-          if(typeof data.permohonan != 'undefined'){
+          if (typeof data.permohonan != "undefined") {
             var dt = $("#permohonan-table").DataTable({
               destroy: true,
               paging: true,
@@ -980,33 +1028,35 @@ function loadpermohonan(param) {
                 {
                   render: function (data, type, row) {
                     if (type == "display") {
-                      var el = ''
-                      var idfile_permohonan = row.id
-                      row.file.forEach(element => {
-                        
-                        idfile_permohonan = element.id
-                        var type_permohonan = element.type
-                        var namafile_permohonan = element.filename
-                        var path_file = element.path
+                      var el = "";
+                      var idfile_permohonan = row.id;
+                      row.file.forEach((element) => {
+                        idfile_permohonan = element.id;
+                        var type_permohonan = element.type;
+                        var namafile_permohonan = element.filename;
+                        var path_file = element.path;
                         el += `<grp id="view-file-permohonan">
                                   <button type="button" class="btn btn-sm btn-outline-secondary btn-round">
                                     <i class="bx bx-file"></i>
-                                    <span class="bigger-110" id="nama-file-permohonan" onclick="downloadatuh('${'public/'+path_file}/${namafile_permohonan}')">${namafile_permohonan}</span>
+                                    <span class="bigger-110" id="nama-file-permohonan" onclick="downloadatuh('${
+                                      "public/" + path_file
+                                    }/${namafile_permohonan}')">${namafile_permohonan}</span>
                                   </button>
                                   <button class="btn btn-danger btn-sm btn-round" id="hapus-permohonan" type="button" onclick="actionfile('delete', '${idfile_permohonan}', '${type_permohonan}', '${path_file}/${namafile_permohonan}')"><i class="bx bx-trash"></i></button>
                                 </grp>
-                              `
-                        
+                              `;
                       });
-                      el += `<div class="form-group" id="form-permohonan-reupload" style="display:${row.file.length ? 'none' : 'block'};">        
+                      el += `<div class="form-group" id="form-permohonan-reupload" style="display:${
+                        row.file.length ? "none" : "block"
+                      };">        
                                   <div class="col-sm-11">
                                     <input type="file" name="id-input-file-5" id="doc_permohonan_reupload" accept=".pdf" onchange="filepermohonan(this)" />
                                     <button class="btn btn-success btn-sm btn-round" id="upload-permohonan" onclick="reupload('permohonan', ${idfile_permohonan})" type="button"><i class="bx bx-check-double"></i></button>
                                   </div>
-                                </div>`
+                                </div>`;
 
-                      el += ''
-                      
+                      el += "";
+
                       return el;
                     }
                     return data;
@@ -1034,11 +1084,9 @@ function loadpermohonan(param) {
                               <i class="bx bx-edit font-size-16"></i>
                             </button>`;
                       if (row.status == 1) {
-                        el +=
-                          `<button type="button" title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view','${row.id}','${row.type}')"><i class="bx bx-check-square font-size-16"></i></button>`;
+                        el += `<button type="button" title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view','${row.id}','${row.type}')"><i class="bx bx-check-square font-size-16"></i></button>`;
                       } else {
-                        el +=
-                          `<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>`;
+                        el += `<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>`;
                       }
                       el += "</div>";
                       return el;
@@ -1070,7 +1118,6 @@ function loadpermohonan(param) {
                 });
               },
             });
-            
           }
 
           if (!data["param"]) {
@@ -1094,7 +1141,7 @@ function loadpermohonan(param) {
             $("#menu-puas").hide();
             sessionStorage.setItem("survey", 0);
           }
-          
+
           // $("#ini-form-add").hide();
           // $("#ini-form-view").show();
           // $("#deletedataini").show();
@@ -1154,9 +1201,7 @@ function loadpermohonan(param) {
                 }
                 break;
               case "doc_izin_lingkungan":
-                $("#nama-file-izin-lingkungan").html(
-                  data.file[f]["filename"]
-                );
+                $("#nama-file-izin-lingkungan").html(data.file[f]["filename"]);
                 $("#nama-file-izin-lingkungan").attr(
                   "onclick",
                   "downloadatuh('" +
@@ -1289,100 +1334,98 @@ function loadpermohonan(param) {
         } else {
           let data = result.data;
 
-            // Table perusahaan
-            var dt = $("#all-permohonan").DataTable({
-              destroy: true,
-              paging: true,
-              lengthChange: true,
-              searching: true,
-              ordering: false,
-              info: true,
-              autoWidth: false,
-              responsive: false,
-              pageLength: 10,
-              aaData: data,
-              aoColumns: [
-                { mDataProp: "id", width: "10%" },
-                { mDataProp: "nama_usaha" },
-                { mDataProp: "bidang_usaha" },
-                { mDataProp: "nib" },
-                { mDataProp: "no_kbli" },
-                { mDataProp: "penanggung_jawab" },
-                { mDataProp: "jabatan" },
-                { mDataProp: "id" },
-              ],
-              order: [[0, "ASC"]],
-              fixedColumns: true,
-              aoColumnDefs: [
-                { width: 50, targets: 0 },
-                {
-                  render: function (data, type, row) {
-                    if (type == "display") {
-                      var file = row.file;
-                      var oks = 0;
-                      for (const key in file) {
-                        oks = file[key]["ok"] == 1 ? oks + 1 : +0;
-                      }
+          // Table perusahaan
+          var dt = $("#all-permohonan").DataTable({
+            destroy: true,
+            paging: true,
+            lengthChange: true,
+            searching: true,
+            ordering: false,
+            info: true,
+            autoWidth: false,
+            responsive: false,
+            pageLength: 10,
+            aaData: data,
+            aoColumns: [
+              { mDataProp: "id", width: "10%" },
+              { mDataProp: "nama_usaha" },
+              { mDataProp: "bidang_usaha" },
+              { mDataProp: "nib" },
+              { mDataProp: "no_kbli" },
+              { mDataProp: "penanggung_jawab" },
+              { mDataProp: "jabatan" },
+              { mDataProp: "id" },
+            ],
+            order: [[0, "ASC"]],
+            fixedColumns: true,
+            aoColumnDefs: [
+              { width: 50, targets: 0 },
+              {
+                render: function (data, type, row) {
+                  if (type == "display") {
+                    var file = row.file;
+                    var oks = 0;
+                    for (const key in file) {
+                      oks = file[key]["ok"] == 1 ? oks + 1 : +0;
+                    }
 
-                      var el = '<div class="btn-group">';
-                      if (row.param) {
-                        if (oks == 1) {
-                          el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="action('view',${row.id},'${row.type}', '', '', '${row.param}',${row.kategori})">
+                    var el = '<div class="btn-group">';
+                    if (row.param) {
+                      if (oks == 1) {
+                        el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="action('view',${row.id},'${row.type}', '', '', '${row.param}',${row.kategori})">
                                   <i class="bx bx-file font-size-16"></i>
                                 </button>`;
-                        }
                       }
-                      el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="popupvalidasi(${row.id}, '1', ${row.param}, ${row.kategori})">
+                    }
+                    el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="popupvalidasi(${row.id}, '1', ${row.param}, ${row.kategori})">
                           <i class="bx bx-list-ul font-size-16"></i>
                         </button>`;
-                      var permohonan = row.permohonan;
-                      if (permohonan.length) {
-                        el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="detailper(${row.id})">
+                    var permohonan = row.permohonan;
+                    if (permohonan.length) {
+                      el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="detailper(${row.id})">
                                 <i class="bx bx-show font-size-16"></i>
                               </button>`;
-                      }
-                      if (row.status == 1) {
-                        el +=
-                          `<button type="button" title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view','${row.id}','${row.type}')"><i class="bx bx-check-square font-size-16"></i></button>`;
-                      } else {
-                        el +=
-                          `<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>`;
-                      }
-                      el += "</div>";
-                      return el;
                     }
-                    return data;
-                  },
-                  aTargets: [7],
+                    if (row.status == 1) {
+                      el += `<button type="button" title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view','${row.id}','${row.type}')"><i class="bx bx-check-square font-size-16"></i></button>`;
+                    } else {
+                      el += `<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>`;
+                    }
+                    el += "</div>";
+                    return el;
+                  }
+                  return data;
                 },
-              ],
-              fnRowCallback: function (
-                nRow,
-                aData,
-                iDisplayIndex,
-                iDisplayIndexFull
-              ) {
-                var index = iDisplayIndexFull + 1;
-                $("td:eq(0)", nRow).html("#" + index);
-                return index;
+                aTargets: [7],
               },
-              fnInitComplete: function () {
-                var that = this;
-                var td;
-                var tr;
-                this.$("td").click(function () {
-                  td = this;
-                });
-                this.$("tr").click(function () {
-                  tr = this;
-                });
-              },
-            });
+            ],
+            fnRowCallback: function (
+              nRow,
+              aData,
+              iDisplayIndex,
+              iDisplayIndexFull
+            ) {
+              var index = iDisplayIndexFull + 1;
+              $("td:eq(0)", nRow).html("#" + index);
+              return index;
+            },
+            fnInitComplete: function () {
+              var that = this;
+              var td;
+              var tr;
+              this.$("td").click(function () {
+                td = this;
+              });
+              this.$("tr").click(function () {
+                tr = this;
+              });
+            },
+          });
           // $("#all-permohonan_filter.dataTables_filter").append($("#categoryFilter"));
         }
       } else {
         if ($("#isRole").val() == 0) {
-          $('#data_permohonan_btn').hide()
+          $("#data_permohonan_btn").hide();
           $("#initambah").show();
           $("#cekunggahan").css("display", "none");
           $("#cekunggahan").hide();
@@ -1449,18 +1492,18 @@ function upload(formData) {
 function detailper(id) {
   $("#permohonan-all").hide();
   $("#detail").show();
-  window.id_perusahaan = id
+  window.id_perusahaan = id;
   $.ajax({
     type: "post",
     dataType: "json",
     url: "loaddetailpermohonan",
     data: {
       param: id,
-      type: 1
+      type: 1,
     },
     success: function (result) {
       let code = result.code;
-      if ( code != "0") {
+      if (code != "0") {
         $("#categoryFiltertext").show();
         $("#categoryFilter").show();
         let data = result.data;
@@ -1494,7 +1537,7 @@ function detailper(id) {
             //       var el = ''
             //       var idfile_permohonan = row.id
             //       row.file.forEach(element => {
-                    
+
             //         idfile_permohonan = element.id
             //         var type_permohonan = element.type
             //         var namafile_permohonan = element.filename
@@ -1507,9 +1550,9 @@ function detailper(id) {
             //                   <button class="btn btn-danger btn-sm btn-round" id="hapus-permohonan" type="button" onclick="actionfile('delete', '${idfile_permohonan}', '${type_permohonan}', '${path_file}/${namafile_permohonan}')"><i class="bx bx-trash"></i></button>
             //                 </grp>
             //               `
-                    
+
             //       });
-            //       el += `<div class="form-group" id="form-permohonan-reupload" style="display:${row.file.length ? 'none' : 'block'};">        
+            //       el += `<div class="form-group" id="form-permohonan-reupload" style="display:${row.file.length ? 'none' : 'block'};">
             //                   <div class="col-sm-11">
             //                     <input type="file" name="id-input-file-5" id="doc_permohonan_reupload" accept=".pdf" onchange="filepermohonan(this)" />
             //                     <button class="btn btn-success btn-sm btn-round" id="upload-permohonan" onclick="reupload('permohonan', ${idfile_permohonan})" type="button"><i class="bx bx-check-double"></i></button>
@@ -1517,7 +1560,7 @@ function detailper(id) {
             //                 </div>`
 
             //       el += ''
-                  
+
             //       return el;
             //     }
             //     return datas;
@@ -1571,7 +1614,7 @@ function detailper(id) {
                   var el = '<div class="btn-group">';
 
                   if (row.param) {
-                      el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="action('view',${row.id},'${row.type}', '', '', '${row.param}',${row.kategori})">
+                    el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="action('view',${row.id},'${row.type}', '', '', '${row.param}',${row.kategori})">
                               <i class="bx bx-file font-size-16"></i>
                             </button>`;
                   }
@@ -1579,11 +1622,9 @@ function detailper(id) {
                           <i class="bx bx-list-ul font-size-16"></i>
                         </button>`;
                   if (row.status == 1) {
-                    el +=
-                      `<button type="button" title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view','${row.id}','${row.type}')"><i class="bx bx-check-square font-size-16"></i></button>`;
+                    el += `<button type="button" title="Verifikasi Lapangan" class="btn btn-sm btn-success waves-effect waves-light" onclick="actionlapangan('view','${row.id}','${row.type}')"><i class="bx bx-check-square font-size-16"></i></button>`;
                   } else {
-                    el +=
-                      `<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>`;
+                    el += `<button type="button" class="btn btn-sm btn-danger" onclick="action('delete','${row.id}','${row.type}','','data_permohonan')"><i class="bx bx-trash font-size-16"></i></button>`;
                   }
                   el += "</div>";
                   return el;
@@ -1614,7 +1655,7 @@ function detailper(id) {
               tr = this;
             });
           },
-        }); 
+        });
 
         //category filter
         var categoryIndex = 0;
@@ -1637,19 +1678,16 @@ function detailper(id) {
         $("#categoryFilter").change(function (e) {
           dt.draw();
         });
-        dt.draw(); 
-
+        dt.draw();
       } else {
         $("#categoryFiltertext").hide();
         $("#categoryFilter").hide();
         var tb = $("#permohonan-detail").DataTable();
-          tb.clear().draw();
+        tb.clear().draw();
       }
     },
   });
 }
-
-
 
 function action(mode, id, type, keterangan, param, kode, kategori) {
   if (mode == "view") {
@@ -2083,7 +2121,11 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                   mRender: function (data, type, row) {
                     var el =
                       `<div class="btn-group">
-                        <a class="btn btn-xs btn-warning" target="_blank" href="public/` +row.path +"/" +row.filename +`">
+                        <a class="btn btn-xs btn-warning" target="_blank" href="public/` +
+                      row.path +
+                      "/" +
+                      row.filename +
+                      `">
                           <i class="bx bxs-download font-size-16"></i>
                         </a>`;
 
@@ -2091,31 +2133,31 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                       if (row.status == "1") {
                         el +=
                           `<button class="btn btn-xs btn-info" onclick="revisikajian('` +
-                            row.id +
-                            `','` +
-                            row.type +
-                            `','` +
-                            row.jenis +
-                            `','` +
-                            row.path +
-                            "/" +
-                            row.filename +
-                            `','` +
-                            row.bab +
-                            `', '${row.kategori}')">
+                          row.id +
+                          `','` +
+                          row.type +
+                          `','` +
+                          row.jenis +
+                          `','` +
+                          row.path +
+                          "/" +
+                          row.filename +
+                          `','` +
+                          row.bab +
+                          `', '${row.kategori}')">
                             <i class="bx bx-edit font-size-16"></i>
                           </button>`;
 
                         el +=
                           `<button class="btn btn-xs btn-danger" onclick="actionfile('delete','` +
-                            row.id +
-                            `','` +
-                            row.type +
-                            `', '` +
-                            row.path +
-                            "/" +
-                            row.filename +
-                            `')">
+                          row.id +
+                          `','` +
+                          row.type +
+                          `', '` +
+                          row.path +
+                          "/" +
+                          row.filename +
+                          `')">
                             <i class="bx bx-trash font-size-16"></i>
                           </button>`;
                       }
@@ -2125,10 +2167,10 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                       } else {
                         el +=
                           `<button class="btn btn-xs btn-success" onclick="action('update','` +
-                            row.id +
-                            `','` +
-                            row.type +
-                            `','','1')">
+                          row.id +
+                          `','` +
+                          row.type +
+                          `','','1')">
                             <i class="bx bx-check-double"></i>
                           </button>`;
                       }
@@ -2153,9 +2195,9 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                                           </div>
                                         </div>
                                       </div>
-                                    </li>`
-                                  for (let index = 0; index < row.history.length; index++) {
-                                    el +=  `
+                                    </li>`;
+                    for (let index = 0; index < row.history.length; index++) {
+                      el += `
                                     <li class="event-list">
                                       <div class="event-timeline-dot">
                                           <i class="bx bx-right-arrow-circle"></i>
@@ -2164,18 +2206,28 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                                           <div class="flex-grow-1">
                                               <div>
                                                   <h5 class="font-size-15"><a href="javascript: void(0);" class="text-dark">
-                                                  ${row.history[index]["status"] == 1 ? '<span class="label label-warning label-sm">Revisi</span>' : '<span class="label label-success label-sm">Selesai</span>' }</a></h5>
-                                                  <span class="text-primary">${row.history[index]["createdate"]}</span>
+                                                  ${
+                                                    row.history[index][
+                                                      "status"
+                                                    ] == 1
+                                                      ? '<span class="label label-warning label-sm">Revisi</span>'
+                                                      : '<span class="label label-success label-sm">Selesai</span>'
+                                                  }</a></h5>
+                                                  <span class="text-primary">${
+                                                    row.history[index][
+                                                      "createdate"
+                                                    ]
+                                                  }</span>
                                               </div>
                                           </div>
                                       </div>
-                                    </li>`
-                                  }
-                                  el +=  `</ul>
+                                    </li>`;
+                    }
+                    el += `</ul>
                               </div>
                           </div>
                       </div>
-                  </div>`
+                  </div>`;
                     // el += `<button data-toggle="dropdown" class="btn btn-xs btn-secondary dropdown-toggle" aria-expanded="false">
                     //           <i class="bx bx-history font-size-16"></i>
                     //         </button>
@@ -2456,8 +2508,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                 },
                 {
                   mRender: function (data, type, row) {
-                    var el =
-                      `<div class="btn-group">
+                    var el = `<div class="btn-group">
                         <a class="btn btn-sm btn-warning" target="_blank" href="public/${row.path}/${row.filename}">
                             <i class="bx bx-download font-size-16"></i>
                         </a>`;
@@ -2498,9 +2549,9 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                                           </div>
                                         </div>
                                       </div>
-                                    </li>`
-                                  for (let index = 0; index < row.history.length; index++) {
-                                    el +=  `
+                                    </li>`;
+                    for (let index = 0; index < row.history.length; index++) {
+                      el += `
                                     <li class="event-list">
                                       <div class="event-timeline-dot">
                                           <i class="bx bx-right-arrow-circle"></i>
@@ -2509,18 +2560,28 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                                           <div class="flex-grow-1">
                                               <div>
                                                   <h5 class="font-size-15"><a href="javascript: void(0);" class="text-dark">
-                                                  ${row.history[index]["status"] == 1 ? '<span class="label label-warning label-sm">Revisi</span>' : '<span class="label label-success label-sm">Selesai</span>' }</a></h5>
-                                                  <span class="text-primary">${row.history[index]["createdate"]}</span>
+                                                  ${
+                                                    row.history[index][
+                                                      "status"
+                                                    ] == 1
+                                                      ? '<span class="label label-warning label-sm">Revisi</span>'
+                                                      : '<span class="label label-success label-sm">Selesai</span>'
+                                                  }</a></h5>
+                                                  <span class="text-primary">${
+                                                    row.history[index][
+                                                      "createdate"
+                                                    ]
+                                                  }</span>
                                               </div>
                                           </div>
                                       </div>
-                                    </li>`
-                                  }
-                                  el +=  `</ul>
+                                    </li>`;
+                    }
+                    el += `</ul>
                               </div>
                           </div>
                         </div>
-                      </div>`
+                      </div>`;
                     return el;
                   },
                   aTargets: [6],
@@ -2608,7 +2669,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
         let data = result.data;
         // location.reload();
         // $('#back-all-permohonan').click()
-        detailper(window.id_perusahaan)
+        detailper(window.id_perusahaan);
       },
     });
   } else if (mode == "delete") {
@@ -2700,7 +2761,7 @@ function loadstatus(id, param, jenis, kategori) {
         }
       }
 
-      detailper(window.window.id_perusahaan)
+      detailper(window.window.id_perusahaan);
     },
   });
 }
@@ -3078,7 +3139,6 @@ function hapusfile() {
 }
 
 function reupload(type, id_parent) {
-  
   var dialog = bootbox.dialog({
     message:
       '<p class="text-center mb-0"><i class="fa fa-spin fa-spinner"></i> Mohon Tunggu ...</p>',
@@ -3088,7 +3148,10 @@ function reupload(type, id_parent) {
   var formData = new FormData();
   formData.append("param", "data_file");
   formData.append("type", "1");
-  formData.append("id_parent", (id_parent ? id_parent : $("#idpermohonan").val()));
+  formData.append(
+    "id_parent",
+    id_parent ? id_parent : $("#idpermohonan").val()
+  );
 
   if (type == "izin-lingkungan") {
     formData.append(
@@ -3098,9 +3161,7 @@ function reupload(type, id_parent) {
   } else if (type == "nib") {
     formData.append("file[doc_nib]", $("#doc_nib_reupload")[0].files[0]);
   } else if (type == "permohonan") {
-    formData.append(
-      "file[doc_permohonan]", window.filepermohonan
-    );
+    formData.append("file[doc_permohonan]", window.filepermohonan);
   } else if (type == "penapisan-mandiri") {
     formData.append(
       "file[doc_penapisan_mandiri]",
@@ -3108,7 +3169,6 @@ function reupload(type, id_parent) {
     );
   }
 
-  
   $.ajax({
     type: "post",
     processData: false,
@@ -3116,7 +3176,6 @@ function reupload(type, id_parent) {
     url: "reuploadfile",
     data: formData,
     success: function (result) {
-      
       Swal.fire({
         type: "success",
         title: "Berhasil Upload File !",
@@ -3126,9 +3185,9 @@ function reupload(type, id_parent) {
       }).then((result) => {
         $(document).ready(function () {
           dialog.modal("hide");
-          if(id_parent){
+          if (id_parent) {
             loadpermohonan("1");
-          }else{
+          } else {
             location.reload();
           }
         });
@@ -3319,11 +3378,11 @@ function popupvalidasi(id, type, param, kategori) {
         $("#kategori").hide();
         $("#jenis").hide();
         $("#simpanaja").hide();
-      }else if(jenis != "doc_permohonan"){
+      } else if (jenis != "doc_permohonan") {
         $("#kategori").hide();
         $("#jenis").hide();
         $("#simpanaja").hide();
-      }else{
+      } else {
         $("#kategori").show();
         $("#jenis").show();
         $("#simpanaja").show();
@@ -3352,7 +3411,7 @@ function validasiV2(id, param) {
 }
 
 function filepermohonan(isthis) {
-    window.filepermohonan = isthis.files[0]
+  window.filepermohonan = isthis.files[0];
 }
 
 function editpermohonan(id, alamat, notelp, email) {
@@ -3361,6 +3420,6 @@ function editpermohonan(id, alamat, notelp, email) {
   $("#input_7").val(notelp);
   $("#input_8").val(email);
   $("#form-upload-permohonan").hide();
-  $("#mohon_save").prop('disabled', false);
+  $("#mohon_save").prop("disabled", false);
   $("#modal_program").modal("show");
 }

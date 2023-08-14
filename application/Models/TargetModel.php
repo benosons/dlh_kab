@@ -475,6 +475,15 @@ class TargetModel extends Model{
       return true;
     }
 
+    public function updateParamFile($id = null, $data = null)
+    {
+      $builder = $this->db->table('param_file');
+      $query   = $builder->where('id', $id);
+      $query->update($data);
+      // echo $this->db->getLastQuery();die;
+      return true;
+    }
+
     public function getfilenya($table = null, $id = null, $type = null, $jenis = null, $param = null)
     {
 
