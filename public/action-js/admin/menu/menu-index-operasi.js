@@ -291,7 +291,7 @@ $(document).ready(function () {
     $("#form-upload-permohonan").hide();
     $("#mohon_save").prop("disabled", false).show();
     $("#editdataini").hide();
-    editperusahaan(1);
+    editperusahaan(2);
   });
 
   function editperusahaan(param) {
@@ -676,7 +676,6 @@ function loadpermohonan(param) {
                           </button>`;
                         }
                       }
-                      console.log(row.id);
                       el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="detailpermohonan(${row.id})">
                               <i class="bx bx-detail font-size-16"></i>
                             </button>`;
@@ -2351,7 +2350,7 @@ function detailpermohonan(id) {
         .val(data.village_id)
         .trigger("change")
         .prop("disabled", true);
-      $("#select_kategori")
+      $("#kategori")
         .val(data.kategori)
         .trigger("change")
         .prop("disabled", true);
