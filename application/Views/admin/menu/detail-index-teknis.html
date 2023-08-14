@@ -1,129 +1,265 @@
-<div id="alert-expired" style="display: none;">
-    <div class="col-xs-12">
-      <div class="alert alert-block alert-danger">          
-        Permohonan Belum diVerifikasi, Silahkan Hubungi
-        <strong class="danger">
-          Admin DLH Kabupaten Bandung
-          <small></small>
-        </strong>
-      </div>
-    </div> 
+<div id="alert-expired" style="display: none">
+  <div class="col-xs-12">
+    <div class="alert alert-block alert-danger">
+      Permohonan Belum diVerifikasi, Silahkan Hubungi
+      <strong class="danger">
+        Admin DLH Kabupaten Bandung
+        <small></small>
+      </strong>
+    </div>
+  </div>
 </div>
-<div id="form-detail" style="display:none">
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-12">
-                    <div class="page-title-box d-sm-flex align-items-center justify-content-between" style="padding-top: 20px;">
-                        <h4 class="mb-sm-0 font-size-18">
-                            Permohonan Persetujuan Teknis
-                        </h4>
-                        <div class="page-title-right">
-                            <ol class="breadcrumb m-0">
-                                <li class="breadcrumb-item">
-                                    <a href="javascript: void(0);">Permohonan</a>
-                                </li>
-                                <li class="breadcrumb-item active">Persetujuan Teknis</li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
+<div id="form-detail" style="display: none">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-12">
+          <div
+            class="page-title-box d-sm-flex align-items-center justify-content-between"
+            style="padding-top: 20px"
+          >
+            <h4 class="mb-sm-0 font-size-18" style="display: none" id="pt-h4">
+              Permohonan Persetujuan Teknis
+            </h4>
+            <h4 class="mb-sm-0 font-size-18" style="display: none" id="slo-h4">
+              Permohonan Surat Layak Operasi
+            </h4>
+            <h4 class="mb-sm-0 font-size-18" style="display: none" id="b3-h4">
+              Permohonan Limbah B3
+            </h4>
+            <div class="page-title-right">
+              <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item">
+                  <a href="javascript: void(0);">Permohonan</a>
+                </li>
+                <li
+                  class="breadcrumb-item active"
+                  style="display: none"
+                  id="pt-breadcrumb"
+                >
+                  Persetujuan Teknis
+                </li>
+                <li
+                  class="breadcrumb-item active"
+                  style="display: none"
+                  id="slo-breadcrumb"
+                >
+                  Surat Layak Operasi
+                </li>
+                <li
+                  class="breadcrumb-item active"
+                  style="display: none"
+                  id="b3-breadcrumb"
+                >
+                  Limbah B3
+                </li>
+              </ol>
             </div>
-            <div class="row">
-                <div class="col-sm-6" style="padding-bottom: 15px;">
-                    <button type="button" class="btn btn-sm btn-primary waves-effect waves-light" id="back-all-permohonan">
-                        <i class='bx bx-left-arrow-circle font-size-16' style="margin-top: 2px;"></i>
-                    </button>
-                </div>
-                <div class="col-sm-6" id="id_edit_btn">
-                    <button type="button" class="btn btn-sm btn-block btn-info" id="editdataini" style="float: right;">
-                        <i class='bx bx bx-edit font-size-16' style="margin-top: 2px;"> Edit</i>
-                    </button>
-                </div>
-                <div class="col-xs-12 widget-container-col">
-                    <div class="widget-box widget-color-orange">
-                        <div class="widget-header">
-                            <div class="widget-toolbar no-border">
-                            </div>
-                        </div>
-                        <div class="widget-body">
-                            <div class="widget-main">
-                                <input type="hidden" id="idpermohonan">
-                                <input type="hidden" id="inikategori">
-                                <input type="hidden" id="initype">
-                                <form class="form-horizontal" role="form" id="detail-permohonan">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label class="col-sm-3 control-label no-padding-right">Email</label>
-                                            <input type="text" id="input_8" placeholder="" class="form-control">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="col-sm-3 control-label no-padding-right">Nomor Telepon</label>
-                                            <input type="text" id="input_7" placeholder="" class="form-control" onkeypress="return hanyaAngka(event)" maxlength="13">
-                                        </div>
-                                    </div>
-                                    <div class="row" style="padding-top: 15px;">
-                                        <div class="col-md-6" id="div_kategori" style="display: none;">
-                                            <label class="col-sm-3 control-label no-padding-right">Kategori</label>
-                                            <select class="chosen-select form-control" id="select_kategori" data-placeholder="Pilih kategori ...">
-                                                <option value="0">-Pilih Kategori-</option>
-                                                <option value="1">1. Pembuangan air limbah ke badan air permukaan</option>
-                                                <option value="2">2. Pembuangan air limbah ke formasi tertentu</option>
-                                                <option value="3">3. Pemanfaatan air limbah untuk aplikasi ke tanah</option>
-                                                <option value="4">4. Pemanfaatan air limbah ke formasi tertentu</option>
-                                                <option value="5">5. Pembuangan emisi</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6" id="kategori_slo" style="display: none;">
-                                            <label class="col-sm-3 control-label no-padding-right">Kategori</label>
-                                            <select class="chosen-select form-control" id="kategori" style="background-color:#fff;" data-placeholder="Pilih kategori ...">
-                                                <option value="0">-Pilih Kategori-</option>
-                                                <option value="1">1. Air Limbah</option>
-                                                <option value="2">2. Udara</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6" id="div_jenis">
-                                            <label class="col-sm-3 control-label no-padding-right">Jenis</label>
-                                            <select class="chosen-select form-control" id="select_jenis" data-placeholder="Pilih Jenis ...">
-                                                <option value="0">-Pilih Jenis-</option>
-                                                <option value="1">Kajian Teknis</option>
-                                                <option value="2">Standar Teknis</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="padding-top: 15px;">
-                                        <div class="col-md-6">
-                                            <label class="col-sm-3 control-label no-padding-right">Kota / Kabupaten</label>
-                                            <input type="text" id="kota_kabupaten" placeholder="" class="form-control" readonly>
-                                            <input type="hidden" id="kode_kota" />
-                                        </div>
-                                        <div class="col-md-6" id="div_kecamatan">
-                                            <label class="col-sm-3 control-label no-padding-right">Kecamatan</label>
-                                            <select class="chosen-select form-control" id="select_kecamatan" data-placeholder="Pilih Kecamatan ..." onchange="getKelurahanByKecamatan()">
-                                            
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="padding-top: 15px;">
-                                        <div class="col-md-6" id="div_kelurahan">
-                                            <label class="col-sm-3 control-label no-padding-right">Kelurahan</label>
-                                            <select class="chosen-select form-control" id="select_kelurahan" data-placeholder="Pilih Kelurahan ...">
-                                            
-                                            </select>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="col-sm-3 control-label no-padding-right">Alamat</label>
-                                            <textarea class="form-control" name="form-input" id="input_6" cols="30" rows="3"></textarea>
-                                        </div>
-                                    </div>
-                                    <div class="row" style="padding-top: 15px; display: none;" id="form-upload-permohonan">
-                                        <div class="col-md-6">
-                                            <label class="col-sm-3 control-label no-padding-right" for="doc_permohonan">Permohonan <code>*</code></label>
-                                            <input type="file" class="form-control" name="" id="doc_permohonan" accept=".pdf" />
-                                            <code>File .PDF - Max 5 mb</code>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="row" style="padding-top: 15px;">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6" style="padding-bottom: 15px">
+          <button
+            type="button"
+            class="btn btn-sm btn-primary waves-effect waves-light"
+            id="back-all-permohonan"
+          >
+            <i
+              class="bx bx-left-arrow-circle font-size-16"
+              style="margin-top: 2px"
+            ></i>
+          </button>
+        </div>
+        <div class="col-sm-6" id="id_edit_btn">
+          <button
+            type="button"
+            class="btn btn-sm btn-block btn-info"
+            id="editdataini"
+            style="float: right"
+          >
+            <i class="bx bx bx-edit font-size-16" style="margin-top: 2px">
+              Edit</i
+            >
+          </button>
+        </div>
+        <div class="col-xs-12 widget-container-col">
+          <div class="widget-box widget-color-orange">
+            <div class="widget-header">
+              <div class="widget-toolbar no-border"></div>
+            </div>
+            <div class="widget-body">
+              <div class="widget-main">
+                <input type="hidden" id="idpermohonan" />
+                <input type="hidden" id="inikategori" />
+                <input type="hidden" id="initype" />
+                <form
+                  class="form-horizontal"
+                  role="form"
+                  id="detail-permohonan"
+                >
+                  <div class="row">
+                    <div class="col-md-6">
+                      <label class="col-sm-3 control-label no-padding-right"
+                        >Email</label
+                      >
+                      <input
+                        type="text"
+                        id="input_8"
+                        placeholder=""
+                        class="form-control"
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label class="col-sm-3 control-label no-padding-right"
+                        >Nomor Telepon</label
+                      >
+                      <input
+                        type="text"
+                        id="input_7"
+                        placeholder=""
+                        class="form-control"
+                        onkeypress="return hanyaAngka(event)"
+                        maxlength="13"
+                      />
+                    </div>
+                  </div>
+                  <div class="row" style="padding-top: 15px">
+                    <div
+                      class="col-md-6"
+                      id="div_kategori"
+                      style="display: none"
+                    >
+                      <label class="col-sm-3 control-label no-padding-right"
+                        >Kategori</label
+                      >
+                      <select
+                        class="chosen-select form-control"
+                        id="select_kategori"
+                        data-placeholder="Pilih kategori ..."
+                      >
+                        <option value="0">-Pilih Kategori-</option>
+                        <option value="1">
+                          1. Pembuangan air limbah ke badan air permukaan
+                        </option>
+                        <option value="2">
+                          2. Pembuangan air limbah ke formasi tertentu
+                        </option>
+                        <option value="3">
+                          3. Pemanfaatan air limbah untuk aplikasi ke tanah
+                        </option>
+                        <option value="4">
+                          4. Pemanfaatan air limbah ke formasi tertentu
+                        </option>
+                        <option value="5">5. Pembuangan emisi</option>
+                      </select>
+                    </div>
+                    <div
+                      class="col-md-6"
+                      id="kategori_slo"
+                      style="display: none"
+                    >
+                      <label class="col-sm-3 control-label no-padding-right"
+                        >Kategori</label
+                      >
+                      <select
+                        class="chosen-select form-control"
+                        id="kategori"
+                        style="background-color: #fff"
+                        data-placeholder="Pilih kategori ..."
+                      >
+                        <option value="0">-Pilih Kategori-</option>
+                        <option value="1">1. Air Limbah</option>
+                        <option value="2">2. Udara</option>
+                      </select>
+                    </div>
+                    <div class="col-md-6" id="div_jenis">
+                      <label class="col-sm-3 control-label no-padding-right"
+                        >Jenis</label
+                      >
+                      <select
+                        class="chosen-select form-control"
+                        id="select_jenis"
+                        data-placeholder="Pilih Jenis ..."
+                      >
+                        <option value="0">-Pilih Jenis-</option>
+                        <option value="1">Kajian Teknis</option>
+                        <option value="2">Standar Teknis</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="row" style="padding-top: 15px">
+                    <div class="col-md-6">
+                      <label class="col-sm-3 control-label no-padding-right"
+                        >Kota / Kabupaten</label
+                      >
+                      <input
+                        type="text"
+                        id="kota_kabupaten"
+                        placeholder=""
+                        class="form-control"
+                        readonly
+                      />
+                      <input type="hidden" id="kode_kota" />
+                    </div>
+                    <div class="col-md-6" id="div_kecamatan">
+                      <label class="col-sm-3 control-label no-padding-right"
+                        >Kecamatan</label
+                      >
+                      <select
+                        class="chosen-select form-control"
+                        id="select_kecamatan"
+                        data-placeholder="Pilih Kecamatan ..."
+                        onchange="getKelurahanByKecamatan()"
+                      ></select>
+                    </div>
+                  </div>
+                  <div class="row" style="padding-top: 15px">
+                    <div class="col-md-6" id="div_kelurahan">
+                      <label class="col-sm-3 control-label no-padding-right"
+                        >Kelurahan</label
+                      >
+                      <select
+                        class="chosen-select form-control"
+                        id="select_kelurahan"
+                        data-placeholder="Pilih Kelurahan ..."
+                      ></select>
+                    </div>
+                    <div class="col-md-6">
+                      <label class="col-sm-3 control-label no-padding-right"
+                        >Alamat</label
+                      >
+                      <textarea
+                        class="form-control"
+                        name="form-input"
+                        id="input_6"
+                        cols="30"
+                        rows="3"
+                      ></textarea>
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                    style="padding-top: 15px; display: none"
+                    id="form-upload-permohonan"
+                  >
+                    <div class="col-md-6">
+                      <label
+                        class="col-sm-3 control-label no-padding-right"
+                        for="doc_permohonan"
+                        >Permohonan <code>*</code></label
+                      >
+                      <input
+                        type="file"
+                        class="form-control"
+                        name=""
+                        id="doc_permohonan"
+                        accept=".pdf"
+                      />
+                      <code>File .PDF - Max 5 mb</code>
+                    </div>
+                  </div>
+                  <!-- <div class="row" style="padding-top: 15px;">
                                         <div class="col-md-6">
                                             <label class="col-sm-3 control-label no-padding-right" for=""> Permohonan </label>
                                             <grp id="view-file-permohonan" style="display:none;">
@@ -143,17 +279,24 @@
                                             </div>
                                         </div>        
                                     </div> -->
-                                    <div class="form-group" style="padding: 10 0 0; float: right;">
-                                        <div class="col-sm-12">
-                                            <button type="button" id="mohon_save" class="btn btn-xs btn-success" style="display: none; float: right;"><i class="ace-icon fa fa-check"></i> Simpan</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                  <div class="form-group" style="padding: 10 0 0; float: right">
+                    <div class="col-sm-12">
+                      <button
+                        type="button"
+                        id="mohon_save"
+                        class="btn btn-xs btn-success"
+                        style="display: none; float: right"
+                      >
+                        <i class="ace-icon fa fa-check"></i> Simpan
+                      </button>
                     </div>
-                </div>
+                  </div>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 </div>

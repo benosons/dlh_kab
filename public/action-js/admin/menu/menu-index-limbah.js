@@ -1012,6 +1012,10 @@ function getKelurahanByKecamatan() {
 }
 
 function loadpermohonan(param) {
+  if (param == 3) {
+    $("#b3-h4").show();
+    $("#b3-breadcrumb").show();
+  }
   $.ajax({
     type: "post",
     dataType: "json",

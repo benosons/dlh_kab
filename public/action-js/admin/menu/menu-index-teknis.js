@@ -1013,6 +1013,10 @@ function getKelurahanByKecamatan() {
 }
 
 function loadpermohonan(param) {
+  if (param == 1) {
+    $("#pt-h4").show();
+    $("#pt-breadcrumb").show();
+  }
   $.ajax({
     type: "post",
     dataType: "json",
