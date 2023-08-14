@@ -2095,6 +2095,13 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
         $("#kajian").removeClass("active");
         $("#standar").addClass("tab-pane active");
       });
+    }else{
+      opt += `
+      <option value="1">BAB 1 - Pendahuluan </option>
+      <option value="2">BAB 2 - Deskripsi Kegiatan </option>
+      <option value="3">BAB 3 - Muatan Kajian </option>
+      <option value="4">BAB 4 - Penutup </option>
+                `;
     }
 
     $("#bab_kajian").html(opt);
@@ -2812,7 +2819,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
       ];
 
       $("#dokumen-unggahan").html(
-        `<i class="ace-icon fa fa-file green "></i>&nbsp;Persyaratan Permohonan ${kat[kategori]}`
+        `<i class="ace-icon fa fa-file green "></i>&nbsp;Persyaratan Permohonan Limbah B3`
       );
     }
   } else if (mode == "update") {
