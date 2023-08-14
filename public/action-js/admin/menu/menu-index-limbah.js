@@ -1621,7 +1621,17 @@ function upload(formData) {
     data: formData,
     success: function (result) {
       dialog.modal("hide");
-      location.reload();
+      Swal.fire({
+        type: "success",
+        title: "Data Berhasil diTambahkan !",
+        showConfirmButton: true,
+        // showCancelButton: true,
+        confirmButtonText: `Ok`,
+      }).then((result) => {
+        $(document).ready(function () {
+          location.reload();
+        });
+      });
     },
   });
 }
@@ -2099,7 +2109,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
         $("#kajian").removeClass("active");
         $("#standar").addClass("tab-pane active");
       });
-    }else{
+    } else {
       opt += `
       <option value="1">BAB 1 - Pendahuluan </option>
       <option value="2">BAB 2 - Deskripsi Kegiatan </option>

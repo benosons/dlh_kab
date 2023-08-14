@@ -291,7 +291,7 @@ $(document).ready(function () {
     $("#form-upload-permohonan").hide();
     $("#mohon_save").prop("disabled", false).show();
     $("#editdataini").hide();
-    editperusahaan(2);
+    editperusahaan(1);
   });
 
   function editperusahaan(param) {
@@ -1144,7 +1144,17 @@ function upload(formData) {
     data: formData,
     success: function (result) {
       dialog.modal("hide");
-      // location.reload();
+      Swal.fire({
+        type: "success",
+        title: "Data Berhasil diTambahkan !",
+        showConfirmButton: true,
+        // showCancelButton: true,
+        confirmButtonText: `Ok`,
+      }).then((result) => {
+        $(document).ready(function () {
+          location.reload();
+        });
+      });
     },
   });
 }

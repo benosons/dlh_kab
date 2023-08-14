@@ -1622,7 +1622,17 @@ function upload(formData) {
     data: formData,
     success: function (result) {
       dialog.modal("hide");
-      location.reload();
+      Swal.fire({
+        type: "success",
+        title: "Data Berhasil diTambahkan !",
+        showConfirmButton: true,
+        // showCancelButton: true,
+        confirmButtonText: `Ok`,
+      }).then((result) => {
+        $(document).ready(function () {
+          location.reload();
+        });
+      });
     },
   });
 }
