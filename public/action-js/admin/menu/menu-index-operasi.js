@@ -201,6 +201,9 @@ $(document).ready(function () {
             formData.append("kecamatan", $("#select_kecamatan").val());
             formData.append("kelurahan", $("#select_kelurahan").val());
 
+            formData.append("kategori", $("#kategori").val());
+            formData.append("jenis", $("#select_jenis").val());
+
             if (berapa.length == 3) {
               save(formData);
             }
@@ -673,6 +676,7 @@ function loadpermohonan(param) {
                           </button>`;
                         }
                       }
+                      console.log(row.id);
                       el += `<button type="button" class="btn btn-sm btn-info waves-effect waves-light" onclick="detailpermohonan(${row.id})">
                               <i class="bx bx-detail font-size-16"></i>
                             </button>`;
@@ -2328,7 +2332,7 @@ function detailpermohonan(id) {
     url: "loaddetailpermohonan",
     data: {
       param: id,
-      type: 1,
+      type: 2,
       edit: "true",
     },
     success: function (result) {
