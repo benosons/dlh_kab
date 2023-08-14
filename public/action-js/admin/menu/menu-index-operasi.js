@@ -35,7 +35,7 @@ $(document).ready(function () {
   $("#nav-menu li").removeClass();
   // $('#nav-menu li#menu-data').addClass('open');
   $("#nav-menu li#menu-operasi").addClass("active");
-  $("#mohon_save").prop("disabled", true);
+  $("#mohon_save").prop("disabled", false);
   $('[name="id-input-file-3"]')
     .ace_file_input({
       no_file: "tidak ada file ...",
@@ -109,7 +109,7 @@ $(document).ready(function () {
       //onchange:''
       //
       before_remove: function () {
-        $("#mohon_save").prop("disabled", true);
+        $("#mohon_save").prop("disabled", false);
         return true;
       },
     })
@@ -417,7 +417,7 @@ $(document).ready(function () {
           $("#mohon_save").prop("disabled", true);
         }
       } else {
-        $("#mohon_save").prop("disabled", true);
+        $("#mohon_save").prop("disabled", false);
       }
     } else {
       $("#mohon_save").prop("disabled", false);
@@ -530,6 +530,10 @@ function getKelurahanByKecamatan() {
 }
 
 function loadpermohonan(param) {
+  if (param == 2) {
+    $("#slo-h4").show();
+    $("#slo-breadcrumb").show();
+  }
   $.ajax({
     type: "post",
     dataType: "json",
