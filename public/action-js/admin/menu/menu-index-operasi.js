@@ -1353,7 +1353,7 @@ function action(mode, id, type, keterangan, param, kategori) {
       success: function (result) {
         let data = result.data;
         let code = result.code;
-
+        console.log(data);
         if ($("#role").val() == "10") {
           $("#dokumen-unggahan").html(
             keterangan == "1"
@@ -1378,6 +1378,13 @@ function action(mode, id, type, keterangan, param, kategori) {
             }
           }
         } else {
+          for (let i = 0; i < data.length; i++) {
+            $('#jenis_doc option[value="' + data[i]["jenis"] + '"]').prop(
+              "disabled",
+              true
+            );
+            $("#jenis_doc").trigger("chosen:updated");
+          }
         }
 
         $("#ini-ID").val(id);
@@ -1923,7 +1930,6 @@ function loadstatus(id, type, jenis) {
     },
     success: function (result) {
       let data = result.data;
-
       for (let i = 0; i < data.length; i++) {
         $('#jenis_doc option[value="' + data[i]["jenis"] + '"]').prop(
           "disabled",
