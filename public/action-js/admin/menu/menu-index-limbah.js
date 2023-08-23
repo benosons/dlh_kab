@@ -554,7 +554,6 @@ $(document).ready(function () {
     formData.append("id", $("#ini-ID").val());
     formData.append("param", "param_file");
     formData.append("type", "3");
-    formData.append("kategori", $("#inikategori").val());
 
     formData.append("file[doc_kajian]", $("#doc_kajian")[0].files[0]);
     formData.append("bab", $("#bab_kajian").val());
@@ -567,11 +566,9 @@ $(document).ready(function () {
     formData.append("id", $("#ini-ID").val());
     formData.append("param", "param_file");
     formData.append("type", "3");
-    formData.append("kategori", $("#inikategori").val());
 
     formData.append("file[doc_lampiran]", $("#doc_lampiran")[0].files[0]);
     formData.append("bab", $("#bab_lampiran").val());
-    formData.append("kategoriparam", "1");
 
     upload(formData);
   });
@@ -579,12 +576,11 @@ $(document).ready(function () {
   $("#submit_lampiran-2").on("click", function () {
     var formData = new FormData();
     formData.append("id", $("#ini-ID").val());
-    formData.append("param", "param_file");
+    formData.append("param", $("#parameter").val());
     formData.append("type", "3");
-    formData.append("kategori", $("#inikategori").val());
 
     formData.append("file[doc_lampiran]", $("#doc_lampiran-2")[0].files[0]);
-    formData.append("bab", $("#bab_lampiran-2").val());
+    formData.append("bab", $("#bab_lampiran-3").val());
     formData.append("kategoriparam", "2");
 
     upload(formData);
@@ -593,12 +589,12 @@ $(document).ready(function () {
   $("#submit_standar").on("click", function () {
     var formData = new FormData();
     formData.append("id", $("#ini-ID").val());
-    formData.append("param", "param_file");
+    formData.append("param", $("#parameter").val());
     formData.append("type", "3");
-    formData.append("kategori", $("#inikategori").val());
 
     formData.append("file[doc_standar]", $("#doc_standar")[0].files[0]);
     formData.append("bab", $("#bab_standar").val());
+    formData.append("kategoriparam", "1");
 
     upload(formData);
   });
@@ -1146,10 +1142,9 @@ function loadpermohonan(param) {
                         oks = file[key]["ok"] == 1 ? oks + 1 : +0;
                       }
                       var el = '<div class="btn-group">';
-
                       if (row.param) {
                         if (oks == 1) {
-                          el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="action('view',${row.id},'${row.type}', '', '', '${row.param}',${row.kategori})">
+                          el += `<button type="button" class="btn btn-sm btn-primary waves-effect waves-light" onclick="action('view',${row.id},'${row.type}', '', '', '${row.param}','')">
                           <i class="bx bx-file font-size-16"></i>
                           </button>`;
                         }
@@ -1608,6 +1603,7 @@ function save(formData) {
 }
 
 function upload(formData) {
+  console.log(formData);
   var dialog = bootbox.dialog({
     message:
       '<p class="text-center mb-0"><i class="fa fa-spin fa-spinner"></i> Mohon Tunggu ...</p>',
@@ -1758,7 +1754,6 @@ function detailper(id) {
                   // Sudah Verifikasi status = 1
                   // Gagal Verifikasi status = 2
                   // Ditolak status = 3
-                  console.log(row.status);
                   if (row.status == 0) {
                     el +=
                       '<span class="label label-danger arrowed">Menunggu Verifikasi</span>';
@@ -1792,6 +1787,10 @@ function detailper(id) {
                               <i class="bx bx-file font-size-16"></i>
                             </button>`;
                   }
+                  // Menunggu Verifikasi status = 0
+                  // Sudah Verifikasi status = 1
+                  // Gagal Verifikasi status = 2
+                  // Ditolak status = 3
                   if (
                     moment().isSameOrAfter(moment(row.expired_date)) ||
                     row.status != 0
@@ -1892,265 +1891,20 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
     }
 
     let opt = '<option value="0">Pilih Dokumen</option>';
-
-    if (kategori == 1 && kode == 1) {
-      opt += `<option value="1">BAB 1 - Deskripsi Kegiatan</option>
-                <option value="2">BAB 2 - Rona Lingkungan Awal</option>
-                <option value="3">BAB 3 - Komponen Lingkungan Yang Terkena Dampa</option>
-                <option value="4">BAB 4 - Prakiraan Dampa</option>
-                <option value="5">BAB 5 - Rencana Pengelolaan Lingkungan</option>
-                <option value="6">BAB 6 - Rencana Pemantauan Lingkungan</option>
-                <option value="7">BAB 7 - Sistem Penanggulangan Keadaan Darura</option>
-                <option value="8">BAB 8 - Internalisasi Biaya Lingkungan</option>
-                <option value="9">BAB 9 - Periode Waktu Uji Coba</option>
-                <option value="10">BAB 10 - Struktur Organisasi Dan Standar Kompetensi Sumber Daya Manusia</option>
-                <option value="11">BAB 11 - Sistem Manajemen Lingkungan</option>
-                `;
-
-      $("#ini-lampiran").show();
-      $("#kajian-teknis").show();
-      $("#standar-teknis").hide();
-      $("#modal_file").on("shown.bs.modal", function (e) {
-        $("#edit_group_kajian").attr("hidden", true);
-        $("#kajian-teknis").addClass("active");
-        $("#standar-teknis").removeClass("active");
-
-        $("#kajian").addClass("tab-pane active");
-        $("#standar").removeClass("active");
-      });
-    } else if (kategori == 2 && kode == 1) {
-      opt += `<option value="1">BAB 1 - Deskripsi Kegiatan</option>
-                  <option value="2">BAB 2 - Rona Lingkungan Awal</option>
-                  <option value="3">BAB 3 - Prakiraan Dampak</option>
-                  <option value="4">BAB 4 - Rencana Pengelolaan Lingkungan </option>
-                  <option value="5">BAB 5 - Rencana Pemantauan Lingkungan</option>
-                  <option value="6">BAB 6 - Sistem Penanggulangan Keadaan Darurat</option>
-                  <option value="7">BAB 7 - Internalisasi Biaya Lingkungan</option>
-                  <option value="8">BAB 8 - Periode Waktu Uji Coba</option>
-                  <option value="9">BAB 9 - Struktur Organisasi dan Standar Kompetensi Sumber Daya Manusia</option>
-                  <option value="10">BAB 10 - Sistem Manajemen Lingkungan</option>`;
-      // <option value="11">BAB LAMPIRAN</option>
-
-      $("#ini-lampiran").show();
-      $("#kajian-teknis").show();
-      $("#standar-teknis").hide();
-      $("#modal_file").on("shown.bs.modal", function (e) {
-        $("#edit_group_kajian").attr("hidden", true);
-        $("#kajian-teknis").addClass("active");
-        $("#standar-teknis").removeClass("active");
-
-        $("#kajian").addClass("tab-pane active");
-        $("#standar").removeClass("active");
-      });
-    } else if (kategori == 3 && kode == 1) {
-      opt += `<option value="1">Bab 1 - Deskripsi Kegiatan</option>
-                <option value="2">Bab 2 - Rona Lingkungan Awal</option>
-                <option value="3">Bab 3 - Prakiraan Dampak</option>
-                <option value="4">Bab 4 - Rencana Pengelolaan Lingkungan</option>
-                <option value="5">Bab 5 - Rencana Pemantauan Lingkungan</option>
-                <option value="6">Bab 6 - Sistem Penanggulangan Keadaan Darurat</option>
-                <option value="7">Bab 7 - Internalisasi Biaya Lingkungan</option>
-                <option value="8">Bab 8 - Periode Uji Coba</option>
-                <option value="9">Bab 9 - Standar Kompetensi Sumber Daya Manusia</option>
-                <option value="10">Bab 10 - Sistem Manajemen Lingkungan</option>
-                `;
-      // <option vavlue="9">BAB LAMPIRAN</option>
-
-      $("#ini-lampiran").show();
-      $("#kajian-teknis").show();
-      $("#standar-teknis").hide();
-      $("#modal_file").on("shown.bs.modal", function (e) {
-        $("#edit_group_kajian").attr("hidden", true);
-        $("#kajian-teknis").addClass("active");
-        $("#standar-teknis").removeClass("active");
-
-        $("#kajian").addClass("tab-pane active");
-        $("#standar").removeClass("active");
-      });
-    } else if (kategori == 4 && kode == 1) {
-      opt += `<option value="1">BAB 1 - Deskripsi Kegiatan</option>
-                <option value="2">BAB 2 - Rona Lingkungan Awal</option>
-                <option value="3">BAB 3 - Baku Mutu Air Limbah</option>
-                <option value="4">BAB 4 - Prakiraan Dampak</option>
-                <option value="5">BAB 5 - Rencana Pengelolaan Lingkungan</option>
-                <option value="6">BAB 6 - Rencana Pemantauan Lingkungan</option>
-                <option value="7">BAB 7 - Sistem Penanggulangan Keadaan Darurat</option>
-                <option value="8">BAB 8 - Internalisasi Biaya Lingkungan</option>
-                <option value="9">BAB 9 - Periode Waktu Uji Coba</option>
-                <option value="10">BAB 10 - Struktur Organisasi dan Standar Kompetensi Sumber Daya Manusia</option>
-                <option value="11">BAB 11 - Sistem Manajemen Lingkungan</option>`;
-      // <option value="12">BAB LAMPIRAN</option>
-
-      $("#ini-lampiran").show();
-      $("#kajian-teknis").show();
-      $("#standar-teknis").hide();
-      $("#modal_file").on("shown.bs.modal", function (e) {
-        $("#edit_group_kajian").attr("hidden", true);
-        $("#kajian-teknis").addClass("active");
-        $("#standar-teknis").removeClass("active");
-
-        $("#kajian").addClass("tab-pane active");
-        $("#standar").removeClass("active");
-      });
-    } else if (kategori == 5 && kode == 1) {
-      opt += `<option value="1">BAB 1 - Deskripsi Kegiatan</option>
-                <option value="2">BAB 2 - Rona Lingkungan Awal</option>
-                <option value="3">BAB 3 - Desain Sarana dan Prasarana Sistem Pengendalian Emisi</option>
-                <option value="4">BAB 4 - Prakiraan Dampak</option>
-                <option value="5">BAB 5 - Rencana Pemantauan Lingkungan</option>
-                <option value="6">BAB 6 - Internalisasi Biaya Lingkungan</option>
-                <option value="7">BAB 7 - Standar Kompetensi Sumber Daya Manusia</option>
-                <option value="8">BAB 8 - Sistem Manajemen Lingkungan</option>
-                <option value="9">BAB 9 - Periode Uji Coba Instalasi Pengendali Emisi</option>
-                `;
-      // <option value="8">BAB LAMPIRAN</option>
-
-      $("#ini-lampiran").show();
-      $("#kajian-teknis").show();
-      $("#standar-teknis").hide();
-      $("#modal_file").on("shown.bs.modal", function (e) {
-        $("#edit_group_kajian").attr("hidden", true);
-        $("#kajian-teknis").addClass("active");
-        $("#standar-teknis").removeClass("active");
-
-        $("#kajian").addClass("tab-pane active");
-        $("#standar").removeClass("active");
-      });
-    } else if (kategori == 1 && kode == 2) {
-      opt += ` <option value="1">BAB 1 - Deskripsi Kegiatan</option>
-                <option value="2">BAB 2 - Baku Mutu Air Limbah Nasional</option>
-                <option value="3">BAB 3 - Rencana Pengelolaan Lingkungan</option>
-                <option value="4">BAB 4 - Rencana Pemantauan Lingkungan</option>
-                <option value="5">BAB 5 - Sistem Penanggulangan Keadaan Darurat</option>
-                <option value="6">BAB 6 - Internalisasi Biaya Lingkungan</option>
-                <option value="7">BAB 7 - Periode Waktu Uji Coba</option>
-                <option value="8">BAB 8 - Struktur Organisasi Dan Standar Kompetensi Sumber Daya Manusia</option>
-                <option value="9">BAB 9 - Sistem Manajemen Lingkungan</option>`;
-
-      $("#ini-lampiran-2").show();
-      $("#kajian-teknis").hide();
-      $("#standar-teknis").show();
-      $("#modal_file").on("shown.bs.modal", function (e) {
-        $("#edit_group_kajian").attr("hidden", true);
-        $("#kajian-teknis").removeClass("active");
-        $("#standar-teknis").addClass("active");
-
-        $("#kajian").removeClass("active");
-        $("#standar").addClass("tab-pane active");
-      });
-    } else if (kategori == 3 && kode == 2) {
-      opt += `<option value="1">BAB 1 - Deskripsi Kegiatan</option>
-                <option value="2">BAB 2 - Baku Mutu Air Limbah</option>
-                <option value="3">BAB 3 - Rencana Pengelolaan Lingkungan</option>
-                <option value="4">BAB 4 - Rencana Pemantauan Lingkungan</option>
-                <option value="5">BAB 5 - Sistem Penanggulangan Keadaan Darurat</option>
-                <option value="6">BAB 6 - Internalisasi Biaya Lingkungan</option>
-                <option value="7">BAB 7 - Periode Waktu Uji Coba</option>
-                <option value="8">BAB 8 - Struktur Organisasi dan Standar Kompetensi Sumber Daya Manusia</option>
-                <option value="9">BAB 9 - Sistem Manajemen Lingkungan</option>
-                `;
-      // <option value="9">BAB LAMPIRAN</option>
-
-      $("#ini-lampiran-2").show();
-      $("#kajian-teknis").hide();
-      $("#standar-teknis").show();
-      $("#modal_file").on("shown.bs.modal", function (e) {
-        $("#edit_group_kajian").attr("hidden", true);
-        $("#kajian-teknis").removeClass("active");
-        $("#standar-teknis").addClass("active");
-
-        $("#kajian").removeClass("active");
-        $("#standar").addClass("tab-pane active");
-      });
-    } else if (kategori == 4 && kode == 2) {
-      opt += `<option value="1">BAB 1 - Deskripsi Kegiatan</option>
-                <option value="2">BAB 2 - Baku Mutu Air Limbah</option>
-                <option value="3">BAB 3 - Rencana Pengelolaan Lingkungan</option>
-                <option value="4">BAB 4 - Rencana Pemantauan Lingkungan</option>
-                <option value="5">BAB 5 - Sistem Penanggulangan Keadaan Darurat</option>
-                <option value="6">BAB 6 - Internalisasi Biaya Lingkungan</option>
-                <option value="7">BAB 7 - Periode Waktu Uji Coba</option>
-                <option value="8">BAB 8 - Standar Kompetensi Sumber Daya Manusia</option>
-                <option value="9">BAB 9 - Sistem Manajemen Lingkungan</option>
-                `;
-      // <option value="9">BAB LAMPIRAN</option>
-
-      $("#ini-lampiran-2").show();
-      $("#kajian-teknis").hide();
-      $("#standar-teknis").show();
-      $("#modal_file").on("shown.bs.modal", function (e) {
-        $("#edit_group_kajian").attr("hidden", true);
-        $("#kajian-teknis").removeClass("active");
-        $("#standar-teknis").addClass("active");
-
-        $("#kajian").removeClass("active");
-        $("#standar").addClass("tab-pane active");
-      });
-    } else if (kategori == 5 && kode == 2) {
-      opt += `<option value="1">BAB 1 - Deskripsi Kegiatan</option>
-                <option value="2">BAB 2 - Rujukan Baku Mutu Emisi</option>
-                <option value="3">BAB 3 - Desain Sarana dan Prasarana Sistem Pengendalian Emisi</option>
-                <option value="4">BAB 4 - Rencana Pemantauan Lingkungan </option>
-                <option value="5">BAB 5 - Internalisasi Biaya Lingkungan</option>
-                <option value="6">BAB 6 - Standar Kompetensi Sumber Daya Manusia </option>
-                <option value="7">BAB 7 - Sistem Manajemen Lingkungan</option>
-                <option value="8">BAB 8 - Periode Uji Coba Instalasi Pengendali Emisi</option>
-                `;
-      // <option value="7">BAB LAMPIRAN</option>
-
-      $("#ini-lampiran-2").show();
-      $("#kajian-teknis").hide();
-      $("#standar-teknis").show();
-      $("#modal_file").on("shown.bs.modal", function (e) {
-        $("#edit_group_kajian").attr("hidden", true);
-        $("#kajian-teknis").removeClass("active");
-        $("#standar-teknis").addClass("active");
-
-        $("#kajian").removeClass("active");
-        $("#standar").addClass("tab-pane active");
-      });
-    } else {
-      opt += `
+    opt += `
       <option value="1">BAB 1 - Pendahuluan </option>
       <option value="2">BAB 2 - Deskripsi Kegiatan </option>
       <option value="3">BAB 3 - Muatan Kajian </option>
-      <option value="4">BAB 4 - Penutup </option>
-                `;
-    }
+      <option value="4">BAB 4 - Penutup </option>`;
 
     $("#bab_kajian").html(opt);
     $("#bab_kajian").trigger("chosen:updated");
     $("#bab_standar").html(opt);
     $("#bab_standar").trigger("chosen:updated");
 
-    // switch (kode) {
-    //   case '1':
-    //       $('#kajian-teknis').show();
-    //       $('#standar-teknis').hide();
-    //       $( "#modal_file" ).on('shown.bs.modal', function (e) {
-    //         $("#kajian-teknis").addClass('active');
-    //         $("#standar-teknis").removeClass('active');
-
-    //         $('#kajian').addClass('tab-pane active');
-    //         $('#standar').addClass('tab-pane');
-    //       });
-    //     break;
-    //   case '2':
-    //       $('#kajian-teknis').hide();
-    //       $('#standar-teknis').show();
-    //       $( "#modal_file" ).on('shown.bs.modal', function (e) {
-    //         $("#kajian-teknis").removeClass('active');
-    //         $("#standar-teknis").addClass('active');
-
-    //         $('#kajian').removeClass('active');
-    //         $('#standar').addClass('active');
-
-    //       });
-    //     break;
-    // }
-
     $("#modal_file").modal("show");
     $("#ini-ID").val(id);
+    $("#parameter").val(kode);
     if (kode == "1") {
       $.ajax({
         type: "post",
@@ -2164,8 +1918,6 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
         },
         success: function (result) {
           loadstatus(id, 3, "doc_kajian", kategori);
-
-          let data = result.data;
           let code = result.code;
           if (code != "0") {
             var dt = $("#data-file-kajian").DataTable({
@@ -2178,7 +1930,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
               autoWidth: false,
               responsive: false,
               pageLength: 10,
-              aaData: data,
+              aaData: result.data,
               aoColumns: [
                 { mDataProp: "id" },
                 { mDataProp: "bab" },
@@ -2186,7 +1938,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                 // { 'mDataProp': 'size'},
                 { mDataProp: "status" },
                 { mDataProp: "created_date" },
-                { mDataProp: "updated_date" },
+                // { mDataProp: "updated_date" },
                 { mDataProp: "keterangan" },
                 { mDataProp: "id" },
               ],
@@ -2289,7 +2041,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                         : row.updated_date;
                     return el;
                   },
-                  aTargets: [5],
+                  aTargets: [4],
                 },
                 {
                   mRender: function (data, type, row) {
@@ -2313,7 +2065,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
 
                     return el;
                   },
-                  aTargets: [6],
+                  aTargets: [5],
                 },
                 {
                   mRender: function (data, type, row) {
@@ -2475,7 +2227,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
 
                     return el;
                   },
-                  aTargets: [7],
+                  aTargets: [6],
                 },
               ],
               fnRowCallback: function (
@@ -2576,20 +2328,26 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                     if (type == "display") {
                       let des = [];
                       if (row.jenis != "doc_lampiran") {
-                        $("#bab_kajian option").each(function () {
+                        des = [
+                          "BAB 1 - Pendahuluan",
+                          "BAB 2 - Deskripsi Kegiatan",
+                          "BAB 3 - Muatan Kajian",
+                          "BAB 4 - Penutup",
+                        ];
+                        $("#bab_standar option").each(function () {
                           des.push($(this).text());
                         });
+
+                        $(`#bab_standar option[value="${row.bab}"]`).prop(
+                          "disabled",
+                          true
+                        );
+                        $(`#bab_standar`).trigger("chosen:updated");
                       } else {
                         let p = "";
                         if (row.param == 2) {
                           p = "-2";
                         }
-
-                        $(`#bab_lampiran${p} option[value="${row.bab}"]`).prop(
-                          "disabled",
-                          true
-                        );
-                        $(`#bab_lampiran${p}`).trigger("chosen:updated");
 
                         des = [
                           "-",
@@ -2597,6 +2355,15 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                           "LAMPIRAN II",
                           "LAMPIRAN III",
                         ];
+                        $("#bab_lampiran-3 option").each(function () {
+                          des.push($(this).text());
+                        });
+
+                        $(`#bab_lampiran-3 option[value="${row.bab}"]`).prop(
+                          "disabled",
+                          true
+                        );
+                        $(`#bab_lampiran-3`).trigger("chosen:updated");
                       }
                       return des[row.bab];
                     }
@@ -2645,25 +2412,6 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
                     return el;
                   },
                   aTargets: [3],
-                },
-                {
-                  mRender: function (data, type, row) {
-                    let des = [
-                      "Pilih Dokumen",
-                      "DESKRIPSI KEGIATAN",
-                      "BAKU MUTU AIR LIMBAH NASIONAL",
-                      "RENCANA PENGELOLAAN LINGKUNGAN",
-                      "RENCANA PEMANTAUAN LINGKUNGAN",
-                      "SISTEM PENANGGULANGAN KEADAAAN DARURAT",
-                      "INTERNALISASI BIAYA LINGKUNGAN",
-                      "PERIODE WAKTU UJI COBA",
-                      "STRUKTUR ORGANISASI DAN STANDAR KOMPETENSI SUMBER DAYA MANUSIA",
-                      "SISTEM MANAJEMEN LINGKUNGAN",
-                    ];
-
-                    return des[data];
-                  },
-                  aTargets: [1],
                 },
                 //   {
                 //     mRender: function ( data, type, row ) {
@@ -2837,8 +2585,8 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
       );
     }
   } else if (mode == "update") {
-    let stat = $("#status_" + param + "_" + id).val();
-    let keterangan = $("#keterangan_" + param + "_" + id).val();
+    let stat = $("#status_2_" + id).val();
+    let keterangan = $("#keterangan_2_" + id).val();
 
     $.ajax({
       type: "post",
@@ -2853,7 +2601,7 @@ function action(mode, id, type, keterangan, param, kode, kategori) {
       },
       success: function (result) {
         let data = result.data;
-        // location.reload();
+        location.reload();
         // $('#back-all-permohonan').click()
         detailper(window.id_perusahaan);
       },
@@ -3648,6 +3396,7 @@ function editpermohonan(id) {
 }
 
 function detailpermohonan(id) {
+  console.log(id);
   $.ajax({
     type: "post",
     dataType: "json",

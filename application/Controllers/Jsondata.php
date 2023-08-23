@@ -455,7 +455,8 @@ class Jsondata extends \CodeIgniter\Controller
 					foreach ($expired_per as $keyex => $valuex) {
 						$id = json_decode(json_encode($valuex['id']));
 						$expired = json_decode(json_encode($valuex['expired_date']));
-						if ($this->now >= $expired) {
+						$status = json_decode(json_encode($valuex['status']));
+						if ($this->now >= $expired && $status = 0) {
 							// Menunggu Verifikasi status = 0
 							// Sudah Verifikasi status = 1
 							// Gagal Verifikasi status = 2
@@ -1947,11 +1948,11 @@ class Jsondata extends \CodeIgniter\Controller
 		$type 		= $request->getVar('type');
 		$bab		= $request->getVar('bab');
 		$kategori	= $request->getVar('kategori');
-		$kategoriparam	= $request->getVar('kategoriparam');
+		$kategoriparam	= $request->getVar('param');
 
 		$role 		= $this->data['role'];
 		$userid		= $this->data['userid'];
-
+		
 		$model 	  = new \App\Models\ProgramModel();
 		$modelfile 	  = new \App\Models\TargetModel();
 		
@@ -3308,21 +3309,21 @@ class Jsondata extends \CodeIgniter\Controller
 
 	public function updatestatus(){
 
-		$request  = $this->request;
-		$table 	  = $request->getVar('table');
-		$id 	  = $request->getVar('id');
-		$stat 	  = $request->getVar('stat');
-		$keterangan 	  = $request->getVar('keterangan');
+		$request  	= $this->request;
+		$table 	  	= $request->getVar('table');
+		$id 	  	= $request->getVar('id');
+		$stat 	  	= $request->getVar('stat');
+		$keterangan	= $request->getVar('keterangan');
 		$role 		= $this->data['role'];
 		$userid		= $this->data['userid'];
 
 		$model 	  = new \App\Models\TargetModel();
 
 		$data = [
-						'updated_date'	=> $this->now,
-						'update_by' 	=> $userid,
-						'status' 		=> $stat,
-						'keterangan' 	=> $keterangan,
+			'updated_date'	=> $this->now,
+			'update_by' 	=> $userid,
+			'status' 		=> $stat,
+			'keterangan' 	=> $keterangan,
         ];
 		// print_r($data);die;
 		$res = $model->updatestatus($table, $id, $data);
